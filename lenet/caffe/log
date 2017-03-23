@@ -1,0 +1,103 @@
+I0323 11:37:54.607832 10569 layer_factory.hpp:74] Creating layer mnist
+I0323 11:37:54.607873 10569 net.cpp:90] Creating Layer mnist
+I0323 11:37:54.607924 10569 net.cpp:378] mnist -> data
+I0323 11:37:54.607956 10569 net.cpp:378] mnist -> label
+I0323 11:37:54.607995 10569 net.cpp:120] Setting up mnist
+I0323 11:37:54.608100 10569 db_lmdb.cpp:30] Opened lmdb caffe/mnist_test_lmdb
+I0323 11:37:54.608162 10569 data_layer.cpp:52] output data size: 100,1,28,28
+I0323 11:37:54.608467 10569 net.cpp:127] Top shape: 100 1 28 28 (78400)
+I0323 11:37:54.608505 10569 net.cpp:127] Top shape: 100 (100)
+I0323 11:37:54.608551 10569 layer_factory.hpp:74] Creating layer label_mnist_1_split
+I0323 11:37:54.608577 10569 net.cpp:90] Creating Layer label_mnist_1_split
+I0323 11:37:54.608608 10569 net.cpp:420] label_mnist_1_split <- label
+I0323 11:37:54.608638 10569 net.cpp:378] label_mnist_1_split -> label_mnist_1_split_0
+I0323 11:37:54.608664 10569 net.cpp:378] label_mnist_1_split -> label_mnist_1_split_1
+I0323 11:37:54.608707 10569 net.cpp:120] Setting up label_mnist_1_split
+I0323 11:37:54.608747 10569 net.cpp:127] Top shape: 100 (100)
+I0323 11:37:54.608786 10569 net.cpp:127] Top shape: 100 (100)
+I0323 11:37:54.608819 10569 layer_factory.hpp:74] Creating layer conv1
+I0323 11:37:54.608863 10569 net.cpp:90] Creating Layer conv1
+I0323 11:37:54.608898 10569 net.cpp:420] conv1 <- data
+I0323 11:37:54.608943 10569 net.cpp:378] conv1 -> conv1
+I0323 11:37:54.608985 10569 net.cpp:120] Setting up conv1
+I0323 11:37:54.609082 10569 net.cpp:127] Top shape: 100 20 24 24 (1152000)
+I0323 11:37:54.609136 10569 layer_factory.hpp:74] Creating layer relu1
+I0323 11:37:54.609184 10569 net.cpp:90] Creating Layer relu1
+I0323 11:37:54.609216 10569 net.cpp:420] relu1 <- conv1
+I0323 11:37:54.609251 10569 net.cpp:367] relu1 -> conv1 (in-place)
+I0323 11:37:54.609287 10569 net.cpp:120] Setting up relu1
+I0323 11:37:54.609319 10569 net.cpp:127] Top shape: 100 20 24 24 (1152000)
+I0323 11:37:54.609349 10569 layer_factory.hpp:74] Creating layer pool1
+I0323 11:37:54.609388 10569 net.cpp:90] Creating Layer pool1
+I0323 11:37:54.609411 10569 net.cpp:420] pool1 <- conv1
+I0323 11:37:54.609433 10569 net.cpp:378] pool1 -> pool1
+I0323 11:37:54.609455 10569 net.cpp:120] Setting up pool1
+I0323 11:37:54.609480 10569 net.cpp:127] Top shape: 100 20 12 12 (288000)
+I0323 11:37:54.609501 10569 layer_factory.hpp:74] Creating layer conv2
+I0323 11:37:54.609526 10569 net.cpp:90] Creating Layer conv2
+I0323 11:37:54.609544 10569 net.cpp:420] conv2 <- pool1
+I0323 11:37:54.609578 10569 net.cpp:378] conv2 -> conv2
+I0323 11:37:54.609613 10569 net.cpp:120] Setting up conv2
+I0323 11:37:54.610155 10569 net.cpp:127] Top shape: 100 50 8 8 (320000)
+I0323 11:37:54.610186 10569 layer_factory.hpp:74] Creating layer relu2
+I0323 11:37:54.610208 10569 net.cpp:90] Creating Layer relu2
+I0323 11:37:54.610225 10569 net.cpp:420] relu2 <- conv2
+I0323 11:37:54.610244 10569 net.cpp:367] relu2 -> conv2 (in-place)
+I0323 11:37:54.610263 10569 net.cpp:120] Setting up relu2
+I0323 11:37:54.610282 10569 net.cpp:127] Top shape: 100 50 8 8 (320000)
+I0323 11:37:54.610298 10569 layer_factory.hpp:74] Creating layer pool2
+I0323 11:37:54.610319 10569 net.cpp:90] Creating Layer pool2
+I0323 11:37:54.610335 10569 net.cpp:420] pool2 <- conv2
+I0323 11:37:54.610354 10569 net.cpp:378] pool2 -> pool2
+I0323 11:37:54.610375 10569 net.cpp:120] Setting up pool2
+I0323 11:37:54.610396 10569 net.cpp:127] Top shape: 100 50 4 4 (80000)
+I0323 11:37:54.610412 10569 layer_factory.hpp:74] Creating layer ip1
+I0323 11:37:54.610436 10569 net.cpp:90] Creating Layer ip1
+I0323 11:37:54.610452 10569 net.cpp:420] ip1 <- pool2
+I0323 11:37:54.610476 10569 net.cpp:378] ip1 -> ip1
+I0323 11:37:54.610499 10569 net.cpp:120] Setting up ip1
+I0323 11:37:54.618526 10569 net.cpp:127] Top shape: 100 500 (50000)
+I0323 11:37:54.618585 10569 layer_factory.hpp:74] Creating layer relu3
+I0323 11:37:54.618610 10569 net.cpp:90] Creating Layer relu3
+I0323 11:37:54.618628 10569 net.cpp:420] relu3 <- ip1
+I0323 11:37:54.618649 10569 net.cpp:367] relu3 -> ip1 (in-place)
+I0323 11:37:54.618680 10569 net.cpp:120] Setting up relu3
+I0323 11:37:54.618701 10569 net.cpp:127] Top shape: 100 500 (50000)
+I0323 11:37:54.618717 10569 layer_factory.hpp:74] Creating layer ip2
+I0323 11:37:54.618742 10569 net.cpp:90] Creating Layer ip2
+I0323 11:37:54.618767 10569 net.cpp:420] ip2 <- ip1
+I0323 11:37:54.618800 10569 net.cpp:378] ip2 -> ip2
+I0323 11:37:54.618839 10569 net.cpp:120] Setting up ip2
+I0323 11:37:54.619016 10569 net.cpp:127] Top shape: 100 10 (1000)
+I0323 11:37:54.619068 10569 layer_factory.hpp:74] Creating layer relu4
+I0323 11:37:54.619108 10569 net.cpp:90] Creating Layer relu4
+I0323 11:37:54.619173 10569 net.cpp:420] relu4 <- ip2
+I0323 11:37:54.619210 10569 net.cpp:367] relu4 -> ip2 (in-place)
+I0323 11:37:54.619246 10569 net.cpp:120] Setting up relu4
+I0323 11:37:54.619280 10569 net.cpp:127] Top shape: 100 10 (1000)
+I0323 11:37:54.619308 10569 layer_factory.hpp:74] Creating layer ip2_relu4_0_split
+I0323 11:37:54.619343 10569 net.cpp:90] Creating Layer ip2_relu4_0_split
+I0323 11:37:54.619374 10569 net.cpp:420] ip2_relu4_0_split <- ip2
+I0323 11:37:54.619408 10569 net.cpp:378] ip2_relu4_0_split -> ip2_relu4_0_split_0
+I0323 11:37:54.619444 10569 net.cpp:378] ip2_relu4_0_split -> ip2_relu4_0_split_1
+I0323 11:37:54.619482 10569 net.cpp:120] Setting up ip2_relu4_0_split
+I0323 11:37:54.619534 10569 net.cpp:127] Top shape: 100 10 (1000)
+I0323 11:37:54.619568 10569 net.cpp:127] Top shape: 100 10 (1000)
+I0323 11:37:54.619596 10569 layer_factory.hpp:74] Creating layer accuracy
+I0323 11:37:54.619632 10569 net.cpp:90] Creating Layer accuracy
+I0323 11:37:54.619662 10569 net.cpp:420] accuracy <- ip2_relu4_0_split_0
+I0323 11:37:54.619693 10569 net.cpp:420] accuracy <- label_mnist_1_split_0
+I0323 11:37:54.619736 10569 net.cpp:378] accuracy -> accuracy
+I0323 11:37:54.619778 10569 net.cpp:120] Setting up accuracy
+I0323 11:37:54.619820 10569 net.cpp:127] Top shape: (1)
+I0323 11:37:54.619850 10569 layer_factory.hpp:74] Creating layer loss
+I0323 11:37:54.619882 10569 net.cpp:90] Creating Layer loss
+I0323 11:37:54.619900 10569 net.cpp:420] loss <- ip2_relu4_0_split_1
+I0323 11:37:54.619920 10569 net.cpp:420] loss <- label_mnist_1_split_1
+I0323 11:37:54.619940 10569 net.cpp:378] loss -> loss
+I0323 11:37:54.619961 10569 net.cpp:120] Setting up loss
+I0323 11:37:54.619982 10569 layer_factory.hpp:74] Creating layer loss
+I0323 11:37:54.620024 10569 net.cpp:127] Top shape: (1)
+I0323 11:37:54.620043 10569 net.cpp:129]     with loss weight 1
+I0323 11:37:54.620070 10569 net.cpp:192] loss needs backward computation.
+

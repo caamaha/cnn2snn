@@ -17,7 +17,7 @@ weights = './caffe/lenet_iter_10000.caffemodel';
 % create net and load weights
 net = caffe.Net(model, weights, 'test'); 
 
-test_num = 10;
+test_num = 1;
 
 net_inputs = images(:, :, 1:test_num);
 net_inputs = {reshape(net_inputs, [28, 28, 1, test_num])};
@@ -33,4 +33,9 @@ disp(pred-1);
 % show the label
 disp(labels(1:test_num)');
 
-caffe.reset_all();
+% save network weights
+conv1_weights = net.params('conv1', 1).get_data();
+conv2_weights = net.params('conv2', 1).get_data();
+ip1_weights = net.params('ip1', 1).get_data();
+ip2_weights = net.params('ip2', 1).get_data();
+

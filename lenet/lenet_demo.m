@@ -39,3 +39,14 @@ conv2_weights = net.params('conv2', 1).get_data();
 ip1_weights = net.params('ip1', 1).get_data();
 ip2_weights = net.params('ip2', 1).get_data();
 
+% permute network weights in python sequence
+conv1_weights = reshape(conv1_weights, size(conv1_weights, 1), size(conv1_weights, 2), []);
+conv1_weights = permute(conv1_weights, [2 1 3]);
+
+conv2_weights = reshape(conv2_weights, size(conv2_weights, 1), size(conv2_weights, 2), []);
+conv2_weights = permute(conv2_weights, [2 1 3]);
+
+ip1_weights = permute(ip1_weights, [2 1]);
+ip2_weights = permute(ip2_weights, [2 1]);
+
+save('brian2/weights/pretrained_lenet.mat', 'conv1_weights', 'conv2_weights', 'ip1_weights', 'ip2_weights');

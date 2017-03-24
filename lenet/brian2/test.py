@@ -19,6 +19,12 @@ synapses_input_conv1 = Synapses(input_group, conv1_group, model='w:1', on_pre = 
 
 synapses_input_conv1.connect(i = [10, 5], j = [40, 60])
 
-synapses_input_conv1.w = [1, 2];
+cw = [1, 2]
+
+synapses_input_conv1.w = cw;
+
+cw[1] = 3
+
+synapses_input_conv1.w = cw;
 
 print synapses_input_conv1.w[5, 60]

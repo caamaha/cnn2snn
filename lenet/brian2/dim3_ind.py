@@ -11,7 +11,7 @@ class dim3_ind:
     def ind3(self, ind2, ind1, ind0):
         assert(ind1 < self.sz1)
         assert(ind0 < self.sz0)
-        return ind2 * self.sz1 + ind1 * self.sz0 + ind0
+        return ind2 * self.sz1 * self.sz0 + ind1 * self.sz0 + ind0
     def ind2(self, ind1, ind0):
         return ind1 * self.sz0 + ind0
         

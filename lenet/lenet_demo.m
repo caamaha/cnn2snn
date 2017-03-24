@@ -2,8 +2,8 @@ addpath ../caffe/matlab
 addpath mnistHelper/
 
 % load mnist dataset
-images = loadMNISTImages('mnist/train-images-idx3-ubyte');
-labels = loadMNISTLabels('mnist/train-labels-idx1-ubyte');
+images = loadMNISTImages('mnist/t10k-images-idx3-ubyte');
+labels = loadMNISTLabels('mnist/t10k-labels-idx1-ubyte');
  
 %imshow(images(:,:,1));
 %disp(labels(1));
@@ -19,7 +19,12 @@ net = caffe.Net(model, weights, 'test');
 
 test_num = 1;
 
+test_input = zeros(28, 28);
+test_input(1, 1) = 1;
+test_input(1, 2) = 1;
+
 net_inputs = images(:, :, 1:test_num);
+%net_inputs = test_input;
 net_inputs = {reshape(net_inputs, [28, 28, 1, test_num])};
 net.reshape_as_input(net_inputs);
 net.set_input_data(net_inputs);
@@ -41,12 +46,12 @@ ip2_weights = net.params('ip2', 1).get_data();
 
 % permute network weights in python sequence
 conv1_weights = reshape(conv1_weights, size(conv1_weights, 1), size(conv1_weights, 2), []);
-conv1_weights = permute(conv1_weights, [2 1 3]);
+%conv1_weights = permute(conv1_weights, [2 1 3]);
 
 conv2_weights = reshape(conv2_weights, size(conv2_weights, 1), size(conv2_weights, 2), []);
-conv2_weights = permute(conv2_weights, [2 1 3]);
+%conv2_weights = permute(conv2_weights, [2 1 3]);
 
-ip1_weights = permute(ip1_weights, [2 1]);
-ip2_weights = permute(ip2_weights, [2 1]);
+%ip1_weights = permute(ip1_weights, [2 1]);
+%ip2_weights = permute(ip2_weights, [2 1]);
 
 save('brian2/weights/pretrained_lenet.mat', 'conv1_weights', 'conv2_weights', 'ip1_weights', 'ip2_weights');

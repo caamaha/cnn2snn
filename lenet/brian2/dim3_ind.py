@@ -5,7 +5,8 @@
 #  sz: 维度尺寸,(二维尺寸,一维尺寸)
 # 返回一维索引 
 class dim3_ind:
-    def __init__(self, sz1, sz0):
+    def __init__(self, sz2, sz1, sz0):
+        self.sz2 = sz2
         self.sz1 = sz1
         self.sz0 = sz0
     def ind3(self, ind2, ind1, ind0):

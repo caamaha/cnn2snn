@@ -115,6 +115,7 @@ eqs_conv2           = 'v : 1'
 eqs_pool2           = 'v : 1'
 eqs_ip1             = 'v : 1'
 eqs_ip2             = 'v : 1'
+eqs_it              = 'v : 1'
 
 conv1_thresh        = 'v >= 1'
 conv1_reset         = 'v = 0'
@@ -133,6 +134,9 @@ ip1_reset           = 'v = 0'
 
 ip2_thresh          = 'v >= 2'
 ip2_reset           = 'v = 0'
+
+it_thresh           = 'v >= 2'
+it_reset            = 'v = 0'
 
 input_size          = 28
 input_n             = input_size * input_size
@@ -169,16 +173,19 @@ pool2_ind           = dim3_ind(pool2_kernel_num, pool2_output_size, pool2_output
 ip1_output_n        = 500
 ip1_ind             = dim3_ind(1, 1, ip1_output_n)
 ip2_output_n        = 10
+ip2_ind             = dim3_ind(1, 1, ip2_output_n)
+it_output_n         = 10
 
 #------------------------------------------------------------------------------ 
 # load synapses weights from pretrained model
 #------------------------------------------------------------------------------
 pretrained_lenet = sio.loadmat('weights/pretrained_lenet.mat')
-conv1_weights = pretrained_lenet['conv1_weights']
-conv2_weights = pretrained_lenet['conv2_weights']
-ip1_weights   = pretrained_lenet['ip1_weights']
-ip2_weights   = pretrained_lenet['ip2_weights']
-
+lenet_softmax    = sio.loadmat('weights/pretrained_lenet_softmax.mat')
+conv1_weights    = pretrained_lenet['conv1_weights']
+conv2_weights    = pretrained_lenet['conv2_weights']
+ip1_weights      = pretrained_lenet['ip1_weights']
+ip2_weights      = pretrained_lenet['ip2_weights']
+softmax_weights  = lenet_softmax['softmax_weights']
 
 #------------------------------------------------------------------------------ 
 # create network population and synapses
@@ -194,19 +201,6 @@ pre_ind  = []
 post_ind = []
 conv_w  = []
 create_conv_connections(input_ind, conv1_ind, conv1_output_size, conv1_kernel_num, conv1_kernel_size, conv1_weights, pre_ind, post_ind, conv_w)
-# for h in range(conv1_output_size):
-#     for w in range(conv1_output_size):
-#         for k in range(conv1_kernel_num):
-#             for kh in range(conv1_kernel_size):
-#                 for kw in range(conv1_kernel_size):
-#                     i = input_ind.ind2 (   kh + h, kw + w)
-#                     j = conv1_ind.ind3(k,      h,      w)
-#                     pre_ind.append(i)
-#                     post_ind.append(j)
-#                     conv1_w.append(conv1_weights[kw, kh, k])
-
-
-
 synapses_input_conv1.connect(i = pre_ind, j = post_ind)
 synapses_input_conv1.w = conv_w;
 
@@ -260,36 +254,64 @@ create_ip_connections(ip1_ind, ip2_output_n, ip2_weights, pre_ind, post_ind, ip_
 synapses_ip1_ip2.connect(i = pre_ind, j = post_ind)
 synapses_ip1_ip2.w = ip_w;
 
+# it group
+it_group = NeuronGroup(it_output_n, eqs_it, threshold = it_thresh, reset = it_reset, method = 'euler')
+synapses_ip2_it = Synapses(ip2_group, it_group, model='w:1', on_pre = 'v_post += w', method = 'linear')
+pre_ind  = []
+post_ind = []
+it_w     = []
+create_ip_connections(ip2_ind, it_output_n, softmax_weights, pre_ind, post_ind, it_w)
+synapses_ip2_it.connect(i = pre_ind, j = post_ind)
+synapses_ip2_it.w = it_w;
+
+synapses_it_it = Synapses(it_group, it_group, model='w:1', on_pre = 'v_post += w', method = 'linear')
+synapses_it_it.connect(condition='i != j')
+synapses_it_it.w = -1
+
 #------------------------------------------------------------------------------ 
 # create monitors
 #------------------------------------------------------------------------------
-pool2_mon = SpikeMonitor(pool2_group)
-ip2_mon = SpikeMonitor(ip2_group)
+it_mon = SpikeMonitor(it_group)
+# ip2_mon = SpikeMonitor(ip2_group)
 # print synapses_input_conv1.w[input_ind.ind2(0, 0), conv1_ind.ind3(16, 0, 0) ]
 
-
+last_it_counts = np.array(it_mon.count)
+it_counts_record = np.zeros((np.size(testing['x'], 0), 10))
+print np.size(it_counts_record)
 
 #------------------------------------------------------------------------------ 
 # run the simulation and set inputs
 #------------------------------------------------------------------------------
-ion()
-
-input_group.rates = testing['x'][1, :, :].reshape(input_n) * Hz
-
 start = time.time()
-run(1000 * ms)
-input_group.rates = 0 * Hz
-run(500 * ms)
+
+defaultclock.dt = 0.5 * ms;
+
+for i in range(np.size(testing['x'], 0) / 10):
+    input_group.rates = testing['x'][i, :, :].reshape(input_n) * Hz
+    conv1_group.v = 0
+    pool1_group.v = 0
+    conv2_group.v = 0
+    pool2_group.v = 0
+    ip1_group.v = 0
+    ip2_group.v = 0
+    it_group.v = 0
+    run(50 * ms)
+    curr_it_counts = np.array(it_mon.count) - last_it_counts
+    last_it_counts = np.array(it_mon.count)
+    it_counts_record[i, :] = curr_it_counts
+#     print curr_it_counts
+    print '%d / %d' % (i, np.size(testing['x'], 0))
+
 end = time.time()
 print 'time needed to run simulation:', end - start
+
+# save classified results
+sio.savemat('it_counts.mat', {'it_counts':it_counts_record})
 
 #------------------------------------------------------------------------------ 
 # plot results
 #------------------------------------------------------------------------------   
+# print ip2_mon.count
 
-print pool2_mon.count[pool2_ind.ind3(1, 0, 2)]
-print pool2_mon.count[pool2_ind.ind3(1, 0, 1)]
-print ip2_mon.count
 
-ioff()
 show()

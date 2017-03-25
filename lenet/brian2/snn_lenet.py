@@ -179,13 +179,12 @@ it_output_n         = 10
 #------------------------------------------------------------------------------ 
 # load synapses weights from pretrained model
 #------------------------------------------------------------------------------
-pretrained_lenet = sio.loadmat('weights/pretrained_lenet.mat')
-lenet_softmax    = sio.loadmat('weights/pretrained_lenet_softmax.mat')
+pretrained_lenet = sio.loadmat('weights/lenet_avg_pooling.mat')
 conv1_weights    = pretrained_lenet['conv1_weights']
 conv2_weights    = pretrained_lenet['conv2_weights']
 ip1_weights      = pretrained_lenet['ip1_weights']
 ip2_weights      = pretrained_lenet['ip2_weights']
-softmax_weights  = lenet_softmax['softmax_weights']
+softmax_weights  = pretrained_lenet['softmax_weights']
 
 #------------------------------------------------------------------------------ 
 # create network population and synapses
@@ -286,7 +285,7 @@ start = time.time()
 
 defaultclock.dt = 0.5 * ms;
 
-for i in range(np.size(testing['x'], 0) / 10):
+for i in range(np.size(testing['x'], 0)):
     input_group.rates = testing['x'][i, :, :].reshape(input_n) * Hz
     conv1_group.v = 0
     pool1_group.v = 0
@@ -295,7 +294,7 @@ for i in range(np.size(testing['x'], 0) / 10):
     ip1_group.v = 0
     ip2_group.v = 0
     it_group.v = 0
-    run(100 * ms)
+    run(50 * ms)
     curr_it_counts = np.array(it_mon.count) - last_it_counts
     last_it_counts = np.array(it_mon.count)
     it_counts_record[i, :] = curr_it_counts
@@ -306,7 +305,7 @@ end = time.time()
 print 'time needed to run simulation:', end - start
 
 # save classified results
-sio.savemat('it_counts.mat', {'it_counts':it_counts_record})
+sio.savemat('output/it_counts.mat', {'it_counts':it_counts_record})
 
 #------------------------------------------------------------------------------ 
 # plot results

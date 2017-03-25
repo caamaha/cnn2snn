@@ -264,9 +264,9 @@ create_ip_connections(ip2_ind, it_output_n, softmax_weights, pre_ind, post_ind, 
 synapses_ip2_it.connect(i = pre_ind, j = post_ind)
 synapses_ip2_it.w = it_w;
 
-synapses_it_it = Synapses(it_group, it_group, model='w:1', on_pre = 'v_post += w', method = 'linear')
-synapses_it_it.connect(condition='i != j')
-synapses_it_it.w = -1
+# synapses_it_it = Synapses(it_group, it_group, model='w:1', on_pre = 'v_post += w', method = 'linear')
+# synapses_it_it.connect(condition='i != j')
+# synapses_it_it.w = -1
 
 #------------------------------------------------------------------------------ 
 # create monitors
@@ -295,7 +295,7 @@ for i in range(np.size(testing['x'], 0) / 10):
     ip1_group.v = 0
     ip2_group.v = 0
     it_group.v = 0
-    run(50 * ms)
+    run(100 * ms)
     curr_it_counts = np.array(it_mon.count) - last_it_counts
     last_it_counts = np.array(it_mon.count)
     it_counts_record[i, :] = curr_it_counts

@@ -1,3 +1,5 @@
+addpath mnistHelper/
+
 load('brian2/it_counts.mat');
 
 labels = loadMNISTLabels('mnist/t10k-labels-idx1-ubyte');

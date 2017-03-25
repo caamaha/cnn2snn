@@ -1,30 +1,38 @@
 from brian2 import *
+from brian2 import numpy as np
 
 start_scope()
 
 eqs_conv1 = '''
-dv/dt = (I-v)/tau : 1
-I : 1
-tau : second
+v : 1
 '''
 
 conv1_thresh = 1
 conv1_reset  = 0
 
-input_group = PoissonGroup(100, 0 * Hz)
+input_group = PoissonGroup(4, 0 * Hz)
 
-conv1_group  = NeuronGroup(100, eqs_conv1, threshold = conv1_thresh, reset = conv1_reset, method = 'euler')
+max_group  = NeuronGroup(4, eqs_conv1, threshold = 'v>=2', reset = 'v=0', method = 'euler')
+out_group  = NeuronGroup(1, eqs_conv1, threshold = 'v>=1', reset = 'v=0', method = 'euler')
 
-synapses_input_conv1 = Synapses(input_group, conv1_group, model='w:1', on_pre = 'v_post += w', method = 'linear')
 
-synapses_input_conv1.connect(i = [10, 5], j = [40, 60])
+synapses_input_max = Synapses(input_group, max_group, model='w:1', on_pre = 'v_post += w', method = 'linear', delay=1*ms)
+synapses_input_max.connect(condition = 'i == j')
+synapses_input_max.w = 1;
 
-cw = [1, 2]
+synapses_max_max = Synapses(max_group, max_group, model='w:1', on_pre = 'v_post += w', method = 'linear', delay=1*ms)
+synapses_max_max.connect(condition = 'i != j')
+synapses_max_max.w = -1;
 
-synapses_input_conv1.w = cw;
+synapses_max_out = Synapses(max_group, out_group, model='w:1', on_pre = 'v_post += w', method = 'linear', delay=1*ms)
+synapses_max_out.connect()
+synapses_max_out.w = 1;
 
-cw[1] = 3
+spike_mon = SpikeMonitor(out_group)
 
-synapses_input_conv1.w = cw;
+input_group.rates = np.array([50, 50, 0, 0]) * Hz
+run(10000 * ms)
+input_group.rates = 0 * Hz
+run(1000 * ms)
 
-print synapses_input_conv1.w[5, 60]
+print spike_mon.count

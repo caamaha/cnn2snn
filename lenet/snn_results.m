@@ -7,5 +7,5 @@ labels(labels == 0)  = 10; % Remap 0 to 10
 
 [~, pred] = max(it_counts', [], 1);
 
-acc = mean(labels(1:1000) == pred(1:1000));
+acc = mean(labels(:) == pred(:));
 fprintf('Accuracy: %0.3f%%\n', acc * 100);

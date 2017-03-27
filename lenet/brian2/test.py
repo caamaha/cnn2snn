@@ -17,8 +17,7 @@ conv1_reset  = 0
 input_group = PoissonGroup(4, 0 * Hz)
 
 pool_group = NeuronGroup(1, eqs_conv1, threshold = 'v>=1', reset = 'v=0', method = 'euler')
-inter_group  = NeuronGroup(4, eqs_conv1, threshold = 'v>=1', reset = 'v=0', method = 'euler', events={'under': 'v < 0'})
-inter_group.run_on_event('under', 'v=0')
+inter_group  = NeuronGroup(4, eqs_conv1, threshold = 'v>=1', reset = 'v=0', method = 'euler')
 out_group  = NeuronGroup(1, eqs_conv1, threshold = 'v>=1', reset = 'v=0', method = 'euler')
 
 
@@ -31,7 +30,7 @@ synapses_inter_pool = Synapses(inter_group, pool_group, model='w:1', on_pre = 'v
 synapses_inter_pool.connect()
 synapses_inter_pool.w = 0.5;
 
-synapses_pool_inter = Synapses(pool_group, inter_group, model='w:1', on_pre = 'v_post += w', method = 'linear', delay=1*ms)
+synapses_pool_inter = Synapses(pool_group, inter_group, model='w:1', on_pre = 'v_post = clip(v_post+w, 0, 1)', method = 'linear', delay=1*ms)
 synapses_pool_inter.connect()
 synapses_pool_inter.w = -0.5;
 
@@ -43,7 +42,11 @@ synapses_inter_out.w = 0.1;
 spike_mon = SpikeMonitor(out_group)
 M = StateMonitor(inter_group, 'v', record=True)
 
-input_group.rates = np.array([1, 500, 0, 0]) * Hz
+input_group.rates = np.array([100, 500, 0, 0]) * Hz
+
+logger = get_logger('brian2.codegen.generators.base')
+logger.warn('A warning message')
+
 run(1000 * ms)
 # input_group.rates = 0 * Hz
 # run(1000 * ms)

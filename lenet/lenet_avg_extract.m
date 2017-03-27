@@ -47,6 +47,8 @@ end
 
 inputData = train_ip2_val;
 
+numClasses = 10;
+
 % Randomly initialise theta
 theta = 0.005 * randn(numClasses * inputSize, 1);
 

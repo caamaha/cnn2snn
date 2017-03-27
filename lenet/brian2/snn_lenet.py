@@ -137,6 +137,9 @@ ip2_reset           = 'v = 0'
 it_thresh           = 'v >= 2'
 it_reset            = 'v = 0'
 
+def under(v, w):
+    return max(0, v+w)
+
 input_size          = 28
 input_n             = input_size * input_size
 input_ind           = dim3_ind(1, input_size, input_size)
@@ -193,9 +196,8 @@ softmax_weights  = pretrained_lenet['softmax_weights']
 input_group = PoissonGroup(input_n, 0 * Hz)
 
 # conv1 group
-conv1_group  = NeuronGroup(conv1_output_n * conv1_kernel_num, eqs_conv1, threshold = conv1_thresh, reset = conv1_reset, method = 'euler', events = {'under': 'v < 0'})
-conv1_group.run_on_event('under', 'v=0')
-synapses_input_conv1 = Synapses(input_group, conv1_group, model='w:1', on_pre = 'v_post += w', method = 'linear')
+conv1_group  = NeuronGroup(conv1_output_n * conv1_kernel_num, eqs_conv1, threshold = conv1_thresh, reset = conv1_reset, method = 'euler')
+synapses_input_conv1 = Synapses(input_group, conv1_group, model='w:1', on_pre = 'v_post += w', method = 'linear')   # on_pre = 'v_post = clip(v_post+w, 0, 1)'
 pre_ind  = []
 post_ind = []
 conv_w  = []
@@ -204,8 +206,7 @@ synapses_input_conv1.connect(i = pre_ind, j = post_ind)
 synapses_input_conv1.w = conv_w;
 
 # pool1 group
-pool1_group = NeuronGroup(pool1_output_n * pool1_kernel_num, eqs_pool1, threshold = pool1_thresh, reset = pool1_reset, method = 'euler', events = {'under': 'v < 0'})
-pool1_group.run_on_event('under', 'v=0')
+pool1_group = NeuronGroup(pool1_output_n * pool1_kernel_num, eqs_pool1, threshold = pool1_thresh, reset = pool1_reset, method = 'euler')
 synapses_conv1_pool1 = Synapses(conv1_group, pool1_group, model='w:1', on_pre = 'v_post += w', method = 'linear')
 pre_ind  = []
 post_ind = []
@@ -215,8 +216,7 @@ synapses_conv1_pool1.connect(i = pre_ind, j = post_ind)
 synapses_conv1_pool1.w = pool_w;
 
 # conv2 group
-conv2_group  = NeuronGroup(conv2_output_n * conv2_kernel_num, eqs_conv2, threshold = conv2_thresh, reset = conv2_reset, method = 'euler', events = {'under': 'v < 0'})
-conv2_group.run_on_event('under', 'v=0')
+conv2_group  = NeuronGroup(conv2_output_n * conv2_kernel_num, eqs_conv2, threshold = conv2_thresh, reset = conv2_reset, method = 'euler')
 synapses_pool1_conv2 = Synapses(pool1_group, conv2_group, model='w:1', on_pre = 'v_post += w', method = 'linear')
 pre_ind  = []
 post_ind = []
@@ -226,8 +226,7 @@ synapses_pool1_conv2.connect(i = pre_ind, j = post_ind)
 synapses_pool1_conv2.w = conv_w;
 
 # pool2 group
-pool2_group = NeuronGroup(pool2_output_n * pool2_kernel_num, eqs_pool2, threshold = pool2_thresh, reset = pool2_reset, method = 'euler', events = {'under': 'v < 0'})
-pool2_group.run_on_event('under', 'v=0')
+pool2_group = NeuronGroup(pool2_output_n * pool2_kernel_num, eqs_pool2, threshold = pool2_thresh, reset = pool2_reset, method = 'euler')
 synapses_conv2_pool2 = Synapses(conv2_group, pool2_group, model='w:1', on_pre = 'v_post += w', method = 'linear')
 pre_ind  = []
 post_ind = []
@@ -288,7 +287,7 @@ start = time.time()
 
 defaultclock.dt = 0.5 * ms;
 
-for i in range(np.size(testing['x'], 0)/10):
+for i in range(np.size(testing['x'], 0)):
     input_group.rates = testing['x'][i, :, :].reshape(input_n) * Hz
     conv1_group.v = 0
     pool1_group.v = 0
@@ -297,7 +296,7 @@ for i in range(np.size(testing['x'], 0)/10):
     ip1_group.v = 0
     ip2_group.v = 0
     it_group.v = 0
-    run(50 * ms)
+    run(100 * ms)
     curr_it_counts = np.array(it_mon.count) - last_it_counts
     last_it_counts = np.array(it_mon.count)
     it_counts_record[i, :] = curr_it_counts

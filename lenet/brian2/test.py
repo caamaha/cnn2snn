@@ -2,9 +2,6 @@ from brian2 import *
 from brian2 import numpy as np
 from matplotlib.pyplot import *
 
-set_device('cpp_standalone')
-prefs.codegen.target = 'weave'
-
 start_scope()
 
 eqs_conv1 = '''

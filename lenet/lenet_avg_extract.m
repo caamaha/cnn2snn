@@ -1,4 +1,5 @@
 addpath ../caffe/matlab
+addpath softmax
 addpath mnistHelper/
 
 % record ip2 features
@@ -47,7 +48,9 @@ end
 
 inputData = train_ip2_val;
 
+inputSize = size(inputData, 1);
 numClasses = 10;
+lambda = 0.001;
 
 % Randomly initialise theta
 theta = 0.005 * randn(numClasses * inputSize, 1);

@@ -4,4 +4,4 @@ lenet/caffe/mnist_test_lmdb/
 lenet/caffe/mnist_train_lmdb/
 lenet/.metadata/
 lenet/brian2/cache/
-lenet/tensorflow/model_data/
+lenet/tensorflow/output/

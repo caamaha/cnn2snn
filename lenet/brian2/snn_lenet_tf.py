@@ -62,11 +62,11 @@ def create_conv_connections(in_ind, out_ind, output_size, kernel_num, kernel_siz
     for h in range(output_size):    # output height
         for w in range(output_size):    # output width
             for k in range(kernel_num):     # kernel numbers
-                for kd in range(in_ind.sz2):    # kernel depth
+                for kd in range(in_ind.sz0):    # kernel depth
                     for kh in range(kernel_size):   # kernel height
                         for kw in range(kernel_size):   # kernel width
-                            i = in_ind.ind3 (kd, kh + h, kw + w)
-                            j = out_ind.ind3(k,       h,      w)
+                            i = in_ind.ind3 (kh + h, kw + w, kd)
+                            j = out_ind.ind3(     h,      w, k )
                             pre_ind.append(i)
                             post_ind.append(j)
                             conv_w.append(kernel_weights[kh, kw, kd, k])
@@ -77,18 +77,18 @@ def create_pool_connections(in_ind, out_ind, output_size, kernel_num, kernel_siz
             for k in range(kernel_num):
                 for kh in range(kernel_size):
                     for kw in range(kernel_size):
-                        i = in_ind.ind3 (k, kh + kernel_size*h, kw + kernel_size*w)
-                        j = out_ind.ind3(k,                  h,                  w)
+                        i = in_ind.ind3 (kh + kernel_size*h, kw + kernel_size*w, k)
+                        j = out_ind.ind3(                 h,                  w, k)
                         pre_ind.append(i)
                         post_ind.append(j)
                         pool_w.append(0.25)
 
 def create_ip_connections(in_ind, output_n, ip_weights, pre_ind, post_ind, ip_w):
     for n in range(output_n):
-        for d in range(in_ind.sz2):
-            for h in range(in_ind.sz1):
-                for w in range(in_ind.sz0):
-                    i = in_ind.ind3(d, h, w)
+        for h in range(in_ind.sz2):
+            for w in range(in_ind.sz1):
+                for d in range(in_ind.sz0):
+                    i = in_ind.ind3(h, w, d)
                     pre_ind.append(i)
                     post_ind.append(n)
                     ip_w.append(ip_weights[i, n])
@@ -128,10 +128,10 @@ conv2_reset         = 'v = 0'
 pool2_thresh        = 'v >= 1'
 pool2_reset         = 'v = 0'
 
-ip1_thresh          = 'v >= 1'
+ip1_thresh          = 'v >= 2'
 ip1_reset           = 'v = 0'
 
-ip2_thresh          = 'v >= 2'
+ip2_thresh          = 'v >= 1'
 ip2_reset           = 'v = 0'
 
 def under(v, w):
@@ -139,35 +139,35 @@ def under(v, w):
 
 input_size          = 28
 input_n             = input_size * input_size
-input_ind           = dim3_ind(1, input_size, input_size)
+input_ind           = dim3_ind(input_size, input_size, 1)
 
 conv1_kernel_size   = 5
 conv1_kernel_num    = 20
 conv1_kernel_stride = 1
 conv1_output_size   = (input_size - conv1_kernel_size + 0) / conv1_kernel_stride + 1    # should be 24
 conv1_output_n      = conv1_output_size * conv1_output_size
-conv1_ind           = dim3_ind(conv1_kernel_num, conv1_output_size, conv1_output_size)
+conv1_ind           = dim3_ind(conv1_output_size, conv1_output_size, conv1_kernel_num)
 
 pool1_kernel_size   = 2
 pool1_kernel_num    = conv1_kernel_num
 pool1_kernel_stride = 2
 pool1_output_size   = conv1_output_size / 2     # should be 12
 pool1_output_n      = pool1_output_size * pool1_output_size
-pool1_ind           = dim3_ind(pool1_kernel_num, pool1_output_size, pool1_output_size)
+pool1_ind           = dim3_ind(pool1_output_size, pool1_output_size, pool1_kernel_num)
 
 conv2_kernel_size   = 5
 conv2_kernel_num    = 50
 conv2_kernel_stride = 1
 conv2_output_size   = (pool1_output_size - conv2_kernel_size + 0) / conv2_kernel_stride + 1    # should be 8
 conv2_output_n      = conv2_output_size * conv2_output_size
-conv2_ind           = dim3_ind(conv2_kernel_num, conv2_output_size, conv2_output_size)
+conv2_ind           = dim3_ind(conv2_output_size, conv2_output_size, conv2_kernel_num)
 
 pool2_kernel_size   = 2
 pool2_kernel_num    = conv2_kernel_num
 pool2_kernel_stride = 2
 pool2_output_size   = conv2_output_size / 2     # should be 4
 pool2_output_n      = pool2_output_size * pool2_output_size
-pool2_ind           = dim3_ind(pool2_kernel_num, pool2_output_size, pool2_output_size)
+pool2_ind           = dim3_ind(pool2_output_size, pool2_output_size, pool2_kernel_num)
 
 ip1_output_n        = 500
 ip1_ind             = dim3_ind(1, 1, ip1_output_n)
@@ -250,23 +250,12 @@ create_ip_connections(ip1_ind, ip2_output_n, ip2_weights, pre_ind, post_ind, ip_
 synapses_ip1_ip2.connect(i = pre_ind, j = post_ind)
 synapses_ip1_ip2.w = ip_w;
 
-# synapses_it_it = Synapses(it_group, it_group, model='w:1', on_pre = 'v_post += w', method = 'linear')
-# synapses_it_it.connect(condition='i != j')
-# synapses_it_it.w = -1
-
 #------------------------------------------------------------------------------ 
 # create monitors
 #------------------------------------------------------------------------------
-ip1_mon = SpikeMonitor(ip1_group)
-
-# ip2_mon = SpikeMonitor(ip2_group)
-# last_ip2_counts = np.array(ip2_mon.count)
-# ip2_counts_record = np.zeros((np.size(testing['x'], 0), 10))
-
-
-conv1_mon = SpikeMonitor(conv1_group)
-last_conv1_counts = np.array(conv1_mon.count)
-conv1_counts_record = np.zeros((np.size(testing['x'], 0), 24*24*20))
+ip2_mon = SpikeMonitor(ip2_group)
+last_ip2_counts = np.array(ip2_mon.count)
+ip2_counts_record = np.zeros((np.size(testing['x'], 0), 10))
 
 
 # print np.size(it_counts_record)
@@ -279,12 +268,7 @@ start = time.time()
 defaultclock.dt = 0.1 * ms;
 
 # for i in range(np.size(testing['x'], 0)):
-for i in range(1):
-#     my_input = np.zeros((28, 28))
-#     # y = 10, x = 1
-#     my_input[10, 1] = 255
-#     
-#     input_group.rates = my_input.reshape(input_n) * Hz
+for i in range(10):
     input_group.rates = testing['x'][i, :, :].reshape(input_n) * Hz
     conv1_group.v = 0
     pool1_group.v = 0
@@ -294,13 +278,10 @@ for i in range(1):
     ip2_group.v = 0
     run(1000 * ms)
     
-    curr_conv1_counts = np.array(conv1_mon.count) - last_conv1_counts
-    last_conv1_counts = np.array(conv1_mon.count)
-    conv1_counts_record[i, :] = curr_conv1_counts
-    
-#     curr_ip2_counts = np.array(ip2_mon.count) - last_ip2_counts
-#     last_ip2_counts = np.array(ip2_mon.count)
-#     ip2_counts_record[i, :] = curr_ip2_counts
+    curr_ip2_counts = np.array(ip2_mon.count) - last_ip2_counts
+    last_ip2_counts = np.array(ip2_mon.count)
+    ip2_counts_record[i, :] = curr_ip2_counts
+    print np.array(curr_ip2_counts)
     
     print '%d / %d' % (i, np.size(testing['x'], 0))
 
@@ -308,14 +289,9 @@ end = time.time()
 print 'time needed to run simulation:', end - start
 
 # save classified results
-# sio.savemat('output/it_counts.mat', {'it_counts':it_counts_record})
-
-conv1out = conv1_counts_record[0,:]
-reshape_out = np.reshape(conv1out[0:24*24], (24, 24))
-print reshape_out
+sio.savemat('output/it_counts.mat', {'it_counts':ip2_counts_record})
 
 
-sio.savemat('output/conv1.mat', {'testimg':testing['x'][0, :, :].reshape((28,28)), 'conv1_weights':conv1_weights, 'conv1_output':conv1out})
 
 #------------------------------------------------------------------------------ 
 # plot results
@@ -323,4 +299,3 @@ sio.savemat('output/conv1.mat', {'testimg':testing['x'][0, :, :].reshape((28,28)
 # print ip2_mon.count
 
 
-show()

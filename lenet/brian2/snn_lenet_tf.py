@@ -257,6 +257,10 @@ ip2_mon = SpikeMonitor(ip2_group)
 last_ip2_counts = np.array(ip2_mon.count)
 ip2_counts_record = np.zeros((np.size(testing['x'], 0), 10))
 
+# conv1_mon = SpikeMonitor(conv1_group)
+# last_conv1_counts = np.array(conv1_mon.count)
+# conv1_counts_record = np.zeros((np.size(testing['x'], 0), 11520))
+
 
 # print np.size(it_counts_record)
 
@@ -267,8 +271,7 @@ start = time.time()
 
 defaultclock.dt = 0.1 * ms;
 
-# for i in range(np.size(testing['x'], 0)):
-for i in range(10):
+for i in range(np.size(testing['x'], 0)):
     input_group.rates = testing['x'][i, :, :].reshape(input_n) * Hz
     conv1_group.v = 0
     pool1_group.v = 0
@@ -276,20 +279,21 @@ for i in range(10):
     pool2_group.v = 0
     ip1_group.v = 0
     ip2_group.v = 0
-    run(1000 * ms)
+    run(400 * ms)
+    
     
     curr_ip2_counts = np.array(ip2_mon.count) - last_ip2_counts
     last_ip2_counts = np.array(ip2_mon.count)
     ip2_counts_record[i, :] = curr_ip2_counts
-    print np.array(curr_ip2_counts)
+    
+#     curr_conv1_counts = np.array(conv1_mon.count) - last_conv1_counts
+#     last_conv1_counts = np.array(conv1_mon.count)
+#     conv1_counts_record[i, :] = curr_conv1_counts
     
     print '%d / %d' % (i, np.size(testing['x'], 0))
 
 end = time.time()
 print 'time needed to run simulation:', end - start
-
-# save classified results
-sio.savemat('output/it_counts.mat', {'it_counts':ip2_counts_record})
 
 
 
@@ -298,4 +302,7 @@ sio.savemat('output/it_counts.mat', {'it_counts':ip2_counts_record})
 #------------------------------------------------------------------------------   
 # print ip2_mon.count
 
+# save classified results
+sio.savemat('output/it_counts.mat', {'it_counts':ip2_counts_record})
 
+# sio.savemat('output/conv1_counts.mat', {'conv1_counts':conv1_counts_record})

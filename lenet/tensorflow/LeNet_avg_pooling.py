@@ -9,7 +9,7 @@ import scipy.io as sio
 
 # Parameter
 batch_size = 64
-isTrain = False
+isTrain = True
 
 #初始化单个卷积核上的参数
 def weight_variable(shape):
@@ -118,7 +118,7 @@ with tf.Session() as sess:
         #保存参数
         if not tf.gfile.Exists('output/model'):
             tf.gfile.MakeDirs('output/model')
-        save_path = saver.save(sess, "output/model/model.ckpt")
+        save_path = saver.save(sess, "output/model/avg_pooling_model.ckpt")
         print "Model saved in file: ", save_path
 
         #保存网络权值
@@ -133,7 +133,7 @@ with tf.Session() as sess:
                                                             'ip1_weights':ip1_weights, 
                                                             'ip2_weights':ip2_weights})
     else:
-        saver.restore(sess, "output/model/model.ckpt")
+        saver.restore(sess, "output/model/avg_pooling_model.ckpt")
         
     # 输出整体测试数据的情况
     avg = 0

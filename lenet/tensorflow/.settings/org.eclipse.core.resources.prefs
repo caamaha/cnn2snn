@@ -1,2 +1,3 @@
 eclipse.preferences.version=1
-encoding/LeNet.py=utf-8
+encoding/LeNet_avg_pooling.py=utf-8
+encoding/LeNet_max_pooling.py=utf-8

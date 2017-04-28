@@ -1,5 +1,6 @@
 eclipse.preferences.version=1
 encoding/dim3_ind.py=utf-8
-encoding/snn_lenet_caffe.py=utf-8
-encoding/snn_lenet_tf.py=utf-8
+encoding/snn_lenet_avg_pooling_caffe.py=utf-8
+encoding/snn_lenet_avg_pooling_tf.py=utf-8
+encoding/snn_lenet_max_pooling.py=utf-8
 encoding/test.py=utf-8

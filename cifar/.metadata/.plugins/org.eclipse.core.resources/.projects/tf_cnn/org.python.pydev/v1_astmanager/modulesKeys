@@ -1,0 +1,5 @@
+MODULES_MANAGER_V2
+cifar10|/home/soe/workspace/ljl/cnn2snn/cifar/tf_cnn/cifar10.py
+cifar10_eval|/home/soe/workspace/ljl/cnn2snn/cifar/tf_cnn/cifar10_eval.py
+cifar10_input|/home/soe/workspace/ljl/cnn2snn/cifar/tf_cnn/cifar10_input.py
+cifar10_train|/home/soe/workspace/ljl/cnn2snn/cifar/tf_cnn/cifar10_train.py

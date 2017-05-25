@@ -1,0 +1,41 @@
+-- VERSION_4
+-- START DISKCACHE_2
+/home/soe/workspace/ljl/cnn2snn/cifar/.metadata/.plugins/org.eclipse.core.resources/.projects/brian2/com.python.pydev.analysis/v2_indexcache
+cifar10_extract|1495604929000000000|/home/soe/workspace/ljl/cnn2snn/cifar/brian2/cifar10_extract.py
+dim3_ind|1495518485576465000|/home/soe/workspace/ljl/cnn2snn/cifar/brian2/dim3_ind.py
+-- END DISKCACHE
+-- START DICTIONARY
+6
+6=dim3_ind.__init__
+1=cifar10_extract
+4=Cifar10DataSet.__init__
+2=dim3_ind
+3=Cifar10DataSet
+5=Cifar10DataSet.next_train_batch
+-- END DICTIONARY
+-- START TREE 1
+11
+cif|1|Cifar10DataSet!9@
+den|1|dense_to_one_hot!10@
+dim|1|dim3_ind!17@
+ext|3|extract_train_data!10@extract_test_data!10@extract_data!10@
+ima|1|IMAGE_SIZE!11@
+lab|1|LABEL_SIZE!11@
+mai|1|main!10@
+num|2|NUM_CHANNELS!11@NUM_CLASSES!11@
+pix|1|PIXEL_DEPTH!11@
+tes|1|TEST_NUM!11@
+tra|2|TRAIN_NUMS!11@TRAIN_NUM!11@
+-- END TREE
+-- START TREE 2
+9
+__i|2|__init__!2&18@__init__!3&10@
+epo|1|epochs_completed!4&11@
+ind|4|ind2!2&18@index_in_epoch!4&11@index_in_epoch!5&11@ind3!2&18@
+nex|1|next_train_batch!3&10@
+sz0|1|sz0!6&19@
+sz1|1|sz1!6&19@
+sz2|1|sz2!6&19@
+tes|2|test_data!3&10@test_labels!4&11@
+tra|3|train_labels!4&11@train_labels!5&11@train_images!5&11@
+-- END TREE

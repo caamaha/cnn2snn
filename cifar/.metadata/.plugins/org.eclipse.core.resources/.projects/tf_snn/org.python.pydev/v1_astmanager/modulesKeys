@@ -1,0 +1,7 @@
+MODULES_MANAGER_V2
+cifar10|/home/soe/workspace/ljl/cnn2snn/cifar/tf_snn/cifar10.py
+cifar10_eval|/home/soe/workspace/ljl/cnn2snn/cifar/tf_snn/cifar10_eval.py
+cifar10_extract|/home/soe/workspace/ljl/cnn2snn/cifar/tf_snn/cifar10_extract.py
+cifar10_input|/home/soe/workspace/ljl/cnn2snn/cifar/tf_snn/cifar10_input.py
+cifar10_test|/home/soe/workspace/ljl/cnn2snn/cifar/tf_snn/cifar10_test.py
+cifar10_train|/home/soe/workspace/ljl/cnn2snn/cifar/tf_snn/cifar10_train.py

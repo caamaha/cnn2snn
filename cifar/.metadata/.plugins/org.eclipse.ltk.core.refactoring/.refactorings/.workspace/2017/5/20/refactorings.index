@@ -1,0 +1,4 @@
+1494831611822	Delete resource 'tf_cifar_snn1/cifar10_multi_gpu_train.py'
+1494831613025	Delete resource 'tf_cifar/cifar10_multi_gpu_train.py'
+1494831614112	Delete resource 'tf_cifar/cifar10_input_test.py'
+1494831615878	Delete resource 'tf_cifar_snn1/cifar10_input_test.py'

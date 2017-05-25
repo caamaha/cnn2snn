@@ -6,3 +6,7 @@ lenet/.metadata/
 lenet/brian2/cache/
 lenet/brian2/output/
 lenet/tensorflow/output/model/
+cifar/dataset/
+cifar/tf_cnn/output
+cifar/tf_snn/output
+cifar/tf_test/output

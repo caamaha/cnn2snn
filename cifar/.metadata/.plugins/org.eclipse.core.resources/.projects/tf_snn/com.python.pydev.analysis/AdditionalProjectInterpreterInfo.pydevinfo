@@ -1,0 +1,62 @@
+-- VERSION_4
+-- START DISKCACHE_2
+/home/soe/workspace/ljl/cnn2snn/cifar/.metadata/.plugins/org.eclipse.core.resources/.projects/tf_snn/com.python.pydev.analysis/v2_indexcache
+cifar10|1495606412566295000|/home/soe/workspace/ljl/cnn2snn/cifar/tf_snn/cifar10.py
+cifar10_eval|1494831576000000000|/home/soe/workspace/ljl/cnn2snn/cifar/tf_snn/cifar10_eval.py
+cifar10_extract|1495604929064179000|/home/soe/workspace/ljl/cnn2snn/cifar/tf_snn/cifar10_extract.py
+cifar10_test|1495606348835255000|/home/soe/workspace/ljl/cnn2snn/cifar/tf_snn/cifar10_test.py
+cifar10_train|1495543656520448000|/home/soe/workspace/ljl/cnn2snn/cifar/tf_snn/cifar10_train.py
+cifar10_input|1495539657007745000|/home/soe/workspace/ljl/cnn2snn/cifar/tf_snn/cifar10_input.py
+-- END DISKCACHE
+-- START DICTIONARY
+9
+1=cifar10
+5=cifar10_eval
+3=cifar10_extract
+8=Cifar10DataSet.__init__
+4=cifar10_test
+6=cifar10_train
+7=Cifar10DataSet
+9=Cifar10DataSet.next_train_batch
+2=cifar10_input
+-- END DICTIONARY
+-- START TREE 1
+28
+_ac|1|_activation_summary!10@
+_ad|1|_add_loss_summaries!10@
+_ge|1|_generate_image_and_label_batch!18@
+_va|2|_variable_on_cpu!10@_variable_with_weight_decay!10@
+cif|1|Cifar10DataSet!25@
+dat|1|DATA_URL!11@
+den|1|dense_to_one_hot!26@
+dis|2|distorted_inputs!18@distorted_inputs!10@
+eva|4|eval_once!34@evaluate!34@eval_once!42@evaluate!42@
+ext|3|extract_train_data!26@extract_test_data!26@extract_data!26@
+fla|4|FLAGS!11@FLAGS!43@FLAGS!51@FLAGS!35@
+ima|3|IMAGE_SIZE!27@IMAGE_SIZE!11@IMAGE_SIZE!19@
+inf|1|inference!10@
+ini|1|INITIAL_LEARNING_RATE!11@
+inp|2|inputs!10@inputs!18@
+lab|1|LABEL_SIZE!27@
+lea|1|LEARNING_RATE_DECAY_FACTOR!11@
+los|1|loss!10@
+mai|4|main!50@main!34@main!42@main!26@
+may|1|maybe_download_and_extract!10@
+mov|1|MOVING_AVERAGE_DECAY!11@
+num|9|NUM_CHANNELS!27@NUM_EXAMPLES_PER_EPOCH_FOR_TRAIN!11@NUM_EPOCHS_PER_DECAY!11@NUM_EXAMPLES_PER_EPOCH_FOR_EVAL!11@NUM_EXAMPLES_PER_EPOCH_FOR_TRAIN!19@NUM_EXAMPLES_PER_EPOCH_FOR_EVAL!19@NUM_CLASSES!19@NUM_CLASSES!11@NUM_CLASSES!27@
+per|1|per_image_int2float!18@
+pix|1|PIXEL_DEPTH!27@
+rea|1|read_cifar10!18@
+tes|1|TEST_NUM!27@
+tow|1|TOWER_NAME!11@
+tra|4|train!10@TRAIN_NUMS!27@train!50@TRAIN_NUM!27@
+-- END TREE
+-- START TREE 2
+6
+__i|1|__init__!7&26@
+epo|1|epochs_completed!8&27@
+ind|2|index_in_epoch!8&27@index_in_epoch!9&27@
+nex|1|next_train_batch!7&26@
+tes|2|test_data!7&26@test_labels!8&27@
+tra|3|train_labels!8&27@train_labels!9&27@train_images!9&27@
+-- END TREE

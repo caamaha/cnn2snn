@@ -1,0 +1,8 @@
+INSTUPcifar10_test
+/home/soe/workspace/ljl/cnn2snn/cifar/tf_snn/cifar10_test.py
+INFOS:&&3|1|2|0&&2|3|2|0&&2|4|2|0&&2|5|2|0
+cifar10_test=2
+eval_once=3
+FLAGS=1
+main=5
+evaluate=4

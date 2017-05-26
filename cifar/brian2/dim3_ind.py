@@ -13,6 +13,13 @@ class dim3_ind:
         assert(ind1 < self.sz1)
         assert(ind0 < self.sz0)
         return ind2 * self.sz1 * self.sz0 + ind1 * self.sz0 + ind0
+    def pad_ind3(self, ind2, ind1, ind0):
+        if ind1 < 0 or ind1 >= self.sz1 or ind2 < 0 or ind2 >= self.sz2:
+            return -1
+        else:
+            assert(ind1 < self.sz1)
+            assert(ind0 < self.sz0)
+            return ind2 * self.sz1 * self.sz0 + ind1 * self.sz0 + ind0
     def ind2(self, ind1, ind0):
         return ind1 * self.sz0 + ind0
         

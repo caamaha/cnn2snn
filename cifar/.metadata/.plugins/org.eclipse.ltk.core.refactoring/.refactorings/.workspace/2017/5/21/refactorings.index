@@ -9,3 +9,5 @@
 1495690643270	Delete resource 'tf_cifar/__init__.py'
 1495690652083	Rename resource 'tf_cifar'
 1495690658349	Rename resource 'tf_cifar_snn1'
+1495787704569	Delete resource 'tf_snn/output/weights/lenet_avg_pooling.mat'
+1495792538380	Delete resource 'brian2/cifar10_snn.py'

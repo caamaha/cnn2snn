@@ -96,8 +96,6 @@ class Cifar10DataSet(object):
         self.test_labels, self.test_images = extract_test_data(
             os.path.join(data_dir, 'cifar-10-batches-bin'))
 
-        print self.train_labels.size
-
         self.train_labels = dense_to_one_hot(self.train_labels, NUM_CLASSES)
         self.test_labels = dense_to_one_hot(self.test_labels, NUM_CLASSES)
 

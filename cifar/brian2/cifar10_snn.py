@@ -23,43 +23,6 @@ MNIST_data_path = '../mnist/'
 # functions
 #------------------------------------------------------------------------------     
 
-def get_labeled_data(picklename, bTrain = True):
-    """Read input-vector (image) and target class (label, 0-9) and return
-       it as list of tuples.
-    """
-    if os.path.isfile('%s.pickle' % picklename):
-        data = pickle.load(open('%s.pickle' % picklename))
-    else:
-        # Open the images with gzip in read binary mode
-        if bTrain:
-            images = open(MNIST_data_path + 'train-images-idx3-ubyte','rb')
-            labels = open(MNIST_data_path + 'train-labels-idx1-ubyte','rb')
-        else:
-            images = open(MNIST_data_path + 't10k-images-idx3-ubyte','rb')
-            labels = open(MNIST_data_path + 't10k-labels-idx1-ubyte','rb')
-
-        # Get metadata for images
-        images.read(4)  # skip the magic_number
-        number_of_images = unpack('>I', images.read(4))[0]
-        rows = unpack('>I', images.read(4))[0]
-        cols = unpack('>I', images.read(4))[0]
-        # Get metadata for labels
-        labels.read(4)  # skip the magic_number
-        N = unpack('>I', labels.read(4))[0]
-    
-        if number_of_images != N:
-            raise Exception('number of labels did not match the number of images')
-        # Get the data
-        x = np.zeros((N, rows, cols), dtype=np.uint8)  # Initialize numpy array
-        y = np.zeros((N, 1), dtype=np.uint8)  # Initialize numpy array
-        for i in xrange(N):
-            x[i] = [[unpack('>B', images.read(1))[0] for unused_col in xrange(cols)]  for unused_row in xrange(rows) ]
-            y[i] = unpack('>B', labels.read(1))[0]
-            
-        data = {'x': x, 'y': y, 'rows': rows, 'cols': cols}
-        pickle.dump(data, open("%s.pickle" % picklename, "wb"))
-    return data
-
 def create_conv_connections(in_ind, out_ind, output_size, kernel_num, kernel_size, pad_left, kernel_weights, pre_ind, post_ind, conv_w):
     for h in range(output_size):    # output height
         for w in range(output_size):    # output width
@@ -81,7 +44,10 @@ def create_convb_connections(out_ind, output_size, kernel_num, kernel_bias, pre_
             for k in range(kernel_num):
                 pre_ind.append(k)
                 post_ind.append(out_ind.ind3(h, w, k))
-                conv_w.append(kernel_bias[k])
+                if kernel_bias[k] > 0:
+                    conv_w.append(1)
+                else:
+                    conv_w.append(-1)
     
 def create_max_pooling_inter_connections(inter_ind, output_size, kernel_num, kernel_size, kernel_stride, pad_left, pre_ind, post_ind, pool_w):
     for h in range(output_size):
@@ -125,17 +91,14 @@ def create_ip_connections(in_ind, output_n, ip_weights, pre_ind, post_ind, ip_w)
                     ip_w.append(ip_weights[i, n])
 
 #------------------------------------------------------------------------------ 
-# load MNIST
+# load CIFAR10
 #------------------------------------------------------------------------------
-# start = time.time()
-# training = get_labeled_data('cache/training')
-# end = time.time()
-# print 'time needed to load training set:', end - start
- 
-start = time.time()
-testing = get_labeled_data('cache/testing', bTrain = False)
-end = time.time()
-print 'time needed to load test set:', end - start
+cifar10_data_set = cifar10_extract.Cifar10DataSet('../dataset/')
+test_images, test_labels = cifar10_data_set.test_data()
+
+# crop
+test_images = test_images[:, 4:28, 4:28, :] * 255
+
 
 #------------------------------------------------------------------------------ 
 # set parameters and equations
@@ -219,15 +182,15 @@ ip3_ind             = dim3_ind(1, 1, ip3_output_n)
 #------------------------------------------------------------------------------
 pretrained = sio.loadmat('../tf_snn/output/weights/cifar10_weights.mat')
 conv1_w    = pretrained['conv1_w']
-conv1_b    = pretrained['conv1_b']
+conv1_b    = pretrained['conv1_b'][0, :]
 conv2_w    = pretrained['conv2_w']
-conv1_b    = pretrained['conv2_b']
+conv2_b    = pretrained['conv2_b'][0, :]
 ip1_w      = pretrained['ip1_w']
-ip1_b      = pretrained['ip1_b']
+ip1_b      = pretrained['ip1_b'][0, :]
 ip2_w      = pretrained['ip2_w']
-ip2_b      = pretrained['ip2_b']
+ip2_b      = pretrained['ip2_b'][0, :]
 ip3_w      = pretrained['ip3_w']
-ip3_b      = pretrained['ip3_b']
+ip3_b      = pretrained['ip3_b'][0, :]
 
 #------------------------------------------------------------------------------ 
 # create network population and synapses
@@ -255,7 +218,7 @@ create_convb_connections(conv1_ind, conv1_output_size, conv1_kernel_num, conv1_b
 synapses_conv1b_conv1.connect(i = pre_ind, j = post_ind)
 synapses_conv1b_conv1.w = weights;
 
-
+'''
 # pool1 intermediate group
 synapses_conv1_conv1 = Synapses(conv1_group, conv1_group, model='w:1', on_pre = 'v_post += w', method = 'linear')
 pre_ind  = []
@@ -323,16 +286,17 @@ ip_w     = []
 create_ip_connections(ip1_ind, ip2_output_n, ip2_w, pre_ind, post_ind, ip_w)
 synapses_ip1_ip2.connect(i = pre_ind, j = post_ind)
 synapses_ip1_ip2.w = ip_w;
+'''
 
 #------------------------------------------------------------------------------ 
 # create monitors
 #------------------------------------------------------------------------------
-ip2_mon = SpikeMonitor(ip2_group)
-last_ip2_counts = np.array(ip2_mon.count)
-ip2_counts_record = np.zeros((np.size(testing['x'], 0), 10))
+# ip2_mon = SpikeMonitor(ip2_group)
+# last_ip2_counts = np.array(ip2_mon.count)
+# ip2_counts_record = np.zeros((np.size(test_images, 0), 10))
 
-# conv1_mon = SpikeMonitor(conv1_group)
-# last_conv1_counts = np.array(conv1_mon.count)
+conv1_mon = SpikeMonitor(conv1_group)
+last_conv1_counts = np.array(conv1_mon.count)
 # conv1_counts_record = np.zeros((np.size(testing['x'], 0), 11520))
 
 
@@ -345,29 +309,32 @@ start = time.time()
 
 defaultclock.dt = 0.1 * ms;
 
+conv1b_group.rates = np.abs(conv1_b) * 255 * Hz
+
 # for i in range(np.size(testing['x'], 0)):
-for i in range(10):
-    input_group.rates = testing['x'][i, :, :].reshape(input_n) * Hz
+for i in range(1):
+    input_group.rates = test_images[i, :, :, :].reshape(input_n) * Hz
     conv1_group.v = 0
-    pool1_group.v = 0
-    conv2_group.v = 0
-    pool2_group.v = 0
-    ip1_group.v = 0
-    ip2_group.v = 0
-    run(400 * ms)
+#     pool1_group.v = 0
+#     conv2_group.v = 0
+#     pool2_group.v = 0
+#     ip1_group.v = 0
+#     ip2_group.v = 0
+    run(1000 * ms)
     
     
-    curr_ip2_counts = np.array(ip2_mon.count) - last_ip2_counts
-    last_ip2_counts = np.array(ip2_mon.count)
-    ip2_counts_record[i, :] = curr_ip2_counts
+#     curr_ip2_counts = np.array(ip2_mon.count) - last_ip2_counts
+#     last_ip2_counts = np.array(ip2_mon.count)
+#     ip2_counts_record[i, :] = curr_ip2_counts
     
-#     curr_conv1_counts = np.array(conv1_mon.count) - last_conv1_counts
-#     last_conv1_counts = np.array(conv1_mon.count)
+    curr_conv1_counts = np.array(conv1_mon.count) - last_conv1_counts
+    last_conv1_counts = np.array(conv1_mon.count)
 #     conv1_counts_record[i, :] = curr_conv1_counts
     
-    print curr_ip2_counts
+    print curr_conv1_counts
+    print(np.shape(curr_conv1_counts))
     
-    print '%d / %d' % (i, np.size(testing['x'], 0))
+    print '%d / %d' % (i, np.size(test_images, 0))
 
 end = time.time()
 print 'time needed to run simulation:', end - start
@@ -380,6 +347,6 @@ print 'time needed to run simulation:', end - start
 # print ip2_mon.count
 
 # save classified results
-sio.savemat('output/max_pooing_it_counts.mat', {'it_counts':ip2_counts_record})
+sio.savemat('output/snn_counts.mat', {'conv1':curr_conv1_counts})
 
 # sio.savemat('output/conv1_counts.mat', {'conv1_counts':conv1_counts_record})

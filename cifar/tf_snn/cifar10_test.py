@@ -146,14 +146,14 @@ def evaluate():
         saver = tf.train.Saver(variables_to_restore)
 
 #         eval_once(saver, summary_writer, top_k_op, summary_op)
-
+        
         # get cifar-10 dataset
         cifar10_data_set = cifar10_extract.Cifar10DataSet('../dataset/')
         test_images, test_labels = cifar10_data_set.test_data()
 
         # crop
         test_images = test_images[:, 4:28, 4:28, :]
-
+        
         with tf.Session() as sess:
             ckpt = tf.train.get_checkpoint_state(FLAGS.checkpoint_dir)
             if ckpt and ckpt.model_checkpoint_path:
@@ -173,6 +173,13 @@ def evaluate():
                                                      batch_xs, labels: batch_ys})
             avg /= (100)
             print("test accuracy %g" % avg)
+            
+            # Get conv1 output
+            conv1 = tf.get_default_graph().get_tensor_by_name('conv1/conv1:0')
+            cnn_conv1 = sess.run(conv1, feed_dict={images: test_images[0:100], labels: test_labels[0:100]})
+            cnn_conv1 = cnn_conv1.reshape((100, 24*24*64))
+            sio.savemat('output/cifar10_cnn.mat', {'conv1': cnn_conv1})
+            
 
             # Save weights for brian2
             with tf.variable_scope('conv1', reuse=True):

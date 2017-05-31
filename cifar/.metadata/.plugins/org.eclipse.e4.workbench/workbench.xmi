@@ -136,7 +136,7 @@
             <children xsi:type="basic:PartStack" xmi:id="_z2cE6kBhEee2j5-wZ0WFsA" elementId="topLeft" containerData="2600" selectedElement="_z2cE60BhEee2j5-wZ0WFsA">
               <children xsi:type="advanced:Placeholder" xmi:id="_z2cE60BhEee2j5-wZ0WFsA" elementId="org.python.pydev.navigator.view" ref="_z2cHBEBhEee2j5-wZ0WFsA"/>
             </children>
-            <children xsi:type="basic:PartSashContainer" xmi:id="_z2cE7EBhEee2j5-wZ0WFsA" containerData="7400" selectedElement="_z2cE7kBhEee2j5-wZ0WFsA">
+            <children xsi:type="basic:PartSashContainer" xmi:id="_z2cE7EBhEee2j5-wZ0WFsA" containerData="7400" selectedElement="_z2cE7UBhEee2j5-wZ0WFsA">
               <children xsi:type="advanced:Placeholder" xmi:id="_z2cE7UBhEee2j5-wZ0WFsA" elementId="org.eclipse.ui.editorss" containerData="6159" ref="_z2cGgEBhEee2j5-wZ0WFsA"/>
               <children xsi:type="basic:PartStack" xmi:id="_z2cE7kBhEee2j5-wZ0WFsA" elementId="bottom" containerData="3841" selectedElement="_z2cE8EBhEee2j5-wZ0WFsA">
                 <children xsi:type="advanced:Placeholder" xmi:id="_z2cE70BhEee2j5-wZ0WFsA" elementId="org.eclipse.search.ui.views.SearchView" toBeRendered="false" ref="_z2cHI0BhEee2j5-wZ0WFsA"/>
@@ -281,7 +281,7 @@
         <tags>active</tags>
         <tags>noFocus</tags>
         <children xsi:type="basic:Part" xmi:id="_XiFmoEHbEeenm7AnhaxZlw" elementId="org.eclipse.e4.ui.compatibility.editor" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityEditor" label="cifar10_test" iconURI="platform:/plugin/org.python.pydev/icons/python_file.gif" closeable="true">
-          <persistedState key="memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xA;&lt;editor id=&quot;org.python.pydev.editor.PythonEditor&quot; name=&quot;cifar10_test.py&quot; partName=&quot;cifar10_test&quot; title=&quot;cifar10_test&quot; tooltip=&quot;tf_snn/cifar10_test.py&quot;>&#xA;&lt;input factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; path=&quot;/tf_snn/cifar10_test.py&quot;/>&#xA;&lt;editorState selectionHorizontalPixel=&quot;0&quot; selectionLength=&quot;0&quot; selectionOffset=&quot;5697&quot; selectionTopPixel=&quot;2456&quot;/>&#xA;&lt;/editor>"/>
+          <persistedState key="memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xA;&lt;editor id=&quot;org.python.pydev.editor.PythonEditor&quot; name=&quot;cifar10_test.py&quot; partName=&quot;cifar10_test&quot; title=&quot;cifar10_test&quot; tooltip=&quot;tf_snn/cifar10_test.py&quot;>&#xA;&lt;input factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; path=&quot;/tf_snn/cifar10_test.py&quot;/>&#xA;&lt;editorState selectionHorizontalPixel=&quot;0&quot; selectionLength=&quot;0&quot; selectionOffset=&quot;6968&quot; selectionTopPixel=&quot;2872&quot;/>&#xA;&lt;/editor>"/>
           <tags>Editor</tags>
           <tags>org.python.pydev.editor.PythonEditor</tags>
           <tags>removeOnHide</tags>
@@ -293,7 +293,7 @@
           <tags>removeOnHide</tags>
         </children>
         <children xsi:type="basic:Part" xmi:id="_ixBBkEH5Eeenm7AnhaxZlw" elementId="org.eclipse.e4.ui.compatibility.editor" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityEditor" label="cifar10_snn" iconURI="platform:/plugin/org.python.pydev/icons/python_file.gif" closeable="true">
-          <persistedState key="memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xA;&lt;editor id=&quot;org.python.pydev.editor.PythonEditor&quot; name=&quot;cifar10_snn.py&quot; partName=&quot;cifar10_snn&quot; title=&quot;cifar10_snn&quot; tooltip=&quot;brian2/cifar10_snn.py&quot;>&#xA;&lt;input factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; path=&quot;/brian2/cifar10_snn.py&quot;/>&#xA;&lt;editorState selectionHorizontalPixel=&quot;0&quot; selectionLength=&quot;0&quot; selectionOffset=&quot;6070&quot; selectionTopPixel=&quot;2193&quot;/>&#xA;&lt;/editor>"/>
+          <persistedState key="memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xA;&lt;editor id=&quot;org.python.pydev.editor.PythonEditor&quot; name=&quot;cifar10_snn.py&quot; partName=&quot;cifar10_snn&quot; title=&quot;cifar10_snn&quot; tooltip=&quot;brian2/cifar10_snn.py&quot;>&#xA;&lt;input factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; path=&quot;/brian2/cifar10_snn.py&quot;/>&#xA;&lt;editorState selectionHorizontalPixel=&quot;0&quot; selectionLength=&quot;0&quot; selectionOffset=&quot;2857&quot; selectionTopPixel=&quot;828&quot;/>&#xA;&lt;/editor>"/>
           <tags>Editor</tags>
           <tags>org.python.pydev.editor.PythonEditor</tags>
           <tags>removeOnHide</tags>
@@ -301,13 +301,7 @@
           <tags>activeOnClose</tags>
         </children>
         <children xsi:type="basic:Part" xmi:id="_1zP1sEXFEeee7by-JCwrOQ" elementId="org.eclipse.e4.ui.compatibility.editor" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityEditor" label="cifar10" iconURI="platform:/plugin/org.python.pydev/icons/python_file.gif" closeable="true">
-          <persistedState key="memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xA;&lt;editor id=&quot;org.python.pydev.editor.PythonEditor&quot; name=&quot;cifar10.py&quot; partName=&quot;cifar10&quot; title=&quot;cifar10&quot; tooltip=&quot;tf_snn/cifar10.py&quot;>&#xA;&lt;input factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; path=&quot;/tf_snn/cifar10.py&quot;/>&#xA;&lt;editorState selectionHorizontalPixel=&quot;0&quot; selectionLength=&quot;0&quot; selectionOffset=&quot;7521&quot; selectionTopPixel=&quot;6217&quot;/>&#xA;&lt;/editor>"/>
-          <tags>Editor</tags>
-          <tags>org.python.pydev.editor.PythonEditor</tags>
-          <tags>removeOnHide</tags>
-        </children>
-        <children xsi:type="basic:Part" xmi:id="_Y0sCYEXKEeee7by-JCwrOQ" elementId="org.eclipse.e4.ui.compatibility.editor" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityEditor" label="cifar10_extract" iconURI="platform:/plugin/org.python.pydev/icons/python_file.gif" closeable="true">
-          <persistedState key="memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xA;&lt;editor id=&quot;org.python.pydev.editor.PythonEditor&quot; name=&quot;cifar10_extract.py&quot; partName=&quot;cifar10_extract&quot; title=&quot;cifar10_extract&quot; tooltip=&quot;brian2/cifar10_extract.py&quot;>&#xA;&lt;input factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; path=&quot;/brian2/cifar10_extract.py&quot;/>&#xA;&lt;editorState selectionHorizontalPixel=&quot;0&quot; selectionLength=&quot;0&quot; selectionOffset=&quot;1501&quot; selectionTopPixel=&quot;602&quot;/>&#xA;&lt;/editor>"/>
+          <persistedState key="memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xA;&lt;editor id=&quot;org.python.pydev.editor.PythonEditor&quot; name=&quot;cifar10.py&quot; partName=&quot;cifar10&quot; title=&quot;cifar10&quot; tooltip=&quot;tf_snn/cifar10.py&quot;>&#xA;&lt;input factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; path=&quot;/tf_snn/cifar10.py&quot;/>&#xA;&lt;editorState selectionHorizontalPixel=&quot;0&quot; selectionLength=&quot;0&quot; selectionOffset=&quot;7521&quot; selectionTopPixel=&quot;3349&quot;/>&#xA;&lt;/editor>"/>
           <tags>Editor</tags>
           <tags>org.python.pydev.editor.PythonEditor</tags>
           <tags>removeOnHide</tags>
@@ -545,7 +539,7 @@
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_z2cHpkBhEee2j5-wZ0WFsA" elementId="org.eclipse.ui.workbench.file">
         <tags>Draggable</tags>
-        <children xsi:type="menu:HandledToolItem" xmi:id="_Y8dQkEXFEeee7by-JCwrOQ" elementId="print" visible="false" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/print_edit.png" tooltip="Print" command="_z2d9u0BhEee2j5-wZ0WFsA"/>
+        <children xsi:type="menu:HandledToolItem" xmi:id="_3NsO4EXPEeeP4odwPD23Sg" elementId="print" visible="false" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/print_edit.png" tooltip="Print" command="_z2d9u0BhEee2j5-wZ0WFsA"/>
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_z2cHtUBhEee2j5-wZ0WFsA" elementId="additions" toBeRendered="false">
         <tags>toolbarSeparator</tags>
@@ -575,7 +569,7 @@
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_z2cIIUBhEee2j5-wZ0WFsA" elementId="org.eclipse.ui.workbench.navigate">
         <tags>Draggable</tags>
-        <children xsi:type="menu:HandledToolItem" xmi:id="_Y8fFwUXFEeee7by-JCwrOQ" elementId="org.eclipse.ui.window.pinEditor" visible="false" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/pin_editor.png" tooltip="Pin Editor" type="Check" command="_z2d9T0BhEee2j5-wZ0WFsA"/>
+        <children xsi:type="menu:HandledToolItem" xmi:id="_3NtdA0XPEeeP4odwPD23Sg" elementId="org.eclipse.ui.window.pinEditor" visible="false" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/pin_editor.png" tooltip="Pin Editor" type="Check" command="_z2d9T0BhEee2j5-wZ0WFsA"/>
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_z2cILEBhEee2j5-wZ0WFsA" elementId="group.editor" toBeRendered="false">
         <tags>toolbarSeparator</tags>

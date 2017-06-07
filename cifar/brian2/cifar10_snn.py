@@ -33,7 +33,7 @@ def create_conv_connections(in_ind, out_ind, output_size, kernel_num, kernel_siz
                             i = in_ind.pad_ind3(kh + h - pad_left, kw + w - pad_left, kd)
                             if i < 0:
                                 continue
-                            j = out_ind.ind3(h, w, k )
+                            j = out_ind.ind3(h, w, k)
                             pre_ind.append(i)
                             post_ind.append(j)
                             weights.append(kernel_weights[kh, kw, kd, k])
@@ -44,10 +44,11 @@ def create_convb_connections(out_ind, output_size, kernel_num, kernel_bias, pre_
             for k in range(kernel_num):
                 pre_ind.append(k)
                 post_ind.append(out_ind.ind3(h, w, k))
-                if kernel_bias[k] > 0:
-                    weights.append(1)
-                else:
-                    weights.append(-1)
+                weights.append(kernel_bias[k])
+#                 if kernel_bias[k] > 0:
+#                     weights.append(1)
+#                 else:
+#                     weights.append(-1)
 
 def create_max_pooling_input_connections(in_ind, out_ind, kernel_size, kernel_stride, pad_left, pre_ind, post_ind, weights):
     for h in range(out_ind.sz2 / kernel_size):
@@ -135,10 +136,10 @@ pool1_reset         = 'v = 0'
 conv2_thresh        = 'v >= 1'
 conv2_reset         = 'v = 0'
 
-pool2_thresh        = 'v >= 2'
+pool2_thresh        = 'v >= 1'
 pool2_reset         = 'v = 0'
 
-ip1_thresh          = 'v >= 2'
+ip1_thresh          = 'v >= 1'
 ip1_reset           = 'v = 0'
 
 ip2_thresh          = 'v >= 1'
@@ -200,10 +201,10 @@ ip3_ind             = dim3_ind(1, 1, ip3_output_n)
 # load synapses weights from pretrained model
 #------------------------------------------------------------------------------
 pretrained = sio.loadmat('../tf_snn/output/weights/cifar10_weights.mat')
-conv1_w    = pretrained['conv1_w']
-conv1_b    = pretrained['conv1_b'][0, :]
-conv2_w    = pretrained['conv2_w']
-conv2_b    = pretrained['conv2_b'][0, :]
+conv1_w    = pretrained['conv1_w'] / 8.
+conv1_b    = pretrained['conv1_b'][0, :] / 8.
+conv2_w    = pretrained['conv2_w'] / 4.
+conv2_b    = pretrained['conv2_b'][0, :] / 4.
 ip1_w      = pretrained['ip1_w']
 ip1_b      = pretrained['ip1_b'][0, :]
 ip2_w      = pretrained['ip2_w']
@@ -356,10 +357,10 @@ start = time.time()
 
 defaultclock.dt = 0.1 * ms;
 
-conv1b_group.rates = np.abs(conv1_b) * 255 * Hz
-conv2b_group.rates = np.abs(conv2_b) * 255 * Hz
-
-
+# conv1b_group.rates = np.abs(conv1_b) * 255 * Hz
+# conv2b_group.rates = np.abs(conv2_b) * 255 * Hz
+conv1b_group.rates = 255. * Hz
+conv2b_group.rates = 255. / 8. * Hz
 
 # for i in range(np.size(testing['x'], 0)):
 for i in range(1):
@@ -370,7 +371,7 @@ for i in range(1):
 #     pool2_group.v = 0
 #     ip1_group.v = 0
 #     ip2_group.v = 0
-    run(1000 * ms)
+    run(100 * ms)
     
     
 #     curr_ip2_counts = np.array(ip2_mon.count) - last_ip2_counts

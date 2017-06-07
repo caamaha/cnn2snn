@@ -8846,6 +8846,7 @@ scipy.io.harwell_boeing._fortran_format_parser|/home/soe/workspace/sw/anaconda2/
 scipy.io.harwell_boeing.hb|/home/soe/workspace/sw/anaconda2/lib/python2.7/site-packages/scipy/io/harwell_boeing/hb.py
 scipy.io.harwell_boeing.setup|/home/soe/workspace/sw/anaconda2/lib/python2.7/site-packages/scipy/io/harwell_boeing/setup.py
 scipy.io.idl|/home/soe/workspace/sw/anaconda2/lib/python2.7/site-packages/scipy/io/idl.py
+scipy.io.matlab
 scipy.io.matlab.__init__|/home/soe/workspace/sw/anaconda2/lib/python2.7/site-packages/scipy/io/matlab/__init__.py
 scipy.io.matlab.byteordercodes|/home/soe/workspace/sw/anaconda2/lib/python2.7/site-packages/scipy/io/matlab/byteordercodes.py
 scipy.io.matlab.mio|/home/soe/workspace/sw/anaconda2/lib/python2.7/site-packages/scipy/io/matlab/mio.py

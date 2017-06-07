@@ -213,7 +213,7 @@ def inference(images):
         conv1 = tf.nn.relu(pre_activation, name=scope.name)
 
     # pool1
-    pool1 = tf.nn.max_pool(conv1, ksize=[1, 2, 2, 1], strides=[1, 2, 2, 1],
+    pool1 = tf.nn.max_pool(conv1, ksize=[1, 3, 3, 1], strides=[1, 2, 2, 1],
                            padding='SAME', name='pool1')
 
     # conv2
@@ -229,7 +229,7 @@ def inference(images):
         conv2 = tf.nn.relu(pre_activation, name=scope.name)
 
     # pool2
-    pool2 = tf.nn.max_pool(conv2, ksize=[1, 2, 2, 1],
+    pool2 = tf.nn.max_pool(conv2, ksize=[1, 3, 3, 1],
                            strides=[1, 2, 2, 1], padding='SAME', name='pool2')
 
     # local3

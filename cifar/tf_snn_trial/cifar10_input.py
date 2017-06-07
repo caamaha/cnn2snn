@@ -145,6 +145,7 @@ def per_image_int2float(image):
     image = ops.convert_to_tensor(image, name='image')
     image = math_ops.cast(image, dtype=dtypes.float32)
     image = math_ops.div(image, 255.0)
+    image = math_ops.subtract(image, 0.5)
     return image
 
 

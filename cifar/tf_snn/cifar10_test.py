@@ -184,8 +184,21 @@ def evaluate():
             cnn_pool1 = sess.run(pool1, feed_dict={images: test_images[0:100], labels: test_labels[0:100]})
             cnn_pool1 = cnn_pool1.reshape((100, 12*12*64))
             
+            # Get conv2 output
+            conv2 = tf.get_default_graph().get_tensor_by_name('conv2/conv2:0')
+            cnn_conv2 = sess.run(conv2, feed_dict={images: test_images[0:100], labels: test_labels[0:100]})
+            cnn_conv2 = cnn_conv2.reshape((100, 12*12*64))
+            
+            # Get pool2 output
+            pool2 = tf.get_default_graph().get_tensor_by_name('pool2:0')
+            cnn_pool2 = sess.run(pool2, feed_dict={images: test_images[0:100], labels: test_labels[0:100]})
+            cnn_pool2 = cnn_pool2.reshape((100, 6*6*64))
+            
+            
             sio.savemat('output/cifar10_cnn.mat', {'conv1': cnn_conv1,
-                                                   'pool1': cnn_pool1})
+                                                   'pool1': cnn_pool1,
+                                                   'conv2': cnn_conv2,
+                                                   'pool2': cnn_pool2})
             
 
             # Save weights for brian2

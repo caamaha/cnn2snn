@@ -23,7 +23,7 @@ MNIST_data_path = '../mnist/'
 # functions
 #------------------------------------------------------------------------------     
 
-def create_conv_connections(in_ind, out_ind, output_size, kernel_num, kernel_size, pad_left, kernel_weights, pre_ind, post_ind, conv_w):
+def create_conv_connections(in_ind, out_ind, output_size, kernel_num, kernel_size, pad_left, kernel_weights, pre_ind, post_ind, weights):
     for h in range(output_size):    # output height
         for w in range(output_size):    # output width
             for k in range(kernel_num):     # kernel numbers
@@ -36,20 +36,34 @@ def create_conv_connections(in_ind, out_ind, output_size, kernel_num, kernel_siz
                             j = out_ind.ind3(h, w, k )
                             pre_ind.append(i)
                             post_ind.append(j)
-                            conv_w.append(kernel_weights[kh, kw, kd, k])
+                            weights.append(kernel_weights[kh, kw, kd, k])
                             
-def create_convb_connections(out_ind, output_size, kernel_num, kernel_bias, pre_ind, post_ind, conv_w):
+def create_convb_connections(out_ind, output_size, kernel_num, kernel_bias, pre_ind, post_ind, weights):
     for h in range(output_size):
         for w in range(output_size):
             for k in range(kernel_num):
                 pre_ind.append(k)
                 post_ind.append(out_ind.ind3(h, w, k))
                 if kernel_bias[k] > 0:
-                    conv_w.append(1)
+                    weights.append(1)
                 else:
-                    conv_w.append(-1)
+                    weights.append(-1)
+
+def create_max_pooling_input_connections(in_ind, out_ind, kernel_size, kernel_stride, pad_left, pre_ind, post_ind, weights):
+    for h in range(out_ind.sz2 / kernel_size):
+        for w in range(out_ind.sz1 / kernel_size):
+            for k in range(out_ind.sz0):
+                for kh in range(kernel_size):
+                    for kw in range(kernel_size):
+                        i = in_ind.pad_ind3(kh + kernel_stride*h - pad_left, kw + kernel_stride*w - pad_left, k)
+                        if i < 0:
+                            continue
+                        j = out_ind.ind3(kh + kernel_size*h, kw + kernel_size*w, k)
+                        pre_ind.append(i)
+                        post_ind.append(j)
+                        weights.append(1)
     
-def create_max_pooling_inter_connections(inter_ind, output_size, kernel_num, kernel_size, kernel_stride, pad_left, pre_ind, post_ind, pool_w):
+def create_max_pooling_inter_connections(inter_ind, output_size, kernel_num, kernel_size, pre_ind, post_ind, weights):
     for h in range(output_size):
         for w in range(output_size):
             for k in range(kernel_num):
@@ -57,30 +71,27 @@ def create_max_pooling_inter_connections(inter_ind, output_size, kernel_num, ker
                     for kw1 in range(kernel_size):
                         for kh2 in range(kernel_size):
                             for kw2 in range(kernel_size):
-                                if (kh2 != kh1) and (kw2 != kw1):
-                                    i = inter_ind.pad_ind3(kh1 + kernel_stride*h - pad_left, kw1 + kernel_stride*w - pad_left, k)
-                                    j = inter_ind.pad_ind3(kh2 + kernel_stride*h - pad_left, kw2 + kernel_stride*w - pad_left, k)
-                                    if i < 0 or j < 0:
-                                        continue
-                                    pre_ind.append(i)
-                                    post_ind.append(j)
-                                    pool_w.append(-1)
+                                if (kh2 == kh1) and (kw2 == kw1):
+                                    continue
+                                i = inter_ind.ind3(kh1 + kernel_size*h, kw1 + kernel_size*w, k)
+                                j = inter_ind.ind3(kh2 + kernel_size*h, kw2 + kernel_size*w, k)
+                                pre_ind.append(i)
+                                post_ind.append(j)
+                                weights.append(-1)
 
-def create_max_pooling_out_connections(in_ind, out_ind, output_size, kernel_num, kernel_size, kernel_stride, pad_left, pre_ind, post_ind, pool_w):
+def create_max_pooling_out_connections(in_ind, out_ind, output_size, kernel_num, kernel_size, pre_ind, post_ind, weights):
     for h in range(output_size):
         for w in range(output_size):
             for k in range(kernel_num):
                 for kh in range(kernel_size):
                     for kw in range(kernel_size):
-                        i = in_ind.pad_ind3 (kh + kernel_stride*h - pad_left, kw + kernel_stride*w - pad_left, k)
-                        if i < 0:
-                            continue
+                        i = in_ind.ind3(kh + kernel_size*h, kw + kernel_size*w, k)
                         j = out_ind.ind3(h, w, k)
                         pre_ind.append(i)
                         post_ind.append(j)
-                        pool_w.append(1)
+                        weights.append(1)
 
-def create_ip_connections(in_ind, output_n, ip_weights, pre_ind, post_ind, ip_w):
+def create_ip_connections(in_ind, output_n, ip_weights, pre_ind, post_ind, weights):
     for n in range(output_n):
         for h in range(in_ind.sz2):
             for w in range(in_ind.sz1):
@@ -88,7 +99,7 @@ def create_ip_connections(in_ind, output_n, ip_weights, pre_ind, post_ind, ip_w)
                     i = in_ind.ind3(h, w, d)
                     pre_ind.append(i)
                     post_ind.append(n)
-                    ip_w.append(ip_weights[i, n])
+                    weights.append(ip_weights[i, n])
 
 #------------------------------------------------------------------------------ 
 # load CIFAR10
@@ -149,6 +160,9 @@ pool1_pad_right     = 1 # pad right and bottom
 pool1_output_size   = (conv1_output_size - pool1_kernel_size + pool1_pad_left + pool1_pad_right) / pool1_kernel_stride + 1     # should be 12
 pool1_output_n      = pool1_output_size * pool1_output_size * pool1_kernel_num
 pool1_ind           = dim3_ind(pool1_output_size, pool1_output_size, pool1_kernel_num)
+pool1_input_size    = pool1_output_size * pool1_kernel_size
+pool1_input_n       = pool1_input_size * pool1_input_size * pool1_kernel_num
+pool1_input_ind     = dim3_ind(pool1_input_size, pool1_input_size, pool1_kernel_num)
 
 conv2_kernel_size   = 5
 conv2_kernel_num    = 64
@@ -220,29 +234,32 @@ synapses_conv1b_conv1.w = weights;
 
 
 # pool1 intermediate group
-pool1_in_group = NeuronGroup(conv1_output_n, eqs_conv1, threshold = conv1_thresh, reset = conv1_reset, method = 'euler')
+pool1_in_group = NeuronGroup(pool1_input_n, eqs_conv1, threshold = conv1_thresh, reset = conv1_reset, method = 'euler')
 synapses_conv1_pool1_in = Synapses(conv1_group, pool1_in_group, model='w:1', on_pre = 'v_post += w', method = 'linear')
-synapses_conv1_pool1_in.connect(condition = 'i==j')
-synapses_conv1_pool1_in.w[:, :] = 1
-
+pre_ind  = []
+post_ind = []
+weights   = []
+create_max_pooling_input_connections(pool1_input_ind, pool1_ind, pool1_kernel_size, pool1_kernel_stride, pool1_pad_left, pre_ind, post_ind, weights)
+synapses_conv1_pool1_in.connect(i = pre_ind, j = post_ind)
+synapses_conv1_pool1_in.w = weights;
 
 synapses_conv1_conv1 = Synapses(pool1_in_group, pool1_in_group, model='w:1', on_pre = 'v_post += w', method = 'linear')
 pre_ind  = []
 post_ind = []
-pool_w   = []
-create_max_pooling_inter_connections(conv1_ind, pool1_output_size, pool1_kernel_num, pool1_kernel_size, pool1_kernel_stride, pool1_pad_left, pre_ind, post_ind, pool_w)
+weights   = []
+create_max_pooling_inter_connections(pool1_input_ind, pool1_output_size, pool1_kernel_num, pool1_kernel_size, pre_ind, post_ind, weights)
 synapses_conv1_conv1.connect(i = pre_ind, j = post_ind)
-synapses_conv1_conv1.w = pool_w;
+synapses_conv1_conv1.w = weights;
  
 # pool1 out group
 pool1_group = NeuronGroup(pool1_output_n, eqs_pool1, threshold = pool1_thresh, reset = pool1_reset, method = 'euler')
 synapses_conv1_pool1 = Synapses(pool1_in_group, pool1_group, model='w:1', on_pre = 'v_post += w', method = 'linear')
 pre_ind  = []
 post_ind = []
-pool_w   = []
-create_max_pooling_out_connections(conv1_ind, pool1_ind, pool1_output_size, pool1_kernel_num, pool1_kernel_size, pool1_kernel_stride, pool1_pad_left, pre_ind, post_ind, pool_w)
+weights   = []
+create_max_pooling_out_connections(pool1_input_ind, pool1_ind, pool1_output_size, pool1_kernel_num, pool1_kernel_size, pre_ind, post_ind, weights)
 synapses_conv1_pool1.connect(i = pre_ind, j = post_ind)
-synapses_conv1_pool1.w = pool_w;
+synapses_conv1_pool1.w = weights;
 
 '''
 # conv2 group
@@ -343,6 +360,18 @@ for i in range(1):
 
     curr_pool1_counts = np.array(pool1_mon.count) - last_pool1_counts
     last_pool1_counts = np.array(pool1_mon.count)
+    
+    print(curr_conv1_counts[conv1_ind.ind3(0, 2, 0)])
+    print(curr_conv1_counts[conv1_ind.ind3(0, 3, 0)])
+    print(curr_conv1_counts[conv1_ind.ind3(0, 4, 0)])
+    print(curr_conv1_counts[conv1_ind.ind3(1, 2, 0)])
+    print(curr_conv1_counts[conv1_ind.ind3(1, 3, 0)])
+    print(curr_conv1_counts[conv1_ind.ind3(1, 4, 0)])
+    print(curr_conv1_counts[conv1_ind.ind3(2, 2, 0)])
+    print(curr_conv1_counts[conv1_ind.ind3(2, 3, 0)])
+    print(curr_conv1_counts[conv1_ind.ind3(2, 4, 0)])
+    
+    print(curr_pool1_counts[pool1_ind.ind3(0, 1, 0)])
     
     print '%d / %d' % (i, np.size(test_images, 0))
 

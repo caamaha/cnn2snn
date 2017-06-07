@@ -9,5 +9,6 @@ lenet/tensorflow/output/model/
 cifar/dataset/
 cifar/tf_cnn/output
 cifar/tf_snn/output
+cifar/tf_snn_trial/output
 cifar/tf_test/output
 cifar/.metadata/

@@ -15,3 +15,4 @@ subplot(121)
 plot(cnn_conv1, snn_conv1, 'rx')
 subplot(122)
 plot(cnn_pool1, snn_pool1, 'rx')
+

@@ -6912,6 +6912,7 @@ numpy.f2py.info|/home/soe/workspace/sw/anaconda2/lib/python2.7/site-packages/num
 numpy.f2py.rules|/home/soe/workspace/sw/anaconda2/lib/python2.7/site-packages/numpy/f2py/rules.py
 numpy.f2py.setup|/home/soe/workspace/sw/anaconda2/lib/python2.7/site-packages/numpy/f2py/setup.py
 numpy.f2py.use_rules|/home/soe/workspace/sw/anaconda2/lib/python2.7/site-packages/numpy/f2py/use_rules.py
+numpy.fft
 numpy.fft.__init__|/home/soe/workspace/sw/anaconda2/lib/python2.7/site-packages/numpy/fft/__init__.py
 numpy.fft.fftpack|/home/soe/workspace/sw/anaconda2/lib/python2.7/site-packages/numpy/fft/fftpack.py
 numpy.fft.fftpack_lite|/home/soe/workspace/sw/anaconda2/lib/python2.7/site-packages/numpy/fft/fftpack_lite.so
@@ -6943,6 +6944,7 @@ numpy.lib.type_check|/home/soe/workspace/sw/anaconda2/lib/python2.7/site-package
 numpy.lib.ufunclike|/home/soe/workspace/sw/anaconda2/lib/python2.7/site-packages/numpy/lib/ufunclike.py
 numpy.lib.user_array|/home/soe/workspace/sw/anaconda2/lib/python2.7/site-packages/numpy/lib/user_array.py
 numpy.lib.utils|/home/soe/workspace/sw/anaconda2/lib/python2.7/site-packages/numpy/lib/utils.py
+numpy.linalg
 numpy.linalg.__init__|/home/soe/workspace/sw/anaconda2/lib/python2.7/site-packages/numpy/linalg/__init__.py
 numpy.linalg._umath_linalg|/home/soe/workspace/sw/anaconda2/lib/python2.7/site-packages/numpy/linalg/_umath_linalg.so
 numpy.linalg.info|/home/soe/workspace/sw/anaconda2/lib/python2.7/site-packages/numpy/linalg/info.py
@@ -6972,6 +6974,7 @@ numpy.polynomial.legendre|/home/soe/workspace/sw/anaconda2/lib/python2.7/site-pa
 numpy.polynomial.polynomial|/home/soe/workspace/sw/anaconda2/lib/python2.7/site-packages/numpy/polynomial/polynomial.py
 numpy.polynomial.polyutils|/home/soe/workspace/sw/anaconda2/lib/python2.7/site-packages/numpy/polynomial/polyutils.py
 numpy.polynomial.setup|/home/soe/workspace/sw/anaconda2/lib/python2.7/site-packages/numpy/polynomial/setup.py
+numpy.random
 numpy.random.__init__|/home/soe/workspace/sw/anaconda2/lib/python2.7/site-packages/numpy/random/__init__.py
 numpy.random.info|/home/soe/workspace/sw/anaconda2/lib/python2.7/site-packages/numpy/random/info.py
 numpy.random.mtrand|/home/soe/workspace/sw/anaconda2/lib/python2.7/site-packages/numpy/random/mtrand.so
@@ -8836,6 +8839,7 @@ scipy.interpolate.ndgriddata|/home/soe/workspace/sw/anaconda2/lib/python2.7/site
 scipy.interpolate.polyint|/home/soe/workspace/sw/anaconda2/lib/python2.7/site-packages/scipy/interpolate/polyint.py
 scipy.interpolate.rbf|/home/soe/workspace/sw/anaconda2/lib/python2.7/site-packages/scipy/interpolate/rbf.py
 scipy.interpolate.setup|/home/soe/workspace/sw/anaconda2/lib/python2.7/site-packages/scipy/interpolate/setup.py
+scipy.io
 scipy.io.__init__|/home/soe/workspace/sw/anaconda2/lib/python2.7/site-packages/scipy/io/__init__.py
 scipy.io._fortran|/home/soe/workspace/sw/anaconda2/lib/python2.7/site-packages/scipy/io/_fortran.py
 scipy.io.arff.__init__|/home/soe/workspace/sw/anaconda2/lib/python2.7/site-packages/scipy/io/arff/__init__.py

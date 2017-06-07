@@ -3,7 +3,7 @@
 /home/soe/workspace/ljl/cnn2snn/cifar/.metadata/.plugins/org.eclipse.core.resources/.projects/brian2/com.python.pydev.analysis/v2_indexcache
 cifar10_extract|1496213104055899000|/home/soe/workspace/ljl/cnn2snn/cifar/brian2/cifar10_extract.py
 dim3_ind|1495796698095730000|/home/soe/workspace/ljl/cnn2snn/cifar/brian2/dim3_ind.py
-cifar10_snn|1496218611525504000|/home/soe/workspace/ljl/cnn2snn/cifar/brian2/cifar10_snn.py
+cifar10_snn|1496800131217063000|/home/soe/workspace/ljl/cnn2snn/cifar/brian2/cifar10_snn.py
 -- END DISKCACHE
 -- START DICTIONARY
 7
@@ -18,9 +18,9 @@ cifar10_snn|1496218611525504000|/home/soe/workspace/ljl/cnn2snn/cifar/brian2/cif
 -- START TREE 1
 28
 cif|2|Cifar10DataSet!9@cifar10_data_set!19@
-con|27|conv1_thresh!19@conv1_reset!19@conv2_kernel_num!19@conv1_output_size!19@conv2_kernel_size!19@conv2_pad_right!19@conv1b_group!19@conv2_w!19@conv1_kernel_size!19@conv2_pad_left!19@conv2_reset!19@conv2_output_n!19@conv1_kernel_stride!19@conv1_pad_right!19@conv2_ind!19@conv1_kernel_num!19@conv2_kernel_stride!19@conv2_b!19@conv1_w!19@conv1_group!19@conv2_output_size!19@conv1_mon!19@conv2_thresh!19@conv1_pad_left!19@conv1_ind!19@conv1_b!19@conv1_output_n!19@
-cre|5|create_ip_connections!18@create_max_pooling_out_connections!18@create_max_pooling_inter_connections!18@create_convb_connections!18@create_conv_connections!18@
-cur|2|curr_conv1_counts!19@curr_pool1_counts!19@
+con|30|conv2b_group!19@conv1_thresh!19@conv1_reset!19@conv2_kernel_num!19@conv1_output_size!19@conv2_kernel_size!19@conv2_pad_right!19@conv1b_group!19@conv2_w!19@conv1_kernel_size!19@conv2_pad_left!19@conv2_reset!19@conv2_output_n!19@conv1_kernel_stride!19@conv1_pad_right!19@conv2_group!19@conv2_ind!19@conv1_kernel_num!19@conv2_mon!19@conv2_kernel_stride!19@conv2_b!19@conv1_w!19@conv1_group!19@conv2_output_size!19@conv1_mon!19@conv2_thresh!19@conv1_pad_left!19@conv1_ind!19@conv1_b!19@conv1_output_n!19@
+cre|6|create_ip_connections!18@create_max_pooling_out_connections!18@create_max_pooling_input_connections!18@create_max_pooling_inter_connections!18@create_convb_connections!18@create_conv_connections!18@
+cur|3|curr_conv1_counts!19@curr_conv2_counts!19@curr_pool1_counts!19@
 den|1|dense_to_one_hot!10@
 dim|1|dim3_ind!25@
 end|1|end!19@
@@ -32,16 +32,16 @@ ip1|6|ip1_reset!19@ip1_b!19@ip1_ind!19@ip1_w!19@ip1_output_n!19@ip1_thresh!19@
 ip2|6|ip2_w!19@ip2_ind!19@ip2_reset!19@ip2_thresh!19@ip2_b!19@ip2_output_n!19@
 ip3|4|ip3_b!19@ip3_output_n!19@ip3_w!19@ip3_ind!19@
 lab|1|LABEL_SIZE!11@
-las|2|last_pool1_counts!19@last_conv1_counts!19@
+las|3|last_pool1_counts!19@last_conv1_counts!19@last_conv2_counts!19@
 mai|1|main!10@
 mni|1|MNIST_data_path!19@
 num|2|NUM_CHANNELS!11@NUM_CLASSES!11@
 pix|1|PIXEL_DEPTH!11@
-poo|24|pool1_pad_left!19@pool1_output_size!19@pool2_pad_right!19@pool2_reset!19@pool1_kernel_size!19@pool_w!19@pool2_pad_left!19@pool1_reset!19@pool1_kernel_num!19@pool1_group!19@pool1_pad_right!19@pool2_kernel_size!19@pool1_ind!19@pool1_in_group!19@pool1_kernel_stride!19@pool2_output_size!19@pool2_ind!19@pool1_mon!19@pool2_kernel_num!19@pool2_output_n!19@pool2_thresh!19@pool1_output_n!19@pool2_kernel_stride!19@pool1_thresh!19@
+poo|26|pool2_reset!19@pool1_kernel_size!19@pool2_pad_left!19@pool1_reset!19@pool1_input_ind!19@pool1_kernel_num!19@pool2_kernel_size!19@pool1_in_group!19@pool1_kernel_stride!19@pool2_output_n!19@pool2_kernel_stride!19@pool1_pad_left!19@pool1_output_size!19@pool2_pad_right!19@pool1_group!19@pool1_pad_right!19@pool1_ind!19@pool1_input_size!19@pool2_output_size!19@pool2_ind!19@pool1_mon!19@pool2_kernel_num!19@pool2_thresh!19@pool1_output_n!19@pool1_input_n!19@pool1_thresh!19@
 pos|1|post_ind!19@
 pre|2|pretrained!19@pre_ind!19@
 sta|1|start!19@
-syn|5|synapses_conv1_pool1!19@synapses_conv1_pool1_in!19@synapses_input_conv1!19@synapses_conv1_conv1!19@synapses_conv1b_conv1!19@
+syn|7|synapses_conv1_pool1!19@synapses_conv1_pool1_in!19@synapses_pool1_conv2!19@synapses_conv2b_conv2!19@synapses_input_conv1!19@synapses_conv1_conv1!19@synapses_conv1b_conv1!19@
 tes|2|TEST_NUM!11@test_images!19@
 tra|2|TRAIN_NUMS!11@TRAIN_NUM!11@
 wei|1|weights!19@

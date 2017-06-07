@@ -114,6 +114,11 @@ test_images = test_images[:, 4:28, 4:28, :] * 255
 #------------------------------------------------------------------------------ 
 # set parameters and equations
 #------------------------------------------------------------------------------
+eqs_input           = '''rates     : Hz
+                         dv/dt = 1 : second'''
+input_thresh        = 'v > 1/rates'
+input_reset         = 'v -= 1/rates'
+
 eqs_conv1           = 'v : 1'
 eqs_pool1           = 'v : 1'
 eqs_conv2           = 'v : 1'
@@ -211,11 +216,12 @@ ip3_b      = pretrained['ip3_b'][0, :]
 #------------------------------------------------------------------------------
 
 # input group
-input_group = PoissonGroup(input_n, 0 * Hz)
+# input_group = PoissonGroup(input_n, 0 * Hz)
+input_group  = NeuronGroup(input_n, eqs_input, threshold = input_thresh, reset = input_reset, method = 'euler')
 
 # conv1 group
 conv1_group  = NeuronGroup(conv1_output_n, eqs_conv1, threshold = conv1_thresh, reset = conv1_reset, method = 'euler')
-conv1b_group = PoissonGroup(conv1_kernel_num, 0 * Hz)
+conv1b_group = NeuronGroup(conv1_kernel_num, eqs_input, threshold = input_thresh, reset = input_reset, method = 'euler')
 synapses_input_conv1 = Synapses(input_group, conv1_group, model='w:1', on_pre = 'v_post += w', method = 'linear')
 pre_ind  = []
 post_ind = []
@@ -265,7 +271,7 @@ synapses_conv1_pool1.w = weights;
 
 # conv2 group
 conv2_group  = NeuronGroup(conv2_output_n, eqs_conv2, threshold = conv2_thresh, reset = conv2_reset, method = 'euler')
-conv2b_group = PoissonGroup(conv2_kernel_num, 0 * Hz)
+conv2b_group = NeuronGroup(conv2_kernel_num, eqs_input, threshold = input_thresh, reset = input_reset, method = 'euler')
 synapses_pool1_conv2 = Synapses(pool1_group, conv2_group, model='w:1', on_pre = 'v_post += w', method = 'linear')
 pre_ind  = []
 post_ind = []
@@ -352,6 +358,8 @@ defaultclock.dt = 0.1 * ms;
 
 conv1b_group.rates = np.abs(conv1_b) * 255 * Hz
 conv2b_group.rates = np.abs(conv2_b) * 255 * Hz
+
+
 
 # for i in range(np.size(testing['x'], 0)):
 for i in range(1):

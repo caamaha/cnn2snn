@@ -2,58 +2,66 @@
 -- START DISKCACHE_2
 /home/soe/workspace/ljl/cnn2snn/cifar/.metadata/.plugins/org.eclipse.core.resources/.projects/brian2/com.python.pydev.analysis/v2_indexcache
 cifar10_extract|1496213104055899000|/home/soe/workspace/ljl/cnn2snn/cifar/brian2/cifar10_extract.py
+drawlayer|1496893946590187000|/home/soe/workspace/ljl/cnn2snn/cifar/brian2/drawlayer.py
 dim3_ind|1495796698095730000|/home/soe/workspace/ljl/cnn2snn/cifar/brian2/dim3_ind.py
 -- END DISKCACHE
 -- START DICTIONARY
-6
-6=dim3_ind.__init__
-1=cifar10_extract
-4=Cifar10DataSet.__init__
-2=dim3_ind
-3=Cifar10DataSet
-5=Cifar10DataSet.next_train_batch
+7
+7=dim3_ind.__init__
+2=cifar10_extract
+5=Cifar10DataSet.__init__
+1=drawlayer
+3=dim3_ind
+4=Cifar10DataSet
+6=Cifar10DataSet.next_train_batch
 -- END DICTIONARY
 -- START TREE 1
-28
-cif|1|Cifar10DataSet!9@
+34
+X|1|X!11@
+Y|1|Y!11@
+cif|1|Cifar10DataSet!17@
+cnn|3|cnn_pool2!11@cnn_conv2!11@cnn_result!11@
 con|0|
 cre|0|
 cur|0|
-den|1|dense_to_one_hot!10@
-dim|1|dim3_ind!17@
+deg|1|degrees_of_freedom!11@
+den|1|dense_to_one_hot!18@
+dim|1|dim3_ind!25@
 end|0|
 eqs|0|
-ext|3|extract_train_data!10@extract_test_data!10@extract_data!10@
-ima|1|IMAGE_SIZE!11@
+ext|3|extract_train_data!18@extract_test_data!18@extract_data!18@
+ima|1|IMAGE_SIZE!19@
 inp|0|
 ip1|0|
 ip2|0|
 ip3|0|
-lab|1|LABEL_SIZE!11@
+lab|1|LABEL_SIZE!19@
 las|0|
-mai|1|main!10@
+mai|1|main!18@
 mni|0|
-num|2|NUM_CHANNELS!11@NUM_CLASSES!11@
-pix|1|PIXEL_DEPTH!11@
+num|2|NUM_CHANNELS!19@NUM_CLASSES!19@
+pix|1|PIXEL_DEPTH!19@
 poo|0|
 pos|0|
-pre|0|
+pre|2|pred_error!11@predict_y!11@
+res|1|residual_std_error!11@
+snn|3|snn_pool2!11@snn_conv2!11@snn_result!11@
 sta|0|
 syn|0|
-tes|1|TEST_NUM!11@
-tra|2|TRAIN_NUMS!11@TRAIN_NUM!11@
+tes|1|TEST_NUM!19@
+tra|2|TRAIN_NUMS!19@TRAIN_NUM!19@
 wei|0|
 -- END TREE
 -- START TREE 2
 10
-__i|2|__init__!2&18@__init__!3&10@
-epo|1|epochs_completed!4&11@
-ind|4|ind2!2&18@index_in_epoch!4&11@index_in_epoch!5&11@ind3!2&18@
-nex|1|next_train_batch!3&10@
-pad|1|pad_ind3!2&18@
-sz0|1|sz0!6&19@
-sz1|1|sz1!6&19@
-sz2|1|sz2!6&19@
-tes|2|test_data!3&10@test_labels!4&11@
-tra|3|train_labels!4&11@train_labels!5&11@train_images!5&11@
+__i|2|__init__!3&26@__init__!4&18@
+epo|1|epochs_completed!5&19@
+ind|4|ind2!3&26@index_in_epoch!5&19@index_in_epoch!6&19@ind3!3&26@
+nex|1|next_train_batch!4&18@
+pad|1|pad_ind3!3&26@
+sz0|1|sz0!7&27@
+sz1|1|sz1!7&27@
+sz2|1|sz2!7&27@
+tes|2|test_data!4&18@test_labels!5&19@
+tra|3|train_labels!5&19@train_labels!6&19@train_images!6&19@
 -- END TREE

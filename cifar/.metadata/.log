@@ -2859,3 +2859,94 @@ java.lang.StringIndexOutOfBoundsException: String index out of range: -4
 	at org.python.pydev.editor.hover.PyTextHover.getDocstringHover(PyTextHover.java:275)
 	at org.python.pydev.editor.hover.PyTextHover.getHoverInfo(PyTextHover.java:145)
 	at org.eclipse.jface.text.TextViewerHoverManager$4.run(TextViewerHoverManager.java:168)
+
+!ENTRY org.python.pydev.shared_core 4 4 2017-06-08 12:14:18.332
+!MESSAGE Unhandled: ExtSlice[dims=[Index[value=Name[id=i, ctx=Load, reserved=false]], Index[value=Name[id=n, ctx=Load, reserved=false]]]]
+!STACK 0
+java.lang.RuntimeException: Unhandled: ExtSlice[dims=[Index[value=Name[id=i, ctx=Load, reserved=false]], Index[value=Name[id=n, ctx=Load, reserved=false]]]]
+	at org.python.pydev.parser.prettyprinterv2.MakeAstValidForPrettyPrintingVisitor.unhandled_node(MakeAstValidForPrettyPrintingVisitor.java:105)
+	at org.python.pydev.parser.jython.ast.VisitorBase.visitExtSlice(VisitorBase.java:402)
+	at org.python.pydev.parser.jython.ast.ExtSlice.accept(ExtSlice.java:85)
+	at org.python.pydev.parser.prettyprinterv2.MakeAstValidForPrettyPrintingVisitor.visitSubscript(MakeAstValidForPrettyPrintingVisitor.java:933)
+	at org.python.pydev.parser.jython.ast.Subscript.accept(Subscript.java:99)
+	at org.python.pydev.parser.prettyprinterv2.MakeAstValidForPrettyPrintingVisitor.handleArguments(MakeAstValidForPrettyPrintingVisitor.java:1067)
+	at org.python.pydev.parser.prettyprinterv2.MakeAstValidForPrettyPrintingVisitor.visitCall(MakeAstValidForPrettyPrintingVisitor.java:612)
+	at org.python.pydev.parser.jython.ast.Call.accept(Call.java:137)
+	at org.python.pydev.parser.jython.ast.Expr.traverse(Expr.java:85)
+	at org.python.pydev.parser.prettyprinterv2.MakeAstValidForPrettyPrintingVisitor.handleSimpleNode(MakeAstValidForPrettyPrintingVisitor.java:887)
+	at org.python.pydev.parser.prettyprinterv2.MakeAstValidForPrettyPrintingVisitor.visitExpr(MakeAstValidForPrettyPrintingVisitor.java:1058)
+	at org.python.pydev.parser.jython.ast.Expr.accept(Expr.java:79)
+	at org.python.pydev.parser.prettyprinterv2.MakeAstValidForPrettyPrintingVisitor.visitFor(MakeAstValidForPrettyPrintingVisitor.java:457)
+	at org.python.pydev.parser.jython.ast.For.accept(For.java:120)
+	at org.python.pydev.parser.prettyprinterv2.MakeAstValidForPrettyPrintingVisitor.visitFor(MakeAstValidForPrettyPrintingVisitor.java:457)
+	at org.python.pydev.parser.jython.ast.For.accept(For.java:120)
+	at org.python.pydev.parser.prettyprinterv2.MakeAstValidForPrettyPrintingVisitor.visitFor(MakeAstValidForPrettyPrintingVisitor.java:457)
+	at org.python.pydev.parser.jython.ast.For.accept(For.java:120)
+	at org.python.pydev.parser.prettyprinterv2.MakeAstValidForPrettyPrintingVisitor.visitFor(MakeAstValidForPrettyPrintingVisitor.java:457)
+	at org.python.pydev.parser.jython.ast.For.accept(For.java:120)
+	at org.python.pydev.parser.prettyprinterv2.MakeAstValidForPrettyPrintingVisitor.visitFunctionDef(MakeAstValidForPrettyPrintingVisitor.java:862)
+	at org.python.pydev.parser.jython.ast.FunctionDef.accept(FunctionDef.java:137)
+	at org.python.pydev.parser.prettyprinterv2.MakeAstValidForPrettyPrintingVisitor.makeValid(MakeAstValidForPrettyPrintingVisitor.java:171)
+	at org.python.pydev.editor.hover.PyTextHover.getDocstringHover(PyTextHover.java:233)
+	at org.python.pydev.editor.hover.PyTextHover.getHoverInfo(PyTextHover.java:145)
+	at org.eclipse.jface.text.TextViewerHoverManager$4.run(TextViewerHoverManager.java:168)
+
+!ENTRY org.python.pydev.shared_core 4 4 2017-06-08 12:15:19.687
+!MESSAGE Unhandled: ExtSlice[dims=[Index[value=Num[n=0, type=Int, num=0]], Slice[lower=null, upper=null, step=null]]]
+!STACK 0
+java.lang.RuntimeException: Unhandled: ExtSlice[dims=[Index[value=Num[n=0, type=Int, num=0]], Slice[lower=null, upper=null, step=null]]]
+	at org.python.pydev.parser.prettyprinterv2.MakeAstValidForPrettyPrintingVisitor.unhandled_node(MakeAstValidForPrettyPrintingVisitor.java:105)
+	at org.python.pydev.parser.jython.ast.VisitorBase.visitExtSlice(VisitorBase.java:402)
+	at org.python.pydev.parser.jython.ast.ExtSlice.accept(ExtSlice.java:85)
+	at org.python.pydev.parser.prettyprinterv2.MakeAstValidForPrettyPrintingVisitor.visitSubscript(MakeAstValidForPrettyPrintingVisitor.java:933)
+	at org.python.pydev.parser.jython.ast.Subscript.accept(Subscript.java:99)
+	at org.python.pydev.parser.prettyprinterv2.MakeAstValidForPrettyPrintingVisitor.visitAssign(MakeAstValidForPrettyPrintingVisitor.java:184)
+	at org.python.pydev.parser.jython.ast.Assign.accept(Assign.java:96)
+	at org.python.pydev.parser.prettyprinterv2.MakeAstValidForPrettyPrintingVisitor.makeValid(MakeAstValidForPrettyPrintingVisitor.java:171)
+	at org.python.pydev.editor.hover.PyTextHover.getDocstringHover(PyTextHover.java:233)
+	at org.python.pydev.editor.hover.PyTextHover.getHoverInfo(PyTextHover.java:145)
+	at org.eclipse.jface.text.TextViewerHoverManager$4.run(TextViewerHoverManager.java:168)
+
+!ENTRY org.python.pydev.shared_core 4 4 2017-06-08 12:15:19.689
+!MESSAGE String index out of range: -4
+!STACK 0
+java.lang.StringIndexOutOfBoundsException: String index out of range: -4
+	at org.python.pydev.shared_core.string.FastStringBuffer.delete(FastStringBuffer.java:522)
+	at org.python.pydev.parser.prettyprinterv2.WriteStateV2.dedent(WriteStateV2.java:64)
+	at org.python.pydev.parser.prettyprinterv2.PrettyPrinterV2.writeLinePart(PrettyPrinterV2.java:242)
+	at org.python.pydev.parser.prettyprinterv2.PrettyPrinterV2.print(PrettyPrinterV2.java:164)
+	at org.python.pydev.editor.hover.PyTextHover.printAst(PyTextHover.java:322)
+	at org.python.pydev.editor.hover.PyTextHover.getDocstringHover(PyTextHover.java:275)
+	at org.python.pydev.editor.hover.PyTextHover.getHoverInfo(PyTextHover.java:145)
+	at org.eclipse.jface.text.TextViewerHoverManager$4.run(TextViewerHoverManager.java:168)
+
+!ENTRY org.python.pydev.shared_core 4 4 2017-06-08 12:18:49.060
+!MESSAGE Unhandled: ExtSlice[dims=[Index[value=Num[n=0, type=Int, num=0]], Slice[lower=null, upper=null, step=null]]]
+!STACK 0
+java.lang.RuntimeException: Unhandled: ExtSlice[dims=[Index[value=Num[n=0, type=Int, num=0]], Slice[lower=null, upper=null, step=null]]]
+	at org.python.pydev.parser.prettyprinterv2.MakeAstValidForPrettyPrintingVisitor.unhandled_node(MakeAstValidForPrettyPrintingVisitor.java:105)
+	at org.python.pydev.parser.jython.ast.VisitorBase.visitExtSlice(VisitorBase.java:402)
+	at org.python.pydev.parser.jython.ast.ExtSlice.accept(ExtSlice.java:85)
+	at org.python.pydev.parser.prettyprinterv2.MakeAstValidForPrettyPrintingVisitor.visitSubscript(MakeAstValidForPrettyPrintingVisitor.java:933)
+	at org.python.pydev.parser.jython.ast.Subscript.accept(Subscript.java:99)
+	at org.python.pydev.parser.prettyprinterv2.MakeAstValidForPrettyPrintingVisitor.visitBinOp(MakeAstValidForPrettyPrintingVisitor.java:204)
+	at org.python.pydev.parser.jython.ast.BinOp.accept(BinOp.java:99)
+	at org.python.pydev.parser.prettyprinterv2.MakeAstValidForPrettyPrintingVisitor.visitAssign(MakeAstValidForPrettyPrintingVisitor.java:184)
+	at org.python.pydev.parser.jython.ast.Assign.accept(Assign.java:96)
+	at org.python.pydev.parser.prettyprinterv2.MakeAstValidForPrettyPrintingVisitor.makeValid(MakeAstValidForPrettyPrintingVisitor.java:171)
+	at org.python.pydev.editor.hover.PyTextHover.getDocstringHover(PyTextHover.java:233)
+	at org.python.pydev.editor.hover.PyTextHover.getHoverInfo(PyTextHover.java:145)
+	at org.eclipse.jface.text.TextViewerHoverManager$4.run(TextViewerHoverManager.java:168)
+
+!ENTRY org.python.pydev.shared_core 4 4 2017-06-08 12:18:49.061
+!MESSAGE String index out of range: -4
+!STACK 0
+java.lang.StringIndexOutOfBoundsException: String index out of range: -4
+	at org.python.pydev.shared_core.string.FastStringBuffer.delete(FastStringBuffer.java:522)
+	at org.python.pydev.parser.prettyprinterv2.WriteStateV2.dedent(WriteStateV2.java:64)
+	at org.python.pydev.parser.prettyprinterv2.PrettyPrinterV2.writeLinePart(PrettyPrinterV2.java:242)
+	at org.python.pydev.parser.prettyprinterv2.PrettyPrinterV2.print(PrettyPrinterV2.java:164)
+	at org.python.pydev.editor.hover.PyTextHover.printAst(PyTextHover.java:322)
+	at org.python.pydev.editor.hover.PyTextHover.getDocstringHover(PyTextHover.java:275)
+	at org.python.pydev.editor.hover.PyTextHover.getHoverInfo(PyTextHover.java:145)
+	at org.eclipse.jface.text.TextViewerHoverManager$4.run(TextViewerHoverManager.java:168)

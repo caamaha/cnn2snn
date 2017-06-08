@@ -194,11 +194,28 @@ def evaluate():
             cnn_pool2 = sess.run(pool2, feed_dict={images: test_images[0:100], labels: test_labels[0:100]})
             cnn_pool2 = cnn_pool2.reshape((100, 6*6*64))
             
+            # Get local3 output
+            local3 = tf.get_default_graph().get_tensor_by_name('local3/local3:0')
+            cnn_local3 = sess.run(local3, feed_dict={images: test_images[0:100], labels: test_labels[0:100]})
+            cnn_local3 = cnn_local3.reshape((100, 384))
+            
+            # Get local4 output
+            local4 = tf.get_default_graph().get_tensor_by_name('local4/local4:0')
+            cnn_local4 = sess.run(local4, feed_dict={images: test_images[0:100], labels: test_labels[0:100]})
+            cnn_local4 = cnn_local4.reshape((100, 192))
+            
+            # Get softmax_linear output
+            local5 = tf.get_default_graph().get_tensor_by_name('softmax_linear/softmax_linear:0')
+            cnn_local5 = sess.run(local5, feed_dict={images: test_images[0:100], labels: test_labels[0:100]})
+            cnn_local5 = cnn_local5.reshape((100, 10))
             
             sio.savemat('output/cifar10_cnn.mat', {'conv1': cnn_conv1,
                                                    'pool1': cnn_pool1,
                                                    'conv2': cnn_conv2,
-                                                   'pool2': cnn_pool2})
+                                                   'pool2': cnn_pool2,
+                                                   'ip1'  : cnn_local3,
+                                                   'ip2'  : cnn_local4,
+                                                   'ip3'  : cnn_local5})
             
 
             # Save weights for brian2

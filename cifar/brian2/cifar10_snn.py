@@ -45,10 +45,6 @@ def create_convb_connections(out_ind, output_size, kernel_num, kernel_bias, pre_
                 pre_ind.append(k)
                 post_ind.append(out_ind.ind3(h, w, k))
                 weights.append(kernel_bias[k])
-#                 if kernel_bias[k] > 0:
-#                     weights.append(1)
-#                 else:
-#                     weights.append(-1)
 
 def create_max_pooling_input_connections(in_ind, out_ind, kernel_size, kernel_stride, pad_left, pre_ind, post_ind, weights):
     for h in range(out_ind.sz2 / kernel_size):
@@ -101,6 +97,12 @@ def create_ip_connections(in_ind, output_n, ip_weights, pre_ind, post_ind, weigh
                     pre_ind.append(i)
                     post_ind.append(n)
                     weights.append(ip_weights[i, n])
+                    
+def create_ipb_connections(ip_n, ip_bias, pre_ind, post_ind, weights):
+    for i in range(ip_n):
+        pre_ind.append(0)
+        post_ind.append(i)
+        weights.append(ip_bias[i])
 
 #------------------------------------------------------------------------------ 
 # load CIFAR10
@@ -184,9 +186,12 @@ pool2_kernel_num    = conv2_kernel_num
 pool2_kernel_stride = 2
 pool2_pad_left      = 0 # pad left and top
 pool2_pad_right     = 1 # pad right and bottom
-pool2_output_size   = conv2_output_size / 2     # should be 6
+pool2_output_size   = (conv2_output_size - pool2_kernel_size + pool2_pad_left + pool2_pad_right) / pool2_kernel_stride + 1     # should be 6
 pool2_output_n      = pool2_output_size * pool2_output_size * pool2_kernel_num
 pool2_ind           = dim3_ind(pool2_output_size, pool2_output_size, pool2_kernel_num)
+pool2_input_size    = pool2_output_size * pool2_kernel_size
+pool2_input_n       = pool2_input_size * pool2_input_size * pool2_kernel_num
+pool2_input_ind     = dim3_ind(pool2_input_size, pool2_input_size, pool2_kernel_num)
 
 ip1_output_n        = 384
 ip1_ind             = dim3_ind(1, 1, ip1_output_n)
@@ -201,12 +206,12 @@ ip3_ind             = dim3_ind(1, 1, ip3_output_n)
 # load synapses weights from pretrained model
 #------------------------------------------------------------------------------
 pretrained = sio.loadmat('../tf_snn/output/weights/cifar10_weights.mat')
-conv1_w    = pretrained['conv1_w'] / 8.
+conv1_w    = pretrained['conv1_w']       / 8.
 conv1_b    = pretrained['conv1_b'][0, :] / 8.
-conv2_w    = pretrained['conv2_w'] / 4.
+conv2_w    = pretrained['conv2_w']       / 4.
 conv2_b    = pretrained['conv2_b'][0, :] / 4.
-ip1_w      = pretrained['ip1_w']
-ip1_b      = pretrained['ip1_b'][0, :]
+ip1_w      = pretrained['ip1_w']         * 4.
+ip1_b      = pretrained['ip1_b'][0, :]   * 4.
 ip2_w      = pretrained['ip2_w']
 ip2_b      = pretrained['ip2_b'][0, :]
 ip3_w      = pretrained['ip3_w']
@@ -245,7 +250,7 @@ pool1_in_group = NeuronGroup(pool1_input_n, eqs_conv1, threshold = conv1_thresh,
 synapses_conv1_pool1_in = Synapses(conv1_group, pool1_in_group, model='w:1', on_pre = 'v_post += w', method = 'linear')
 pre_ind  = []
 post_ind = []
-weights   = []
+weights  = []
 create_max_pooling_input_connections(conv1_ind, pool1_input_ind, pool1_kernel_size, pool1_kernel_stride, pool1_pad_left, pre_ind, post_ind, weights)
 synapses_conv1_pool1_in.connect(i = pre_ind, j = post_ind)
 synapses_conv1_pool1_in.w = weights;
@@ -254,7 +259,7 @@ synapses_conv1_pool1_in.w = weights;
 synapses_conv1_conv1 = Synapses(pool1_in_group, pool1_in_group, model='w:1', on_pre = 'v_post += w', method = 'linear')
 pre_ind  = []
 post_ind = []
-weights   = []
+weights  = []
 create_max_pooling_inter_connections(pool1_input_ind, pool1_output_size, pool1_kernel_num, pool1_kernel_size, pre_ind, post_ind, weights)
 synapses_conv1_conv1.connect(i = pre_ind, j = post_ind)
 synapses_conv1_conv1.w = weights;
@@ -264,7 +269,7 @@ pool1_group = NeuronGroup(pool1_output_n, eqs_pool1, threshold = pool1_thresh, r
 synapses_conv1_pool1 = Synapses(pool1_in_group, pool1_group, model='w:1', on_pre = 'v_post += w', method = 'linear')
 pre_ind  = []
 post_ind = []
-weights   = []
+weights  = []
 create_max_pooling_out_connections(pool1_input_ind, pool1_ind, pool1_output_size, pool1_kernel_num, pool1_kernel_size, pre_ind, post_ind, weights)
 synapses_conv1_pool1.connect(i = pre_ind, j = post_ind)
 synapses_conv1_pool1.w = weights;
@@ -276,7 +281,7 @@ conv2b_group = NeuronGroup(conv2_kernel_num, eqs_input, threshold = input_thresh
 synapses_pool1_conv2 = Synapses(pool1_group, conv2_group, model='w:1', on_pre = 'v_post += w', method = 'linear')
 pre_ind  = []
 post_ind = []
-weights   = []
+weights  = []
 create_conv_connections(pool1_ind, conv2_ind, conv2_output_size, conv2_kernel_num, conv2_kernel_size, conv2_pad_left, conv2_w, pre_ind, post_ind, weights)
 synapses_pool1_conv2.connect(i = pre_ind, j = post_ind)
 synapses_pool1_conv2.w = weights;
@@ -289,36 +294,57 @@ create_convb_connections(conv2_ind, conv2_output_size, conv2_kernel_num, conv2_b
 synapses_conv2b_conv2.connect(i = pre_ind, j = post_ind)
 synapses_conv2b_conv2.w = weights;
 
-'''
-# pool2 intermediate group
-synapses_conv2_conv2 = Synapses(conv2_group, conv2_group, model='w:1', on_pre = 'v_post += w', method = 'linear')
+
+# pool2 input group
+pool2_in_group = NeuronGroup(pool2_input_n, eqs_conv2, threshold = conv2_thresh, reset = conv2_reset, method = 'euler')
+synapses_conv2_pool2_in = Synapses(conv2_group, pool2_in_group, model='w:1', on_pre = 'v_post += w', method = 'linear')
 pre_ind  = []
 post_ind = []
-pool_w   = []
-create_max_pooling_inter_connections(conv2_ind, pool2_output_size, pool2_kernel_num, pool2_kernel_size, pool2_kernel_stride, pre_ind, post_ind, pool_w)
+weights  = []
+create_max_pooling_input_connections(conv2_ind, pool2_input_ind, pool2_kernel_size, pool2_kernel_stride, pool2_pad_left, pre_ind, post_ind, weights)
+synapses_conv2_pool2_in.connect(i = pre_ind, j = post_ind)
+synapses_conv2_pool2_in.w = weights;
+
+# pool2 intermediate group
+synapses_conv2_conv2 = Synapses(pool2_in_group, pool2_in_group, model='w:1', on_pre = 'v_post += w', method = 'linear')
+pre_ind  = []
+post_ind = []
+weights  = []
+create_max_pooling_inter_connections(pool2_input_ind, pool2_output_size, pool2_kernel_num, pool2_kernel_size, pre_ind, post_ind, weights)
 synapses_conv2_conv2.connect(i = pre_ind, j = post_ind)
-synapses_conv2_conv2.w = pool_w;
+synapses_conv2_conv2.w = weights;
 
 # pool2 out group
 pool2_group = NeuronGroup(pool2_output_n, eqs_pool2, threshold = pool2_thresh, reset = pool2_reset, method = 'euler')
-synapses_conv2_pool2 = Synapses(conv2_group, pool2_group, model='w:1', on_pre = 'v_post += w', method = 'linear')
+synapses_conv2_pool2 = Synapses(pool2_in_group, pool2_group, model='w:1', on_pre = 'v_post += w', method = 'linear')
 pre_ind  = []
 post_ind = []
-pool_w   = []
-create_max_pooling_out_connections(conv2_ind, pool2_ind, pool2_output_size, pool2_kernel_num, pool2_kernel_size, pool2_kernel_stride, pre_ind, post_ind, pool_w)
+weights  = []
+create_max_pooling_out_connections(pool2_input_ind, pool2_ind, pool2_output_size, pool2_kernel_num, pool2_kernel_size, pre_ind, post_ind, weights)
 synapses_conv2_pool2.connect(i = pre_ind, j = post_ind)
-synapses_conv2_pool2.w = pool_w;
+synapses_conv2_pool2.w = weights;
+
 
 # ip1 group
 ip1_group = NeuronGroup(ip1_output_n, eqs_ip1, threshold = ip1_thresh, reset = ip1_reset, method = 'euler')
+ip1b_group = NeuronGroup(1, eqs_input, threshold = input_thresh, reset = input_reset, method = 'euler')
 synapses_pool2_ip1 = Synapses(pool2_group, ip1_group, model='w:1', on_pre = 'v_post += w', method = 'linear')
 pre_ind  = []
 post_ind = []
-ip_w     = []
-create_ip_connections(pool2_ind, ip1_output_n, ip1_w, pre_ind, post_ind, ip_w)
+weights  = []
+create_ip_connections(pool2_ind, ip1_output_n, ip1_w, pre_ind, post_ind, weights)
 synapses_pool2_ip1.connect(i = pre_ind, j = post_ind)
-synapses_pool2_ip1.w = ip_w;
+synapses_pool2_ip1.w = weights;
 
+synapses_ip1b_ip1 = Synapses(ip1b_group, ip1_group, model='w:1', on_pre = 'v_post += w', method = 'linear')
+pre_ind  = []
+post_ind = []
+weights  = []
+create_ipb_connections(ip1_output_n, ip1_b, pre_ind, post_ind, weights);
+synapses_ip1b_ip1.connect(i = pre_ind, j = post_ind)
+synapses_ip1b_ip1.w = weights;
+
+'''
 # ip2 group
 ip2_group = NeuronGroup(ip2_output_n, eqs_ip2, threshold = ip2_thresh, reset = ip2_reset, method = 'euler')
 synapses_ip1_ip2 = Synapses(ip1_group, ip2_group, model='w:1', on_pre = 'v_post += w', method = 'linear')
@@ -347,6 +373,11 @@ last_pool1_counts = np.array(pool1_mon.count)
 conv2_mon = SpikeMonitor(conv2_group)
 last_conv2_counts = np.array(conv2_mon.count)
 
+pool2_mon = SpikeMonitor(pool2_group)
+last_pool2_counts = np.array(pool2_mon.count)
+
+ip1_mon = SpikeMonitor(ip1_group)
+last_ip1_counts = np.array(ip1_mon.count)
 
 # print np.size(it_counts_record)
 
@@ -361,6 +392,7 @@ defaultclock.dt = 0.1 * ms;
 # conv2b_group.rates = np.abs(conv2_b) * 255 * Hz
 conv1b_group.rates = 255. * Hz
 conv2b_group.rates = 255. / 8. * Hz
+ip1b_group.rates   = 10 * Hz
 
 # for i in range(np.size(testing['x'], 0)):
 for i in range(1):
@@ -371,7 +403,7 @@ for i in range(1):
 #     pool2_group.v = 0
 #     ip1_group.v = 0
 #     ip2_group.v = 0
-    run(100 * ms)
+    run(1000 * ms)
     
     
 #     curr_ip2_counts = np.array(ip2_mon.count) - last_ip2_counts
@@ -387,6 +419,12 @@ for i in range(1):
     
     curr_conv2_counts = np.array(conv2_mon.count) - last_conv2_counts
     last_conv2_counts = np.array(conv2_mon.count)
+    
+    curr_pool2_counts = np.array(pool2_mon.count) - last_pool2_counts
+    last_pool2_counts = np.array(pool2_mon.count)
+    
+    curr_ip1_counts = np.array(ip1_mon.count) - last_ip1_counts
+    last_ip1_counts = np.array(ip1_mon.count)
     
     print '%d / %d' % (i, np.size(test_images, 0))
 
@@ -404,6 +442,8 @@ print 'time needed to run simulation:', end - start
 # curr_pool1_counts = []
 sio.savemat('output/snn_counts.mat', {'conv1':curr_conv1_counts,
                                       'pool1':curr_pool1_counts,
-                                      'conv2':curr_conv2_counts})
+                                      'conv2':curr_conv2_counts,
+                                      'pool2':curr_pool2_counts,
+                                      'ip1'  :curr_ip1_counts})
 
 # sio.savemat('output/conv1_counts.mat', {'conv1_counts':conv1_counts_record})

@@ -6790,6 +6790,7 @@ numpy.compat.__init__|/home/soe/workspace/sw/anaconda2/lib/python2.7/site-packag
 numpy.compat._inspect|/home/soe/workspace/sw/anaconda2/lib/python2.7/site-packages/numpy/compat/_inspect.py
 numpy.compat.py3k|/home/soe/workspace/sw/anaconda2/lib/python2.7/site-packages/numpy/compat/py3k.py
 numpy.compat.setup|/home/soe/workspace/sw/anaconda2/lib/python2.7/site-packages/numpy/compat/setup.py
+numpy.core
 numpy.core.__init__|/home/soe/workspace/sw/anaconda2/lib/python2.7/site-packages/numpy/core/__init__.py
 numpy.core._dummy|/home/soe/workspace/sw/anaconda2/lib/python2.7/site-packages/numpy/core/_dummy.so
 numpy.core._internal|/home/soe/workspace/sw/anaconda2/lib/python2.7/site-packages/numpy/core/_internal.py
@@ -6912,13 +6913,13 @@ numpy.f2py.info|/home/soe/workspace/sw/anaconda2/lib/python2.7/site-packages/num
 numpy.f2py.rules|/home/soe/workspace/sw/anaconda2/lib/python2.7/site-packages/numpy/f2py/rules.py
 numpy.f2py.setup|/home/soe/workspace/sw/anaconda2/lib/python2.7/site-packages/numpy/f2py/setup.py
 numpy.f2py.use_rules|/home/soe/workspace/sw/anaconda2/lib/python2.7/site-packages/numpy/f2py/use_rules.py
-numpy.fft
 numpy.fft.__init__|/home/soe/workspace/sw/anaconda2/lib/python2.7/site-packages/numpy/fft/__init__.py
 numpy.fft.fftpack|/home/soe/workspace/sw/anaconda2/lib/python2.7/site-packages/numpy/fft/fftpack.py
 numpy.fft.fftpack_lite|/home/soe/workspace/sw/anaconda2/lib/python2.7/site-packages/numpy/fft/fftpack_lite.so
 numpy.fft.helper|/home/soe/workspace/sw/anaconda2/lib/python2.7/site-packages/numpy/fft/helper.py
 numpy.fft.info|/home/soe/workspace/sw/anaconda2/lib/python2.7/site-packages/numpy/fft/info.py
 numpy.fft.setup|/home/soe/workspace/sw/anaconda2/lib/python2.7/site-packages/numpy/fft/setup.py
+numpy.lib
 numpy.lib.__init__|/home/soe/workspace/sw/anaconda2/lib/python2.7/site-packages/numpy/lib/__init__.py
 numpy.lib._datasource|/home/soe/workspace/sw/anaconda2/lib/python2.7/site-packages/numpy/lib/_datasource.py
 numpy.lib._iotools|/home/soe/workspace/sw/anaconda2/lib/python2.7/site-packages/numpy/lib/_iotools.py
@@ -6944,7 +6945,6 @@ numpy.lib.type_check|/home/soe/workspace/sw/anaconda2/lib/python2.7/site-package
 numpy.lib.ufunclike|/home/soe/workspace/sw/anaconda2/lib/python2.7/site-packages/numpy/lib/ufunclike.py
 numpy.lib.user_array|/home/soe/workspace/sw/anaconda2/lib/python2.7/site-packages/numpy/lib/user_array.py
 numpy.lib.utils|/home/soe/workspace/sw/anaconda2/lib/python2.7/site-packages/numpy/lib/utils.py
-numpy.linalg
 numpy.linalg.__init__|/home/soe/workspace/sw/anaconda2/lib/python2.7/site-packages/numpy/linalg/__init__.py
 numpy.linalg._umath_linalg|/home/soe/workspace/sw/anaconda2/lib/python2.7/site-packages/numpy/linalg/_umath_linalg.so
 numpy.linalg.info|/home/soe/workspace/sw/anaconda2/lib/python2.7/site-packages/numpy/linalg/info.py
@@ -6961,6 +6961,7 @@ numpy.ma.testutils|/home/soe/workspace/sw/anaconda2/lib/python2.7/site-packages/
 numpy.ma.timer_comparison|/home/soe/workspace/sw/anaconda2/lib/python2.7/site-packages/numpy/ma/timer_comparison.py
 numpy.ma.version|/home/soe/workspace/sw/anaconda2/lib/python2.7/site-packages/numpy/ma/version.py
 numpy.matlib|/home/soe/workspace/sw/anaconda2/lib/python2.7/site-packages/numpy/matlib.py
+numpy.matrixlib
 numpy.matrixlib.__init__|/home/soe/workspace/sw/anaconda2/lib/python2.7/site-packages/numpy/matrixlib/__init__.py
 numpy.matrixlib.defmatrix|/home/soe/workspace/sw/anaconda2/lib/python2.7/site-packages/numpy/matrixlib/defmatrix.py
 numpy.matrixlib.setup|/home/soe/workspace/sw/anaconda2/lib/python2.7/site-packages/numpy/matrixlib/setup.py
@@ -6974,7 +6975,6 @@ numpy.polynomial.legendre|/home/soe/workspace/sw/anaconda2/lib/python2.7/site-pa
 numpy.polynomial.polynomial|/home/soe/workspace/sw/anaconda2/lib/python2.7/site-packages/numpy/polynomial/polynomial.py
 numpy.polynomial.polyutils|/home/soe/workspace/sw/anaconda2/lib/python2.7/site-packages/numpy/polynomial/polyutils.py
 numpy.polynomial.setup|/home/soe/workspace/sw/anaconda2/lib/python2.7/site-packages/numpy/polynomial/setup.py
-numpy.random
 numpy.random.__init__|/home/soe/workspace/sw/anaconda2/lib/python2.7/site-packages/numpy/random/__init__.py
 numpy.random.info|/home/soe/workspace/sw/anaconda2/lib/python2.7/site-packages/numpy/random/info.py
 numpy.random.mtrand|/home/soe/workspace/sw/anaconda2/lib/python2.7/site-packages/numpy/random/mtrand.so
@@ -8839,7 +8839,6 @@ scipy.interpolate.ndgriddata|/home/soe/workspace/sw/anaconda2/lib/python2.7/site
 scipy.interpolate.polyint|/home/soe/workspace/sw/anaconda2/lib/python2.7/site-packages/scipy/interpolate/polyint.py
 scipy.interpolate.rbf|/home/soe/workspace/sw/anaconda2/lib/python2.7/site-packages/scipy/interpolate/rbf.py
 scipy.interpolate.setup|/home/soe/workspace/sw/anaconda2/lib/python2.7/site-packages/scipy/interpolate/setup.py
-scipy.io
 scipy.io.__init__|/home/soe/workspace/sw/anaconda2/lib/python2.7/site-packages/scipy/io/__init__.py
 scipy.io._fortran|/home/soe/workspace/sw/anaconda2/lib/python2.7/site-packages/scipy/io/_fortran.py
 scipy.io.arff.__init__|/home/soe/workspace/sw/anaconda2/lib/python2.7/site-packages/scipy/io/arff/__init__.py
@@ -8850,7 +8849,6 @@ scipy.io.harwell_boeing._fortran_format_parser|/home/soe/workspace/sw/anaconda2/
 scipy.io.harwell_boeing.hb|/home/soe/workspace/sw/anaconda2/lib/python2.7/site-packages/scipy/io/harwell_boeing/hb.py
 scipy.io.harwell_boeing.setup|/home/soe/workspace/sw/anaconda2/lib/python2.7/site-packages/scipy/io/harwell_boeing/setup.py
 scipy.io.idl|/home/soe/workspace/sw/anaconda2/lib/python2.7/site-packages/scipy/io/idl.py
-scipy.io.matlab
 scipy.io.matlab.__init__|/home/soe/workspace/sw/anaconda2/lib/python2.7/site-packages/scipy/io/matlab/__init__.py
 scipy.io.matlab.byteordercodes|/home/soe/workspace/sw/anaconda2/lib/python2.7/site-packages/scipy/io/matlab/byteordercodes.py
 scipy.io.matlab.mio|/home/soe/workspace/sw/anaconda2/lib/python2.7/site-packages/scipy/io/matlab/mio.py
@@ -8928,7 +8926,6 @@ scipy.odr.add_newdocs|/home/soe/workspace/sw/anaconda2/lib/python2.7/site-packag
 scipy.odr.models|/home/soe/workspace/sw/anaconda2/lib/python2.7/site-packages/scipy/odr/models.py
 scipy.odr.odrpack|/home/soe/workspace/sw/anaconda2/lib/python2.7/site-packages/scipy/odr/odrpack.py
 scipy.odr.setup|/home/soe/workspace/sw/anaconda2/lib/python2.7/site-packages/scipy/odr/setup.py
-scipy.optimize
 scipy.optimize.__init__|/home/soe/workspace/sw/anaconda2/lib/python2.7/site-packages/scipy/optimize/__init__.py
 scipy.optimize._basinhopping|/home/soe/workspace/sw/anaconda2/lib/python2.7/site-packages/scipy/optimize/_basinhopping.py
 scipy.optimize._cobyla|/home/soe/workspace/sw/anaconda2/lib/python2.7/site-packages/scipy/optimize/_cobyla.so
@@ -9087,7 +9084,6 @@ scipy.special.orthogonal|/home/soe/workspace/sw/anaconda2/lib/python2.7/site-pac
 scipy.special.setup|/home/soe/workspace/sw/anaconda2/lib/python2.7/site-packages/scipy/special/setup.py
 scipy.special.specfun|/home/soe/workspace/sw/anaconda2/lib/python2.7/site-packages/scipy/special/specfun.so
 scipy.special.spfun_stats|/home/soe/workspace/sw/anaconda2/lib/python2.7/site-packages/scipy/special/spfun_stats.py
-scipy.stats
 scipy.stats.__init__|/home/soe/workspace/sw/anaconda2/lib/python2.7/site-packages/scipy/stats/__init__.py
 scipy.stats._binned_statistic|/home/soe/workspace/sw/anaconda2/lib/python2.7/site-packages/scipy/stats/_binned_statistic.py
 scipy.stats._constants|/home/soe/workspace/sw/anaconda2/lib/python2.7/site-packages/scipy/stats/_constants.py

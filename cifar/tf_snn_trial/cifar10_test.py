@@ -152,7 +152,7 @@ def evaluate():
         test_images, test_labels = cifar10_data_set.test_data()
 
         # crop
-        test_images = test_images[:, 4:28, 4:28, :]
+        test_images = test_images[:, 4:28, 4:28, :] - 0.5
         
         with tf.Session() as sess:
             ckpt = tf.train.get_checkpoint_state(FLAGS.checkpoint_dir)

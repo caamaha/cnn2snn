@@ -79,12 +79,13 @@ def create_max_pooling_inter_connections(inter_ind, output_size, kernel_num, ker
                     for kw1 in range(kernel_size):
                         for kh2 in range(kernel_size):
                             for kw2 in range(kernel_size):
-                                if (kh2 != kh1) and (kw2 != kw1):
-                                    i = inter_ind.ind3(kh1 + kernel_stride*h, kw1 + kernel_stride*w, k)
-                                    j = inter_ind.ind3(kh2 + kernel_stride*h, kw2 + kernel_stride*w, k)
-                                    pre_ind.append(i)
-                                    post_ind.append(j)
-                                    pool_w.append(-1)
+                                if (kh2 == kh1) and (kw2 == kw1):
+                                    continue
+                                i = inter_ind.ind3(kh1 + kernel_stride*h, kw1 + kernel_stride*w, k)
+                                j = inter_ind.ind3(kh2 + kernel_stride*h, kw2 + kernel_stride*w, k)
+                                pre_ind.append(i)
+                                post_ind.append(j)
+                                pool_w.append(-1)
 
 def create_max_pooling_out_connections(in_ind, out_ind, output_size, kernel_num, kernel_size, kernel_stride, pre_ind, post_ind, pool_w):
     for h in range(output_size):
@@ -140,17 +141,14 @@ pool1_reset         = 'v = 0'
 conv2_thresh        = 'v >= 1'
 conv2_reset         = 'v = 0'
 
-pool2_thresh        = 'v >= 2'
+pool2_thresh        = 'v >= 1'
 pool2_reset         = 'v = 0'
 
-ip1_thresh          = 'v >= 2'
+ip1_thresh          = 'v >= 1'
 ip1_reset           = 'v = 0'
 
 ip2_thresh          = 'v >= 1'
 ip2_reset           = 'v = 0'
-
-def under(v, w):
-    return max(0, v+w)
 
 input_size          = 28
 input_n             = input_size * input_size
@@ -194,8 +192,8 @@ ip2_ind             = dim3_ind(1, 1, ip2_output_n)
 #------------------------------------------------------------------------------
 pretrained_lenet = sio.loadmat('../tensorflow/output/weights/lenet_max_pooling.mat')
 conv1_weights    = pretrained_lenet['conv1_weights']
-conv2_weights    = pretrained_lenet['conv2_weights']
-ip1_weights      = pretrained_lenet['ip1_weights']
+conv2_weights    = pretrained_lenet['conv2_weights'] * 0.5
+ip1_weights      = pretrained_lenet['ip1_weights']   * 0.5
 ip2_weights      = pretrained_lenet['ip2_weights']
 
 #------------------------------------------------------------------------------ 
@@ -283,53 +281,70 @@ create_ip_connections(ip1_ind, ip2_output_n, ip2_weights, pre_ind, post_ind, ip_
 synapses_ip1_ip2.connect(i = pre_ind, j = post_ind)
 synapses_ip1_ip2.w = ip_w;
 
-#------------------------------------------------------------------------------ 
-# create monitors
-#------------------------------------------------------------------------------
-ip2_mon = SpikeMonitor(ip2_group)
-last_ip2_counts = np.array(ip2_mon.count)
-ip2_counts_record = np.zeros((np.size(testing['x'], 0), 10))
 
-# conv1_mon = SpikeMonitor(conv1_group)
-# last_conv1_counts = np.array(conv1_mon.count)
-# conv1_counts_record = np.zeros((np.size(testing['x'], 0), 11520))
-
-
-# print np.size(it_counts_record)
-
-#------------------------------------------------------------------------------ 
-# run the simulation and set inputs
-#------------------------------------------------------------------------------
-start = time.time()
-
-defaultclock.dt = 0.1 * ms;
-
-# for i in range(np.size(testing['x'], 0)):
-for i in range(10):
-    input_group.rates = testing['x'][i, :, :].reshape(input_n) * Hz
-    conv1_group.v = 0
-    pool1_group.v = 0
-    conv2_group.v = 0
-    pool2_group.v = 0
-    ip1_group.v = 0
-    ip2_group.v = 0
-    run(400 * ms)
-    
-    
-    curr_ip2_counts = np.array(ip2_mon.count) - last_ip2_counts
+def app_run(test_start = 0, test_end = -1):
+    #------------------------------------------------------------------------------ 
+    # create monitors
+    #------------------------------------------------------------------------------
+    ip2_mon = SpikeMonitor(ip2_group)
     last_ip2_counts = np.array(ip2_mon.count)
-    ip2_counts_record[i, :] = curr_ip2_counts
+    # ip2_counts_record = np.zeros((np.size(testing['x'], 0), 10))
     
-#     curr_conv1_counts = np.array(conv1_mon.count) - last_conv1_counts
-#     last_conv1_counts = np.array(conv1_mon.count)
-#     conv1_counts_record[i, :] = curr_conv1_counts
+    # conv1_mon = SpikeMonitor(conv1_group)
+    # last_conv1_counts = np.array(conv1_mon.count)
+    # conv1_counts_record = np.zeros((np.size(testing['x'], 0), 11520))
     
-    print curr_ip2_counts
     
-    print '%d / %d' % (i, np.size(testing['x'], 0))
-
-end = time.time()
-print 'time needed to run simulation:', end - start
+    #------------------------------------------------------------------------------ 
+    # run the simulation and set inputs
+    #------------------------------------------------------------------------------
+    start = time.time()
+    
+    defaultclock.dt = 0.1 * ms;
+    
+    if test_end < test_start:
+        test_num = np.size(testing['x'], 0)
+        test_start = 0
+        test_end = test_num
+        test_range = range(test_num)
+    else:
+        test_num = test_end - test_start
+        test_range = range(test_start, test_end)
+    
+    test_count = 0.0
+    test_right = 0.0
+    
+    for i in test_range:
+        input_group.rates = testing['x'][i, :, :].reshape(input_n) * Hz
+        conv1_group.v = 0
+        pool1_group.v = 0
+        conv2_group.v = 0
+        pool2_group.v = 0
+        ip1_group.v = 0
+        ip2_group.v = 0
+        run(200 * ms)
+        
+        
+        curr_ip2_counts = np.array(ip2_mon.count) - last_ip2_counts
+        last_ip2_counts = np.array(ip2_mon.count)
+    #     ip2_counts_record[i, :] = curr_ip2_counts
+        
+    #     curr_conv1_counts = np.array(conv1_mon.count) - last_conv1_counts
+    #     last_conv1_counts = np.array(conv1_mon.count)
+    #     conv1_counts_record[i, :] = curr_conv1_counts
+    
+        pred = np.argmax(curr_ip2_counts)
+        label = testing['y'][i]
+        if pred == label:
+            test_right += 1
+        test_count += 1
+        
+    #     print curr_ip2_counts
+        
+        print('%d / [%d, %d]:%f %d %d' % (i, test_start, test_end-1, test_right / test_count, test_right, test_count))
+    
+    end = time.time()
+    print 'time needed to run simulation:', end - start
 
 
 
@@ -339,6 +354,13 @@ print 'time needed to run simulation:', end - start
 # print ip2_mon.count
 
 # save classified results
-sio.savemat('output/max_pooing_it_counts.mat', {'it_counts':ip2_counts_record})
+# sio.savemat('output/max_pooing_it_counts.mat', {'it_counts':ip2_counts_record})
 
 # sio.savemat('output/conv1_counts.mat', {'conv1_counts':conv1_counts_record})
+
+if __name__ == "__main__":
+    if len(sys.argv) == 3:
+        app_run(int(sys.argv[1]), int(sys.argv[2]))
+    else:
+        app_run()
+    

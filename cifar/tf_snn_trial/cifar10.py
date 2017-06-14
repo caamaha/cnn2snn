@@ -205,7 +205,7 @@ def inference(images):
         kernel = _variable_with_weight_decay('weights',
                                              shape=[5, 5, 3, 64],
                                              stddev=5e-2,
-                                             wd=0.0)
+                                             wd=0.001)
         conv = tf.nn.conv2d(images, kernel, [1, 1, 1, 1], padding='SAME')
         biases = _variable_on_cpu('biases', [64], tf.constant_initializer(0.0))
         pre_activation = tf.nn.bias_add(conv, biases)
@@ -221,7 +221,7 @@ def inference(images):
         kernel = _variable_with_weight_decay('weights',
                                              shape=[5, 5, 64, 64],
                                              stddev=5e-2,
-                                             wd=0.0)
+                                             wd=0.001)
         conv = tf.nn.conv2d(pool1, kernel, [1, 1, 1, 1], padding='SAME')
         biases = _variable_on_cpu('biases', [64], tf.constant_initializer(0.0))
         pre_activation = tf.nn.bias_add(conv, biases)

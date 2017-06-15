@@ -40,6 +40,7 @@ from datetime import datetime
 import time
 
 import tensorflow as tf
+from tensorflow.python.framework import dtypes
 
 import cifar10
 import cifar10_eval
@@ -56,12 +57,22 @@ tf.app.flags.DEFINE_boolean('log_device_placement', False,
                             """Whether to log device placement.""")
 tf.app.flags.DEFINE_integer('log_frequency', 10,
                             """How often to log results to the console.""")
+tf.app.flags.DEFINE_string('pretrained_dir', '../tf_snn/output/cifar10_train',
+                           """Directory where to restored from""")
 
+train_restored = True;
 
 def train():
     """Train CIFAR-10 for a number of steps."""
     with tf.Graph().as_default():
-        global_step = tf.contrib.framework.get_or_create_global_step()
+        ckpt = tf.train.get_checkpoint_state(FLAGS.pretrained_dir)
+        global_step_init = -1
+        if train_restored and ckpt and ckpt.model_checkpoint_path:
+            global_step_init = int(ckpt.model_checkpoint_path.split('/')[-1].split('-')[-1])
+            global_step = tf.Variable(global_step_init, name='global_step', dtype=dtypes.int64, trainable=False)
+            print(global_step)
+        else:
+            global_step = tf.contrib.framework.get_or_create_global_step()
 
         # Get images and labels for CIFAR-10.
         images, labels = cifar10.distorted_inputs()
@@ -76,6 +87,7 @@ def train():
         # Build a Graph that trains the model with one batch of examples and
         # updates the model parameters.
         train_op = cifar10.train(loss, global_step)
+        
 
         class _LoggerHook(tf.train.SessionRunHook):
             """Logs loss and runtime."""
@@ -105,7 +117,7 @@ def train():
                                          examples_per_sec, sec_per_batch))
                 if self._step % 1000 == 0:
                     cifar10_eval.evaluate()
-
+        saver = tf.train.Saver()
         with tf.train.MonitoredTrainingSession(
             checkpoint_dir=FLAGS.train_dir,
             save_checkpoint_secs=2,
@@ -114,14 +126,21 @@ def train():
                    _LoggerHook()],
             config=tf.ConfigProto(
                 log_device_placement=FLAGS.log_device_placement)) as mon_sess:
+            
+            
+            if train_restored and ckpt and ckpt.model_checkpoint_path:
+                saver.restore(mon_sess, ckpt.model_checkpoint_path)
+            
             while not mon_sess.should_stop():
                 mon_sess.run(train_op)
 
 
 def main(argv=None):  # pylint: disable=unused-argument
     cifar10.maybe_download_and_extract()
+    
     if tf.gfile.Exists(FLAGS.train_dir):
-        tf.gfile.DeleteRecursively(FLAGS.train_dir)
+        if train_restored == False:
+            tf.gfile.DeleteRecursively(FLAGS.train_dir)
     tf.gfile.MakeDirs(FLAGS.train_dir)
     train()
     cifar10_eval.evaluate()

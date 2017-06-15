@@ -9,7 +9,7 @@ import scipy.io as sio
 
 # Parameter
 batch_size = 64
-isTrain = False
+isTrain = True
 
 #初始化单个卷积核上的参数
 def weight_variable(shape):
@@ -102,8 +102,9 @@ with tf.Session() as sess:
         for i in xrange(20000):
             #获取训练数据
             xs, batch_ys = mnist_data_set.next_train_batch(batch_size)
+            # 给输入数据增加噪声
             batch_xs = input_poisson(xs, 50.0)
-            #print batch_xs.shape[0]
+#             batch_xs = xs + 0.5
             #每迭代100个 batch，对当前训练数据进行测试，输出当前预测准确率
             if i%100 == 0:
                 train_accuracy = accuracy.eval(feed_dict={x:batch_xs, y_: batch_ys})

@@ -125,6 +125,11 @@ print 'time needed to load test set:', end - start
 #------------------------------------------------------------------------------ 
 # set parameters and equations
 #------------------------------------------------------------------------------
+eqs_input           = '''rates     : Hz
+                         dv/dt = 1 : second'''
+input_thresh        = 'v > 1/rates'
+input_reset         = 'v -= 1/rates'
+
 eqs_conv1           = 'v : 1'
 eqs_pool1           = 'v : 1'
 eqs_conv2           = 'v : 1'
@@ -201,7 +206,7 @@ ip2_weights      = pretrained_lenet['ip2_weights']
 #------------------------------------------------------------------------------
 
 # input group
-input_group = PoissonGroup(input_n, 0 * Hz)
+input_group = NeuronGroup(input_n, eqs_input, threshold = input_thresh, reset = input_reset, method = 'euler')
 
 # conv1 group
 conv1_group  = NeuronGroup(conv1_output_n * conv1_kernel_num, eqs_conv1, threshold = conv1_thresh, reset = conv1_reset, method = 'euler')
@@ -316,6 +321,7 @@ def app_run(test_start = 0, test_end = -1):
     
     for i in test_range:
         input_group.rates = testing['x'][i, :, :].reshape(input_n) * Hz
+        input_group.v = 0
         conv1_group.v = 0
         pool1_group.v = 0
         conv2_group.v = 0

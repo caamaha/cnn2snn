@@ -209,8 +209,8 @@ def inference(images):
         conv = tf.nn.conv2d(images, kernel, [1, 1, 1, 1], padding='SAME')
         biases = _variable_on_cpu('biases', [64], tf.constant_initializer(0.0))
         pre_activation = tf.nn.bias_add(conv, biases)
-#         pre_activation = conv
-        conv1 = tf.nn.relu(pre_activation, name=scope.name)
+        rand1 = tf.multiply(tf.random_normal(conv.shape, 0, 0.01), tf.reduce_max(tf.abs(pre_activation)))
+        conv1 = tf.nn.relu(tf.add(pre_activation, rand1), name=scope.name)
 
     # pool1
     pool1 = tf.nn.max_pool(conv1, ksize=[1, 3, 3, 1], strides=[1, 2, 2, 1],
@@ -225,8 +225,9 @@ def inference(images):
         conv = tf.nn.conv2d(pool1, kernel, [1, 1, 1, 1], padding='SAME')
         biases = _variable_on_cpu('biases', [64], tf.constant_initializer(0.0))
         pre_activation = tf.nn.bias_add(conv, biases)
+        rand2 = tf.multiply(tf.random_normal(conv.shape, 0, 0.01), tf.reduce_max(tf.abs(pre_activation)))
 #         pre_activation = conv
-        conv2 = tf.nn.relu(pre_activation, name=scope.name)
+        conv2 = tf.nn.relu(tf.add(pre_activation, rand2), name=scope.name)
 
     # pool2
     pool2 = tf.nn.max_pool(conv2, ksize=[1, 3, 3, 1],
@@ -242,8 +243,9 @@ def inference(images):
                                               stddev=0.04, wd=0.004)
         biases = _variable_on_cpu(
             'biases', [384], tf.constant_initializer(0.0))
-        local3 = tf.nn.relu(
-            tf.matmul(reshape, weights) + biases, name=scope.name)
+        pre_activation = tf.matmul(reshape, weights) + biases
+        rand3 = tf.multiply(tf.random_normal(biases.shape, 0, 0.02), tf.reduce_max(tf.abs(pre_activation)))
+        local3 = tf.nn.relu(tf.add(pre_activation, rand3), name=scope.name)
 
     # local4
     with tf.variable_scope('local4') as scope:
@@ -251,8 +253,9 @@ def inference(images):
                                               stddev=0.04, wd=0.004)
         biases = _variable_on_cpu(
             'biases', [192], tf.constant_initializer(0.0))
-        local4 = tf.nn.relu(
-            tf.matmul(local3, weights) + biases, name=scope.name)
+        pre_activation = tf.matmul(local3, weights) + biases
+        rand4 = tf.multiply(tf.random_normal(biases.shape, 0, 0.02), tf.reduce_max(tf.abs(pre_activation)))
+        local4 = tf.nn.relu(tf.add(pre_activation, rand4), name=scope.name)
 
     # linear layer(WX + b),
     # We don't apply softmax here because
@@ -263,8 +266,7 @@ def inference(images):
                                               stddev=1 / 192.0, wd=0.0)
         biases = _variable_on_cpu('biases', [NUM_CLASSES],
                                   tf.constant_initializer(0.0))
-        softmax_linear = tf.add(
-            tf.matmul(local4, weights), biases, name=scope.name)
+        softmax_linear = tf.add(tf.matmul(local4, weights), biases, name=scope.name)
 
     return softmax_linear
 

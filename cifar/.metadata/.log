@@ -1733,3 +1733,197 @@ java.lang.NullPointerException
 	at org.eclipse.core.internal.jobs.JobManager.endJob(JobManager.java:701)
 	at org.eclipse.core.internal.jobs.WorkerPool.endJob(WorkerPool.java:105)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:72)
+!SESSION 2017-06-15 13:21:29.277 -----------------------------------------------
+eclipse.buildId=4.5.2.M20160212-1500
+java.version=1.8.0_111
+java.vendor=Oracle Corporation
+BootLoader constants: OS=linux, ARCH=x86_64, WS=gtk, NL=en_US
+Framework arguments:  -product org.eclipse.epp.package.cpp.product
+Command-line arguments:  -data /home/soe/workspace/ljl/cnn2snn/cifar -os linux -ws gtk -arch x86_64 -product org.eclipse.epp.package.cpp.product
+
+!ENTRY org.python.pydev.shared_core 4 4 2017-06-15 16:18:28.993
+!MESSAGE Unhandled: ExtSlice[dims=[Slice[lower=null, upper=null, step=null], Slice[lower=Num[n=4, type=Int, num=4], upper=Num[n=28, type=Int, num=28], step=null], Slice[lower=Num[n=4, type=Int, num=4], upper=Num[n=28, type=Int, num=28], step=null], Slice[lower=null, upper=null, step=null]]]
+!STACK 0
+java.lang.RuntimeException: Unhandled: ExtSlice[dims=[Slice[lower=null, upper=null, step=null], Slice[lower=Num[n=4, type=Int, num=4], upper=Num[n=28, type=Int, num=28], step=null], Slice[lower=Num[n=4, type=Int, num=4], upper=Num[n=28, type=Int, num=28], step=null], Slice[lower=null, upper=null, step=null]]]
+	at org.python.pydev.parser.prettyprinterv2.MakeAstValidForPrettyPrintingVisitor.unhandled_node(MakeAstValidForPrettyPrintingVisitor.java:105)
+	at org.python.pydev.parser.jython.ast.VisitorBase.visitExtSlice(VisitorBase.java:402)
+	at org.python.pydev.parser.jython.ast.ExtSlice.accept(ExtSlice.java:85)
+	at org.python.pydev.parser.prettyprinterv2.MakeAstValidForPrettyPrintingVisitor.visitSubscript(MakeAstValidForPrettyPrintingVisitor.java:933)
+	at org.python.pydev.parser.jython.ast.Subscript.accept(Subscript.java:99)
+	at org.python.pydev.parser.prettyprinterv2.MakeAstValidForPrettyPrintingVisitor.visitBinOp(MakeAstValidForPrettyPrintingVisitor.java:204)
+	at org.python.pydev.parser.jython.ast.BinOp.accept(BinOp.java:99)
+	at org.python.pydev.parser.prettyprinterv2.MakeAstValidForPrettyPrintingVisitor.visitAssign(MakeAstValidForPrettyPrintingVisitor.java:184)
+	at org.python.pydev.parser.jython.ast.Assign.accept(Assign.java:96)
+	at org.python.pydev.parser.prettyprinterv2.MakeAstValidForPrettyPrintingVisitor.makeValid(MakeAstValidForPrettyPrintingVisitor.java:171)
+	at org.python.pydev.editor.hover.PyTextHover.getDocstringHover(PyTextHover.java:233)
+	at org.python.pydev.editor.hover.PyTextHover.getHoverInfo(PyTextHover.java:145)
+	at org.eclipse.jface.text.TextViewerHoverManager$4.run(TextViewerHoverManager.java:168)
+
+!ENTRY org.python.pydev.shared_core 4 4 2017-06-15 16:18:29.016
+!MESSAGE String index out of range: -4
+!STACK 0
+java.lang.StringIndexOutOfBoundsException: String index out of range: -4
+	at org.python.pydev.shared_core.string.FastStringBuffer.delete(FastStringBuffer.java:522)
+	at org.python.pydev.parser.prettyprinterv2.WriteStateV2.dedent(WriteStateV2.java:64)
+	at org.python.pydev.parser.prettyprinterv2.PrettyPrinterV2.writeLinePart(PrettyPrinterV2.java:242)
+	at org.python.pydev.parser.prettyprinterv2.PrettyPrinterV2.print(PrettyPrinterV2.java:164)
+	at org.python.pydev.editor.hover.PyTextHover.printAst(PyTextHover.java:322)
+	at org.python.pydev.editor.hover.PyTextHover.getDocstringHover(PyTextHover.java:275)
+	at org.python.pydev.editor.hover.PyTextHover.getHoverInfo(PyTextHover.java:145)
+	at org.eclipse.jface.text.TextViewerHoverManager$4.run(TextViewerHoverManager.java:168)
+
+!ENTRY org.python.pydev.shared_core 4 4 2017-06-15 16:18:55.348
+!MESSAGE Unhandled: ExtSlice[dims=[Index[value=Name[id=i, ctx=Load, reserved=false]], Slice[lower=null, upper=null, step=null], Slice[lower=null, upper=null, step=null], Slice[lower=null, upper=null, step=null]]]
+!STACK 0
+java.lang.RuntimeException: Unhandled: ExtSlice[dims=[Index[value=Name[id=i, ctx=Load, reserved=false]], Slice[lower=null, upper=null, step=null], Slice[lower=null, upper=null, step=null], Slice[lower=null, upper=null, step=null]]]
+	at org.python.pydev.parser.prettyprinterv2.MakeAstValidForPrettyPrintingVisitor.unhandled_node(MakeAstValidForPrettyPrintingVisitor.java:105)
+	at org.python.pydev.parser.jython.ast.VisitorBase.visitExtSlice(VisitorBase.java:402)
+	at org.python.pydev.parser.jython.ast.ExtSlice.accept(ExtSlice.java:85)
+	at org.python.pydev.parser.prettyprinterv2.MakeAstValidForPrettyPrintingVisitor.visitSubscript(MakeAstValidForPrettyPrintingVisitor.java:933)
+	at org.python.pydev.parser.jython.ast.Subscript.accept(Subscript.java:99)
+	at org.python.pydev.parser.prettyprinterv2.MakeAstValidForPrettyPrintingVisitor.visitAttribute(MakeAstValidForPrettyPrintingVisitor.java:600)
+	at org.python.pydev.parser.jython.ast.Attribute.accept(Attribute.java:99)
+	at org.python.pydev.parser.prettyprinterv2.MakeAstValidForPrettyPrintingVisitor.visitCall(MakeAstValidForPrettyPrintingVisitor.java:610)
+	at org.python.pydev.parser.jython.ast.Call.accept(Call.java:137)
+	at org.python.pydev.parser.prettyprinterv2.MakeAstValidForPrettyPrintingVisitor.visitBinOp(MakeAstValidForPrettyPrintingVisitor.java:204)
+	at org.python.pydev.parser.jython.ast.BinOp.accept(BinOp.java:99)
+	at org.python.pydev.parser.prettyprinterv2.MakeAstValidForPrettyPrintingVisitor.visitAssign(MakeAstValidForPrettyPrintingVisitor.java:184)
+	at org.python.pydev.parser.jython.ast.Assign.accept(Assign.java:96)
+	at org.python.pydev.parser.prettyprinterv2.MakeAstValidForPrettyPrintingVisitor.visitFor(MakeAstValidForPrettyPrintingVisitor.java:457)
+	at org.python.pydev.parser.jython.ast.For.accept(For.java:120)
+	at org.python.pydev.parser.prettyprinterv2.MakeAstValidForPrettyPrintingVisitor.makeValid(MakeAstValidForPrettyPrintingVisitor.java:171)
+	at org.python.pydev.editor.hover.PyTextHover.getDocstringHover(PyTextHover.java:233)
+	at org.python.pydev.editor.hover.PyTextHover.getHoverInfo(PyTextHover.java:145)
+	at org.eclipse.jface.text.TextViewerHoverManager$4.run(TextViewerHoverManager.java:168)
+
+!ENTRY org.python.pydev.shared_core 4 4 2017-06-15 16:19:00.830
+!MESSAGE ERROR reading shell.
+ProcessInfo:
+
+ - Executed: /home/soe/workspace/sw/anaconda2/bin/python -u /home/soe/workspace/sw/eclipse/plugins/org.python.pydev_4.5.5.201603221110/pysrc/pycompletionserver.py 36218
+
+ - Environment:
+CLUTTER_IM_MODULE=xim
+COLORTERM=gnome-terminal
+COMPIZ_CONFIG_PROFILE=ubuntu
+CUDA_HOME=/usr/local/cuda-8.0
+DBUS_SESSION_BUS_ADDRESS=unix:abstract=/tmp/dbus-52PIZa5bYR
+DEFAULTS_PATH=/usr/share/gconf/ubuntu.default.path
+DESKTOP_SESSION=ubuntu
+DISPLAY=:0
+GDK_CORE_DEVICE_EVENTS=1
+GDMSESSION=ubuntu
+GDM_LANG=en_US
+GNOME_DESKTOP_SESSION_ID=this-is-deprecated
+GNOME_KEYRING_CONTROL=/run/user/1000/keyring-AeTv8c
+GNOME_KEYRING_PID=2001
+GPG_AGENT_INFO=/run/user/1000/keyring-AeTv8c/gpg:0:1
+GTK_IM_MODULE=fcitx
+GTK_MODULES=overlay-scrollbar:unity-gtk-module
+HOME=/home/soe
+IM_CONFIG_PHASE=1
+INSTANCE=Unity
+JOB=gnome-session
+LANG=en_US.UTF-8
+LANGUAGE=en_US
+LC_ADDRESS=zh_CN.UTF-8
+LC_IDENTIFICATION=zh_CN.UTF-8
+LC_MEASUREMENT=zh_CN.UTF-8
+LC_MONETARY=zh_CN.UTF-8
+LC_NAME=zh_CN.UTF-8
+LC_NUMERIC=zh_CN.UTF-8
+LC_PAPER=zh_CN.UTF-8
+LC_TELEPHONE=zh_CN.UTF-8
+LC_TIME=zh_CN.UTF-8
+LD_LIBRARY_PATH=:/usr/local/lib:/usr/local/cuda-8.0/lib64
+LESSCLOSE=/usr/bin/lesspipe %s %s
+LESSOPEN=| /usr/bin/lesspipe %s
+LIBOVERLAY_SCROLLBAR=0
+LOGNAME=soe
+LS_COLORS=rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arj=01;31:*.taz=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.zip=01;31:*.z=01;31:*.Z=01;31:*.dz=01;31:*.gz=01;31:*.lz=01;31:*.xz=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.jpg=01;35:*.jpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.axv=01;35:*.anx=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.axa=00;36:*.oga=00;36:*.spx=00;36:*.xspf=00;36:
+MANDATORY_PATH=/usr/share/gconf/ubuntu.mandatory.path
+OXYGEN_DISABLE_INNER_SHADOWS_HACK=1
+PATH=/home/soe/workspace/sw/anaconda2/bin:/home/soe/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/local/cuda-7.0/bin:/usr/local/bin:/home/soe/bin
+PWD=/home/soe
+PYTHONPATH=/home/soe/workspace/sw/eclipse/plugins/org.python.pydev_4.5.5.201603221110/pysrc/pydev_sitecustomize:/home/soe/workspace/sw/anaconda2/lib/python2.7:/home/soe/workspace/sw/anaconda2/lib/python2.7/plat-linux2:/home/soe/workspace/sw/anaconda2/lib/python2.7/lib-tk:/home/soe/workspace/sw/anaconda2/lib/python2.7/lib-dynload:/home/soe/workspace/sw/anaconda2/lib/python2.7/site-packages:/home/soe/workspace/sw/anaconda2/lib/python2.7/site-packages/Sphinx-1.5.1-py2.7.egg:/home/soe/workspace/sw/anaconda2/lib/python2.7/site-packages/brian-1.4.3-py2.7-linux-x86_64.egg:/home/soe/workspace/sw/anaconda2/lib/python2.7/site-packages/py_cpuinfo-0.1.6-py2.7.egg:/home/soe/workspace/sw/anaconda2/lib/python2.7/site-packages/setuptools-27.2.0-py2.7.egg
+QT4_IM_MODULE=fcitx
+QT_IM_MODULE=xim
+QT_QPA_PLATFORMTHEME=appmenu-qt5
+SELINUX_INIT=YES
+SESSIONTYPE=gnome-session
+SHELL=/bin/bash
+SHLVL=1
+SSH_AUTH_SOCK=/run/user/1000/keyring-AeTv8c/ssh
+TERM=xterm
+TEXTDOMAIN=im-config
+TEXTDOMAINDIR=/usr/share/locale/
+UPSTART_EVENTS=started starting
+UPSTART_INSTANCE=
+UPSTART_JOB=unity-settings-daemon
+UPSTART_SESSION=unix:abstract=/com/ubuntu/upstart-session/1000/2003
+USER=soe
+VTE_VERSION=3409
+WINDOWID=71303413
+XAUTHORITY=/home/soe/.Xauthority
+XDG_CONFIG_DIRS=/etc/xdg/xdg-ubuntu:/usr/share/upstart/xdg:/etc/xdg
+XDG_CURRENT_DESKTOP=Unity
+XDG_DATA_DIRS=/usr/share/ubuntu:/usr/share/gnome:/usr/local/share/:/usr/share/
+XDG_GREETER_DATA_DIR=/var/lib/lightdm-data/soe
+XDG_RUNTIME_DIR=/run/user/1000
+XDG_SEAT=seat0
+XDG_SEAT_PATH=/org/freedesktop/DisplayManager/Seat0
+XDG_SESSION_ID=c2
+XDG_SESSION_PATH=/org/freedesktop/DisplayManager/Session0
+XDG_VTNR=7
+XMODIFIERS=@im=fcitx
+_=/usr/bin/eclipse
+
+ - Working Dir:
+/home/soe/workspace/sw/eclipse/plugins/org.python.pydev_4.5.5.201603221110/pysrc
+
+ - OS:
+Linux
+
+ - Std output:
+
+
+ - Err output:
+
+!STACK 0
+java.nio.channels.ClosedByInterruptException
+	at java.nio.channels.spi.AbstractInterruptibleChannel.end(AbstractInterruptibleChannel.java:202)
+	at sun.nio.ch.SocketChannelImpl.write(SocketChannelImpl.java:478)
+	at java.nio.channels.Channels.writeFullyImpl(Channels.java:78)
+	at java.nio.channels.Channels.writeFully(Channels.java:98)
+	at java.nio.channels.Channels.access$000(Channels.java:61)
+	at java.nio.channels.Channels$1.write(Channels.java:174)
+	at java.io.OutputStream.write(OutputStream.java:75)
+	at org.python.pydev.editor.codecompletion.shell.AbstractShell.write(AbstractShell.java:544)
+	at org.python.pydev.editor.codecompletion.shell.AbstractShell.writeAndGetResults(AbstractShell.java:691)
+	at org.python.pydev.editor.codecompletion.shell.AbstractShell.getLineCol(AbstractShell.java:776)
+	at org.python.pydev.editor.codecompletion.revisited.modules.CompiledModule.findDefinition(CompiledModule.java:597)
+	at org.python.pydev.editor.codecompletion.revisited.modules.CompiledModule.findDefinition(CompiledModule.java:1)
+	at org.python.pydev.editor.codecompletion.revisited.modules.SourceModule.findGlobalTokDef(SourceModule.java:1098)
+	at org.python.pydev.editor.codecompletion.revisited.modules.SourceModule.findDefinitionsFromModAndTok(SourceModule.java:971)
+	at org.python.pydev.editor.codecompletion.revisited.modules.SourceModule.findDefinition(SourceModule.java:953)
+	at org.python.pydev.editor.codecompletion.revisited.modules.SourceModule.findDefinition(SourceModule.java:666)
+	at org.python.pydev.editor.codecompletion.revisited.modules.SourceModule.findDefinition(SourceModule.java:1)
+	at org.python.pydev.editor.codecompletion.revisited.modules.CompiledModule.findDefinition(CompiledModule.java:641)
+	at org.python.pydev.editor.codecompletion.revisited.modules.CompiledModule.findDefinition(CompiledModule.java:1)
+	at org.python.pydev.editor.codecompletion.revisited.modules.SourceModule.findGlobalTokDef(SourceModule.java:1098)
+	at org.python.pydev.editor.codecompletion.revisited.modules.SourceModule.findDefinitionsFromModAndTok(SourceModule.java:971)
+	at org.python.pydev.editor.codecompletion.revisited.modules.SourceModule.findDefinition(SourceModule.java:953)
+	at org.python.pydev.editor.codecompletion.revisited.modules.SourceModule.findDefinition(SourceModule.java:666)
+	at org.python.pydev.editor.codecompletion.revisited.modules.SourceModule.findDefinition(SourceModule.java:1)
+	at org.python.pydev.editor.codecompletion.revisited.modules.CompiledModule.findDefinition(CompiledModule.java:641)
+	at org.python.pydev.editor.codecompletion.revisited.modules.CompiledModule.findDefinition(CompiledModule.java:1)
+	at org.python.pydev.editor.codecompletion.revisited.modules.SourceModule.findGlobalTokDef(SourceModule.java:1098)
+	at org.python.pydev.editor.codecompletion.revisited.modules.SourceModule.findDefinitionsFromModAndTok(SourceModule.java:971)
+	at org.python.pydev.editor.codecompletion.revisited.modules.SourceModule.findDefinition(SourceModule.java:953)
+	at org.python.pydev.editor.codecompletion.revisited.modules.SourceModule.findDefinition(SourceModule.java:666)
+	at org.python.pydev.editor.codecompletion.revisited.modules.SourceModule.findDefinition(SourceModule.java:1)
+	at org.python.pydev.editor.refactoring.PyRefactoringFindDefinition.findActualDefinition(PyRefactoringFindDefinition.java:182)
+	at org.python.pydev.editor.refactoring.PyRefactoringFindDefinition.findActualDefinition(PyRefactoringFindDefinition.java:81)
+	at org.python.pydev.editor.hover.PyTextHover.getDocstringHover(PyTextHover.java:201)
+	at org.python.pydev.editor.hover.PyTextHover.getHoverInfo(PyTextHover.java:145)
+	at org.eclipse.jface.text.TextViewerHoverManager$4.run(TextViewerHoverManager.java:168)

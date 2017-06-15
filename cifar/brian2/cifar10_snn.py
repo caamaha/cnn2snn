@@ -470,31 +470,31 @@ def app_run(test_start = 0, test_end = -1):
         
         curr_conv1_counts = np.array(conv1_mon.count) - last_conv1_counts
         last_conv1_counts = np.array(conv1_mon.count)
-        conv1_record[i, :] = curr_conv1_counts
+        conv1_record[i-test_start, :] = curr_conv1_counts
       
         curr_pool1_counts = np.array(pool1_mon.count) - last_pool1_counts
         last_pool1_counts = np.array(pool1_mon.count)
-        pool1_record[i, :] = curr_pool1_counts
+        pool1_record[i-test_start, :] = curr_pool1_counts
           
         curr_conv2_counts = np.array(conv2_mon.count) - last_conv2_counts
         last_conv2_counts = np.array(conv2_mon.count)
-        conv2_record[i, :] = curr_conv2_counts
+        conv2_record[i-test_start, :] = curr_conv2_counts
           
         curr_pool2_counts = np.array(pool2_mon.count) - last_pool2_counts
         last_pool2_counts = np.array(pool2_mon.count)
-        pool2_record[i, :] = curr_pool2_counts
+        pool2_record[i-test_start, :] = curr_pool2_counts
           
         curr_ip1_counts = np.array(ip1_mon.count) - last_ip1_counts
         last_ip1_counts = np.array(ip1_mon.count)
-        ip1_record[i, :] = curr_ip1_counts
+        ip1_record[i-test_start, :] = curr_ip1_counts
           
         curr_ip2_counts = np.array(ip2_mon.count) - last_ip2_counts
         last_ip2_counts = np.array(ip2_mon.count)
-        ip2_record[i, :] = curr_ip2_counts
+        ip2_record[i-test_start, :] = curr_ip2_counts
         
         curr_ip3_counts = np.array(ip3_mon.count) - last_ip3_counts
         last_ip3_counts = np.array(ip3_mon.count)
-        ip3_record[i, :] = curr_ip3_counts
+        ip3_record[i-test_start, :] = curr_ip3_counts
         
         pred = np.argmax(curr_ip3_counts)
         label = np.argmax(test_labels[i])
@@ -515,7 +515,7 @@ def app_run(test_start = 0, test_end = -1):
     #------------------------------------------------------------------------------   
     
     # save classified results
-    sio.savemat('output/snn_counts.mat', {'conv1':conv1_record,
+    sio.savemat('output/snn_counts_%d_%d.mat' % (test_start, test_end), {'conv1':conv1_record,
                                           'pool1':pool1_record,
                                           'conv2':conv2_record,
                                           'pool2':pool2_record,

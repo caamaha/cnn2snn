@@ -57,7 +57,7 @@ tf.app.flags.DEFINE_boolean('log_device_placement', False,
                             """Whether to log device placement.""")
 tf.app.flags.DEFINE_integer('log_frequency', 10,
                             """How often to log results to the console.""")
-tf.app.flags.DEFINE_string('pretrained_dir', '../tf_snn/output/cifar10_train',
+tf.app.flags.DEFINE_string('pretrained_dir', 'output/cifar10_train',
                            """Directory where to restored from""")
 
 train_restored = True;

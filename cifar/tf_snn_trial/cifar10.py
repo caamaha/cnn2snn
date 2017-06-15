@@ -209,7 +209,7 @@ def inference(images):
         conv = tf.nn.conv2d(images, kernel, [1, 1, 1, 1], padding='SAME')
         biases = _variable_on_cpu('biases', [64], tf.constant_initializer(0.0))
         pre_activation = tf.nn.bias_add(conv, biases)
-        rand1 = tf.multiply(tf.random_normal(conv.shape, 0, 0.01), tf.reduce_max(tf.abs(pre_activation)))
+        rand1 = tf.multiply(tf.random_normal(conv.shape, 0, 0.005), tf.reduce_max(tf.abs(pre_activation)))
         conv1 = tf.nn.relu(tf.add(pre_activation, rand1), name=scope.name)
 
     # pool1
@@ -225,7 +225,7 @@ def inference(images):
         conv = tf.nn.conv2d(pool1, kernel, [1, 1, 1, 1], padding='SAME')
         biases = _variable_on_cpu('biases', [64], tf.constant_initializer(0.0))
         pre_activation = tf.nn.bias_add(conv, biases)
-        rand2 = tf.multiply(tf.random_normal(conv.shape, 0, 0.01), tf.reduce_max(tf.abs(pre_activation)))
+        rand2 = tf.multiply(tf.random_normal(conv.shape, 0, 0.012), tf.reduce_max(tf.abs(pre_activation)))
 #         pre_activation = conv
         conv2 = tf.nn.relu(tf.add(pre_activation, rand2), name=scope.name)
 
@@ -244,7 +244,7 @@ def inference(images):
         biases = _variable_on_cpu(
             'biases', [384], tf.constant_initializer(0.0))
         pre_activation = tf.matmul(reshape, weights) + biases
-        rand3 = tf.multiply(tf.random_normal(biases.shape, 0, 0.02), tf.reduce_max(tf.abs(pre_activation)))
+        rand3 = tf.multiply(tf.random_normal(biases.shape, 0, 0.032), tf.reduce_max(tf.abs(pre_activation)))
         local3 = tf.nn.relu(tf.add(pre_activation, rand3), name=scope.name)
 
     # local4
@@ -254,7 +254,7 @@ def inference(images):
         biases = _variable_on_cpu(
             'biases', [192], tf.constant_initializer(0.0))
         pre_activation = tf.matmul(local3, weights) + biases
-        rand4 = tf.multiply(tf.random_normal(biases.shape, 0, 0.02), tf.reduce_max(tf.abs(pre_activation)))
+        rand4 = tf.multiply(tf.random_normal(biases.shape, 0, 0.052), tf.reduce_max(tf.abs(pre_activation)))
         local4 = tf.nn.relu(tf.add(pre_activation, rand4), name=scope.name)
 
     # linear layer(WX + b),

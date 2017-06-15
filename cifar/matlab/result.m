@@ -29,6 +29,16 @@ pool1_p = polyfit(cnn_pool1(:), snn_pool1(:), 1);
 conv2_p = polyfit(cnn_conv2(:), snn_conv2(:), 1);
 pool2_p = polyfit(cnn_pool2(:), snn_pool2(:), 1);
 
+conv1_pr = polyfit(snn_conv1(:), cnn_conv1(:), 1);
+conv2_pr = polyfit(snn_conv2(:), cnn_conv2(:), 1);
+ip1_pr = polyfit(snn_ip1(:), cnn_ip1(:), 1);
+ip2_pr = polyfit(snn_ip2(:), cnn_ip2(:), 1);
+
+conv1_std = std((cnn_conv1(:) - polyval(conv1_pr, snn_conv1(:))) / max(abs(cnn_conv1(:))));
+conv2_std = std((cnn_conv2(:) - polyval(conv2_pr, snn_conv2(:))) / max(abs(cnn_conv2(:))));
+ip1_std = std((cnn_ip1(:) - polyval(ip1_pr, snn_ip1(:))) / max(abs(cnn_ip1(:))));
+ip2_std = std((cnn_ip2(:) - polyval(ip2_pr, snn_ip2(:))) / max(abs(cnn_ip2(:))));
+
 figure(1);clf;
 subplot(221)
 hold on;

@@ -8839,6 +8839,7 @@ scipy.interpolate.ndgriddata|/home/soe/workspace/sw/anaconda2/lib/python2.7/site
 scipy.interpolate.polyint|/home/soe/workspace/sw/anaconda2/lib/python2.7/site-packages/scipy/interpolate/polyint.py
 scipy.interpolate.rbf|/home/soe/workspace/sw/anaconda2/lib/python2.7/site-packages/scipy/interpolate/rbf.py
 scipy.interpolate.setup|/home/soe/workspace/sw/anaconda2/lib/python2.7/site-packages/scipy/interpolate/setup.py
+scipy.io
 scipy.io.__init__|/home/soe/workspace/sw/anaconda2/lib/python2.7/site-packages/scipy/io/__init__.py
 scipy.io._fortran|/home/soe/workspace/sw/anaconda2/lib/python2.7/site-packages/scipy/io/_fortran.py
 scipy.io.arff.__init__|/home/soe/workspace/sw/anaconda2/lib/python2.7/site-packages/scipy/io/arff/__init__.py
@@ -8903,6 +8904,7 @@ scipy.linalg.matfuncs|/home/soe/workspace/sw/anaconda2/lib/python2.7/site-packag
 scipy.linalg.misc|/home/soe/workspace/sw/anaconda2/lib/python2.7/site-packages/scipy/linalg/misc.py
 scipy.linalg.setup|/home/soe/workspace/sw/anaconda2/lib/python2.7/site-packages/scipy/linalg/setup.py
 scipy.linalg.special_matrices|/home/soe/workspace/sw/anaconda2/lib/python2.7/site-packages/scipy/linalg/special_matrices.py
+scipy.misc
 scipy.misc.__init__|/home/soe/workspace/sw/anaconda2/lib/python2.7/site-packages/scipy/misc/__init__.py
 scipy.misc.common|/home/soe/workspace/sw/anaconda2/lib/python2.7/site-packages/scipy/misc/common.py
 scipy.misc.doccer|/home/soe/workspace/sw/anaconda2/lib/python2.7/site-packages/scipy/misc/doccer.py

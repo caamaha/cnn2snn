@@ -1,5 +1,6 @@
 MODULES_MANAGER_V2
 cifar10_extract|/home/soe/workspace/ljl/cnn2snn/cifar/brian2/cifar10_extract.py
 cifar10_snn|/home/soe/workspace/ljl/cnn2snn/cifar/brian2/cifar10_snn.py
+cifar10_snn_trial|/home/soe/workspace/ljl/cnn2snn/cifar/brian2/cifar10_snn_trial.py
 dim3_ind|/home/soe/workspace/ljl/cnn2snn/cifar/brian2/dim3_ind.py
 drawlayer|/home/soe/workspace/ljl/cnn2snn/cifar/brian2/drawlayer.py

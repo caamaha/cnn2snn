@@ -1,10 +1,10 @@
 %close all
 %clear
 
-sample = 1;
+sample = 16;
 sample_num = 1;
 
-load('../brian2/output/snn_counts.mat');
+load('../brian2/output/snn_counts_0_100.mat');
 snn_conv1 = double(conv1(sample, :));
 snn_pool1 = double(pool1(sample, :));
 snn_conv2 = double(conv2(sample, :));
@@ -12,6 +12,8 @@ snn_pool2 = double(pool2(sample, :));
 snn_ip1   = double(ip1(sample, :));
 snn_ip2   = double(ip2(sample, :));
 snn_ip3   = double(ip3(sample, :));
+
+%sample = 2;
 
 load('../tf_snn/output/cifar10_cnn.mat');
 cnn_conv1 = double(reshape(conv1(sample, :), sample_num, []));
@@ -29,15 +31,15 @@ pool1_p = polyfit(cnn_pool1(:), snn_pool1(:), 1);
 conv2_p = polyfit(cnn_conv2(:), snn_conv2(:), 1);
 pool2_p = polyfit(cnn_pool2(:), snn_pool2(:), 1);
 
-conv1_pr = polyfit(snn_conv1(:), cnn_conv1(:), 1);
-conv2_pr = polyfit(snn_conv2(:), cnn_conv2(:), 1);
-ip1_pr = polyfit(snn_ip1(:), cnn_ip1(:), 1);
-ip2_pr = polyfit(snn_ip2(:), cnn_ip2(:), 1);
+% conv1_pr = polyfit(snn_conv1(:), cnn_conv1(:), 1);
+% conv2_pr = polyfit(snn_conv2(:), cnn_conv2(:), 1);
+% ip1_pr = polyfit(snn_ip1(:), cnn_ip1(:), 1);
+% ip2_pr = polyfit(snn_ip2(:), cnn_ip2(:), 1);
 
-conv1_std = std((cnn_conv1(:) - polyval(conv1_pr, snn_conv1(:))) / max(abs(cnn_conv1(:))));
-conv2_std = std((cnn_conv2(:) - polyval(conv2_pr, snn_conv2(:))) / max(abs(cnn_conv2(:))));
-ip1_std = std((cnn_ip1(:) - polyval(ip1_pr, snn_ip1(:))) / max(abs(cnn_ip1(:))));
-ip2_std = std((cnn_ip2(:) - polyval(ip2_pr, snn_ip2(:))) / max(abs(cnn_ip2(:))));
+% conv1_std = std((cnn_conv1(:) - polyval(conv1_pr, snn_conv1(:))) / max(abs(cnn_conv1(:))));
+% conv2_std = std((cnn_conv2(:) - polyval(conv2_pr, snn_conv2(:))) / max(abs(cnn_conv2(:))));
+% ip1_std = std((cnn_ip1(:) - polyval(ip1_pr, snn_ip1(:))) / max(abs(cnn_ip1(:))));
+% ip2_std = std((cnn_ip2(:) - polyval(ip2_pr, snn_ip2(:))) / max(abs(cnn_ip2(:))));
 
 figure(1);clf;
 subplot(221)

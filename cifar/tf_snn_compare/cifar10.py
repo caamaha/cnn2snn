@@ -199,17 +199,13 @@ def inference(images):
     # tf.Variable() in order to share variables across multiple GPU training runs.
     # If we only ran this model on a single GPU, we could simplify this function
     # by replacing all instances of tf.get_variable() with tf.Variable().
-    
-    
-    noise = tf.random_normal(images.shape, 0, 0.02)
-    images = tf.add(images, noise)
-    
+    #
     # conv1
     with tf.variable_scope('conv1') as scope:
         kernel = _variable_with_weight_decay('weights',
                                              shape=[5, 5, 3, 64],
                                              stddev=5e-2,
-                                             wd=0.0)
+                                             wd=0.001)
         conv = tf.nn.conv2d(images, kernel, [1, 1, 1, 1], padding='SAME')
         biases = _variable_on_cpu('biases', [64], tf.constant_initializer(0.0))
         pre_activation = tf.nn.bias_add(conv, biases)
@@ -217,7 +213,7 @@ def inference(images):
         conv1 = tf.nn.relu(pre_activation, name=scope.name)
 
     # pool1
-    pool1 = tf.nn.max_pool(conv1, ksize=[1, 3, 3, 1], strides=[1, 2, 2, 1],
+    pool1 = tf.nn.avg_pool(conv1, ksize=[1, 3, 3, 1], strides=[1, 2, 2, 1],
                            padding='SAME', name='pool1')
 
     # conv2
@@ -225,7 +221,7 @@ def inference(images):
         kernel = _variable_with_weight_decay('weights',
                                              shape=[5, 5, 64, 64],
                                              stddev=5e-2,
-                                             wd=0.0)
+                                             wd=0.001)
         conv = tf.nn.conv2d(pool1, kernel, [1, 1, 1, 1], padding='SAME')
         biases = _variable_on_cpu('biases', [64], tf.constant_initializer(0.0))
         pre_activation = tf.nn.bias_add(conv, biases)
@@ -233,7 +229,7 @@ def inference(images):
         conv2 = tf.nn.relu(pre_activation, name=scope.name)
 
     # pool2
-    pool2 = tf.nn.max_pool(conv2, ksize=[1, 3, 3, 1],
+    pool2 = tf.nn.avg_pool(conv2, ksize=[1, 3, 3, 1],
                            strides=[1, 2, 2, 1], padding='SAME', name='pool2')
 
     # local3
@@ -246,8 +242,9 @@ def inference(images):
                                               stddev=0.04, wd=0.004)
         biases = _variable_on_cpu(
             'biases', [384], tf.constant_initializer(0.0))
-        local3 = tf.nn.relu(
-            tf.matmul(reshape, weights) + biases, name=scope.name)
+        pre_activation = tf.matmul(reshape, weights) + biases
+#         pre_activation = tf.matmul(reshape, weights)
+        local3 = tf.nn.relu(pre_activation, name=scope.name)
 
     # local4
     with tf.variable_scope('local4') as scope:
@@ -255,8 +252,9 @@ def inference(images):
                                               stddev=0.04, wd=0.004)
         biases = _variable_on_cpu(
             'biases', [192], tf.constant_initializer(0.0))
-        local4 = tf.nn.relu(
-            tf.matmul(local3, weights) + biases, name=scope.name)
+        pre_activation = tf.matmul(local3, weights) + biases
+#         pre_activation = tf.matmul(local3, weights)
+        local4 = tf.nn.relu(pre_activation, name=scope.name)
 
     # linear layer(WX + b),
     # We don't apply softmax here because
@@ -267,8 +265,7 @@ def inference(images):
                                               stddev=1 / 192.0, wd=0.0)
         biases = _variable_on_cpu('biases', [NUM_CLASSES],
                                   tf.constant_initializer(0.0))
-        softmax_linear = tf.add(
-            tf.matmul(local4, weights), biases, name=scope.name)
+        softmax_linear = tf.add(tf.matmul(local4, weights), biases, name=scope.name)
 
     return softmax_linear
 

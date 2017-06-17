@@ -10,6 +10,7 @@ cifar/dataset/
 cifar/tf_cnn/output
 cifar/tf_snn/output
 cifar/tf_snn_trial/output
+cifar/tf_snn_compare/output
 cifar/tf_test/output
 cifar/.metadata/
 cifar/brian2/output/

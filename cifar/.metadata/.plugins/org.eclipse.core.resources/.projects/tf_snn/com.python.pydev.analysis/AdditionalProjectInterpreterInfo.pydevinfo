@@ -4,7 +4,7 @@
 cifar10|1496894603428151000|/home/soe/workspace/ljl/cnn2snn/cifar/tf_snn/cifar10.py
 cifar10_eval|1494831576000000000|/home/soe/workspace/ljl/cnn2snn/cifar/tf_snn/cifar10_eval.py
 cifar10_extract|1496210318385332000|/home/soe/workspace/ljl/cnn2snn/cifar/tf_snn/cifar10_extract.py
-cifar10_test|1497245827517879000|/home/soe/workspace/ljl/cnn2snn/cifar/tf_snn/cifar10_test.py
+cifar10_test|1497613091077707000|/home/soe/workspace/ljl/cnn2snn/cifar/tf_snn/cifar10_test.py
 cifar10_train|1495543656520448000|/home/soe/workspace/ljl/cnn2snn/cifar/tf_snn/cifar10_train.py
 cifar10_input|1495539657007745000|/home/soe/workspace/ljl/cnn2snn/cifar/tf_snn/cifar10_input.py
 -- END DISKCACHE

@@ -37,20 +37,6 @@ def create_conv_connections(in_ind, out_ind, output_size, kernel_num, kernel_siz
                             pre_ind.append(i)
                             post_ind.append(j)
                             weights.append(kernel_weights[kh, kw, kd, k])
-
-def create_conv_padding_connections(in_ind, out_ind, output_size, kernel_num, kernel_size, pad_left, kernel_weights, pre_ind, post_ind, weights):
-    for h in range(output_size):    # output height
-        for w in range(output_size):    # output width
-            for k in range(kernel_num):     # kernel numbers
-                for kd in range(in_ind.sz0):    # kernel depth
-                    for kh in range(kernel_size):   # kernel height
-                        for kw in range(kernel_size):   # kernel width
-                            i = in_ind.pad_ind3(kh + h - pad_left, kw + w - pad_left, kd)
-                            if i < 0:
-                                j = out_ind.ind3(h, w, k)
-                                pre_ind.append(0)
-                                post_ind.append(j)
-                                weights.append(kernel_weights[kh, kw, kd, k])
                             
 def create_convb_connections(out_ind, output_size, kernel_num, kernel_bias, pre_ind, post_ind, weights):
     for h in range(output_size):
@@ -223,26 +209,21 @@ ip3_ind             = dim3_ind(1, 1, ip3_output_n)
 #------------------------------------------------------------------------------ 
 # load synapses weights from pretrained model
 #------------------------------------------------------------------------------
-pretrained = sio.loadmat('../tf_snn/output/weights/cifar10_weights.mat')
-conv1_wn = 1 / 6.1117
-weight_norm = conv1_wn
-conv1_w    = pretrained['conv1_w']       * conv1_wn
+pretrained = sio.loadmat('../tf_snn_trial/output/weights/cifar10_weights.mat')
+weight_norm = 0.5
+conv1_w    = pretrained['conv1_w']       * 0.5
 conv1_b    = pretrained['conv1_b'][0, :] * weight_norm
-conv2_wn = 1 / 25.1312 / weight_norm
-weight_norm *= conv2_wn
-conv2_w    = pretrained['conv2_w']       * conv2_wn
+weight_norm *= 0.6
+conv2_w    = pretrained['conv2_w']       * 0.6
 conv2_b    = pretrained['conv2_b'][0, :] * weight_norm
-ip1_wn = 1 / 10.5770 / weight_norm
-weight_norm *= ip1_wn
-ip1_w      = pretrained['ip1_w']         * ip1_wn
+weight_norm *= 4.
+ip1_w      = pretrained['ip1_w']         * 4.
 ip1_b      = pretrained['ip1_b'][0, :]   * weight_norm
-ip2_wn = 1 / 1.7380 / weight_norm
-weight_norm *= ip2_wn
-ip2_w      = pretrained['ip2_w']         * ip2_wn
+weight_norm *= 3.
+ip2_w      = pretrained['ip2_w']         * 3.
 ip2_b      = pretrained['ip2_b'][0, :]   * weight_norm
-ip3_wn = 1 / 29.9552 / weight_norm
-weight_norm *= ip3_wn
-ip3_w      = pretrained['ip3_w']         * ip3_wn
+weight_norm *= 0.1
+ip3_w      = pretrained['ip3_w']         * 0.1
 ip3_b      = pretrained['ip3_b'][0, :]   * weight_norm
 
 #------------------------------------------------------------------------------ 
@@ -428,31 +409,32 @@ def app_run(test_start = 0, test_end = -1):
     conv1_mon = SpikeMonitor(conv1_group)
     last_conv1_counts = np.array(conv1_mon.count)
     conv1_record = np.zeros((test_num, np.size(last_conv1_counts)))
-     
+    
     pool1_mon = SpikeMonitor(pool1_group)
     last_pool1_counts = np.array(pool1_mon.count)
     pool1_record = np.zeros((test_num, np.size(last_pool1_counts)))
-       
+      
     conv2_mon = SpikeMonitor(conv2_group)
     last_conv2_counts = np.array(conv2_mon.count)
     conv2_record = np.zeros((test_num, np.size(last_conv2_counts)))
-       
+      
     pool2_mon = SpikeMonitor(pool2_group)
     last_pool2_counts = np.array(pool2_mon.count)
     pool2_record = np.zeros((test_num, np.size(last_pool2_counts)))
-     
+    
     ip1_mon = SpikeMonitor(ip1_group)
     last_ip1_counts = np.array(ip1_mon.count)
     ip1_record = np.zeros((test_num, np.size(last_ip1_counts)))
-     
+    
     ip2_mon = SpikeMonitor(ip2_group)
     last_ip2_counts = np.array(ip2_mon.count)
     ip2_record = np.zeros((test_num, np.size(last_ip2_counts)))
-     
+    
     ip3_mon = SpikeMonitor(ip3_group)
     last_ip3_counts = np.array(ip3_mon.count)
     ip3_record = np.zeros((test_num, np.size(last_ip3_counts)))
     
+    # print np.size(it_counts_record)
     
     #------------------------------------------------------------------------------ 
     # run the simulation and set inputs
@@ -463,7 +445,7 @@ def app_run(test_start = 0, test_end = -1):
     
     conv1b_group.rates = 255. * Hz
     conv2b_group.rates = 255. * Hz
-    ip1b_group.rates   = 255. * Hz
+    ip1b_group.rates   = 255. * Hz # 10
     ip2b_group.rates   = 255. * Hz
     ip3b_group.rates   = 255. * Hz
     
@@ -488,33 +470,33 @@ def app_run(test_start = 0, test_end = -1):
         ip1b_group.v = 0
         ip2b_group.v = 0
         ip3b_group.v = 0
-        run(500 * ms)
+        run(200 * ms)
         
         
         curr_conv1_counts = np.array(conv1_mon.count) - last_conv1_counts
         last_conv1_counts = np.array(conv1_mon.count)
         conv1_record[i-test_start, :] = curr_conv1_counts
-       
+      
         curr_pool1_counts = np.array(pool1_mon.count) - last_pool1_counts
         last_pool1_counts = np.array(pool1_mon.count)
         pool1_record[i-test_start, :] = curr_pool1_counts
-           
+          
         curr_conv2_counts = np.array(conv2_mon.count) - last_conv2_counts
         last_conv2_counts = np.array(conv2_mon.count)
         conv2_record[i-test_start, :] = curr_conv2_counts
-           
+          
         curr_pool2_counts = np.array(pool2_mon.count) - last_pool2_counts
         last_pool2_counts = np.array(pool2_mon.count)
         pool2_record[i-test_start, :] = curr_pool2_counts
-           
+          
         curr_ip1_counts = np.array(ip1_mon.count) - last_ip1_counts
         last_ip1_counts = np.array(ip1_mon.count)
         ip1_record[i-test_start, :] = curr_ip1_counts
-           
+          
         curr_ip2_counts = np.array(ip2_mon.count) - last_ip2_counts
         last_ip2_counts = np.array(ip2_mon.count)
         ip2_record[i-test_start, :] = curr_ip2_counts
-         
+        
         curr_ip3_counts = np.array(ip3_mon.count) - last_ip3_counts
         last_ip3_counts = np.array(ip3_mon.count)
         ip3_record[i-test_start, :] = curr_ip3_counts
@@ -527,6 +509,9 @@ def app_run(test_start = 0, test_end = -1):
         sample_counts += 1
     
         print('%d / [%d, %d]:%f %d %d' % (i, test_start, test_end-1, sample_right / sample_counts, sample_right, sample_counts))
+        
+        print(curr_conv1_counts[2])
+        print(curr_conv1_counts[conv1_ind.ind3(0,0,2)])
     
     end = time.time()
     print 'time needed to run simulation:', end - start
@@ -546,11 +531,12 @@ def app_run(test_start = 0, test_end = -1):
                                           'ip2'  :ip2_record,
                                           'ip3'  :ip3_record})
     
+    # sio.savemat('output/conv1_counts.mat', {'conv1_counts':conv1_counts_record})
 
 if __name__ == "__main__":
     if len(sys.argv) == 3:
         app_run(int(sys.argv[1]), int(sys.argv[2]))
     else:
-        app_run(0, 100)
+        app_run(1, 2)
 
 

@@ -163,16 +163,16 @@ def evaluate():
                 print('No checkpoint file found')
                 return
 
-            avg = 0
-            for i in xrange(100):
-                batch_xs = test_images[
-                    i * FLAGS.batch_size:(i + 1) * FLAGS.batch_size]
-                batch_ys = test_labels[
-                    i * FLAGS.batch_size:(i + 1) * FLAGS.batch_size]
-                avg += sess.run(accuracy, feed_dict={images:
-                                                     batch_xs, labels: batch_ys})
-            avg /= (100)
-            print("test accuracy %g" % avg)
+#             avg = 0
+#             for i in xrange(100):
+#                 batch_xs = test_images[
+#                     i * FLAGS.batch_size:(i + 1) * FLAGS.batch_size]
+#                 batch_ys = test_labels[
+#                     i * FLAGS.batch_size:(i + 1) * FLAGS.batch_size]
+#                 avg += sess.run(accuracy, feed_dict={images:
+#                                                      batch_xs, labels: batch_ys})
+#             avg /= (100)
+#             print("test accuracy %g" % avg)
             
             
             # Get conv1 output
@@ -265,7 +265,7 @@ def evaluate():
 
 
 def main(argv=None):  # pylint: disable=unused-argument
-    FLAGS.batch_size = 100
+    FLAGS.batch_size = 10000
     evaluate()
 
 

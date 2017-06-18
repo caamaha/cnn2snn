@@ -1,4 +1,4 @@
-load('../tf_snn/output/cifar10_cnn.mat');
+load('../tf_snn_trial/output/cifar10_cnn.mat');
 conv1_nz = conv1(conv1(:) > 0);
 conv1_sort = sort(conv1_nz);
 conv1_len = length(conv1_sort);

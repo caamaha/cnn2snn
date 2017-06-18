@@ -6790,6 +6790,7 @@ numpy.compat.__init__|/home/soe/workspace/sw/anaconda2/lib/python2.7/site-packag
 numpy.compat._inspect|/home/soe/workspace/sw/anaconda2/lib/python2.7/site-packages/numpy/compat/_inspect.py
 numpy.compat.py3k|/home/soe/workspace/sw/anaconda2/lib/python2.7/site-packages/numpy/compat/py3k.py
 numpy.compat.setup|/home/soe/workspace/sw/anaconda2/lib/python2.7/site-packages/numpy/compat/setup.py
+numpy.core
 numpy.core.__init__|/home/soe/workspace/sw/anaconda2/lib/python2.7/site-packages/numpy/core/__init__.py
 numpy.core._dummy|/home/soe/workspace/sw/anaconda2/lib/python2.7/site-packages/numpy/core/_dummy.so
 numpy.core._internal|/home/soe/workspace/sw/anaconda2/lib/python2.7/site-packages/numpy/core/_internal.py
@@ -6919,6 +6920,7 @@ numpy.fft.fftpack_lite|/home/soe/workspace/sw/anaconda2/lib/python2.7/site-packa
 numpy.fft.helper|/home/soe/workspace/sw/anaconda2/lib/python2.7/site-packages/numpy/fft/helper.py
 numpy.fft.info|/home/soe/workspace/sw/anaconda2/lib/python2.7/site-packages/numpy/fft/info.py
 numpy.fft.setup|/home/soe/workspace/sw/anaconda2/lib/python2.7/site-packages/numpy/fft/setup.py
+numpy.lib
 numpy.lib.__init__|/home/soe/workspace/sw/anaconda2/lib/python2.7/site-packages/numpy/lib/__init__.py
 numpy.lib._datasource|/home/soe/workspace/sw/anaconda2/lib/python2.7/site-packages/numpy/lib/_datasource.py
 numpy.lib._iotools|/home/soe/workspace/sw/anaconda2/lib/python2.7/site-packages/numpy/lib/_iotools.py
@@ -6961,6 +6963,7 @@ numpy.ma.testutils|/home/soe/workspace/sw/anaconda2/lib/python2.7/site-packages/
 numpy.ma.timer_comparison|/home/soe/workspace/sw/anaconda2/lib/python2.7/site-packages/numpy/ma/timer_comparison.py
 numpy.ma.version|/home/soe/workspace/sw/anaconda2/lib/python2.7/site-packages/numpy/ma/version.py
 numpy.matlib|/home/soe/workspace/sw/anaconda2/lib/python2.7/site-packages/numpy/matlib.py
+numpy.matrixlib
 numpy.matrixlib.__init__|/home/soe/workspace/sw/anaconda2/lib/python2.7/site-packages/numpy/matrixlib/__init__.py
 numpy.matrixlib.defmatrix|/home/soe/workspace/sw/anaconda2/lib/python2.7/site-packages/numpy/matrixlib/defmatrix.py
 numpy.matrixlib.setup|/home/soe/workspace/sw/anaconda2/lib/python2.7/site-packages/numpy/matrixlib/setup.py

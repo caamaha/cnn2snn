@@ -1,4 +1,0 @@
-MODULES_MANAGER_V2
-cifar_alexnet|/home/soe/workspace/ljl/cnn2snn/cifar/tf_test/cifar_alexnet.py
-cifar_cnn|/home/soe/workspace/ljl/cnn2snn/cifar/tf_test/cifar_cnn.py
-extract_cifar10|/home/soe/workspace/ljl/cnn2snn/cifar/tf_test/extract_cifar10.py

@@ -174,40 +174,41 @@ def evaluate():
             avg /= (100)
             print("test accuracy %g" % avg)
             
+            
             # Get conv1 output
             conv1 = tf.get_default_graph().get_tensor_by_name('conv1/conv1:0')
-            cnn_conv1 = sess.run(conv1, feed_dict={images: test_images[0:100], labels: test_labels[0:100]})
-            cnn_conv1 = cnn_conv1.reshape((100, 24*24*64))
+            cnn_conv1 = sess.run(conv1, feed_dict={images: test_images[0:FLAGS.batch_size], labels: test_labels[0:FLAGS.batch_size]})
+            cnn_conv1 = cnn_conv1.reshape((FLAGS.batch_size, 24*24*64))
             
             # Get pool1 output
             pool1 = tf.get_default_graph().get_tensor_by_name('pool1:0')
-            cnn_pool1 = sess.run(pool1, feed_dict={images: test_images[0:100], labels: test_labels[0:100]})
-            cnn_pool1 = cnn_pool1.reshape((100, 12*12*64))
+            cnn_pool1 = sess.run(pool1, feed_dict={images: test_images[0:FLAGS.batch_size], labels: test_labels[0:FLAGS.batch_size]})
+            cnn_pool1 = cnn_pool1.reshape((FLAGS.batch_size, 12*12*64))
             
             # Get conv2 output
             conv2 = tf.get_default_graph().get_tensor_by_name('conv2/conv2:0')
-            cnn_conv2 = sess.run(conv2, feed_dict={images: test_images[0:100], labels: test_labels[0:100]})
-            cnn_conv2 = cnn_conv2.reshape((100, 12*12*64))
+            cnn_conv2 = sess.run(conv2, feed_dict={images: test_images[0:FLAGS.batch_size], labels: test_labels[0:FLAGS.batch_size]})
+            cnn_conv2 = cnn_conv2.reshape((FLAGS.batch_size, 12*12*64))
             
             # Get pool2 output
             pool2 = tf.get_default_graph().get_tensor_by_name('pool2:0')
-            cnn_pool2 = sess.run(pool2, feed_dict={images: test_images[0:100], labels: test_labels[0:100]})
-            cnn_pool2 = cnn_pool2.reshape((100, 6*6*64))
+            cnn_pool2 = sess.run(pool2, feed_dict={images: test_images[0:FLAGS.batch_size], labels: test_labels[0:FLAGS.batch_size]})
+            cnn_pool2 = cnn_pool2.reshape((FLAGS.batch_size, 6*6*64))
             
             # Get local3 output
             local3 = tf.get_default_graph().get_tensor_by_name('local3/local3:0')
-            cnn_local3 = sess.run(local3, feed_dict={images: test_images[0:100], labels: test_labels[0:100]})
-            cnn_local3 = cnn_local3.reshape((100, 384))
+            cnn_local3 = sess.run(local3, feed_dict={images: test_images[0:FLAGS.batch_size], labels: test_labels[0:FLAGS.batch_size]})
+            cnn_local3 = cnn_local3.reshape((FLAGS.batch_size, 384))
             
             # Get local4 output
             local4 = tf.get_default_graph().get_tensor_by_name('local4/local4:0')
-            cnn_local4 = sess.run(local4, feed_dict={images: test_images[0:100], labels: test_labels[0:100]})
-            cnn_local4 = cnn_local4.reshape((100, 192))
+            cnn_local4 = sess.run(local4, feed_dict={images: test_images[0:FLAGS.batch_size], labels: test_labels[0:FLAGS.batch_size]})
+            cnn_local4 = cnn_local4.reshape((FLAGS.batch_size, 192))
             
             # Get softmax_linear output
             local5 = tf.get_default_graph().get_tensor_by_name('softmax_linear/softmax_linear:0')
-            cnn_local5 = sess.run(local5, feed_dict={images: test_images[0:100], labels: test_labels[0:100]})
-            cnn_local5 = cnn_local5.reshape((100, 10))
+            cnn_local5 = sess.run(local5, feed_dict={images: test_images[0:FLAGS.batch_size], labels: test_labels[0:FLAGS.batch_size]})
+            cnn_local5 = cnn_local5.reshape((FLAGS.batch_size, 10))
             
             sio.savemat('output/cifar10_cnn.mat', {'conv1': cnn_conv1,
                                                    'pool1': cnn_pool1,

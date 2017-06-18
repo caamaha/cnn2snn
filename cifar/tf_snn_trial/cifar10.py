@@ -201,8 +201,8 @@ def inference(images):
     # by replacing all instances of tf.get_variable() with tf.Variable().
     
     
-    noise = tf.random_normal(images.shape, 0, 0.02)
-    images = tf.add(images, noise)
+#     noise = tf.random_normal(images.shape, 0, 0.02)
+#     images = tf.add(images, noise)
     
     # conv1
     with tf.variable_scope('conv1') as scope:

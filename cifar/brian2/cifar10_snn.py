@@ -223,24 +223,30 @@ ip3_ind             = dim3_ind(1, 1, ip3_output_n)
 #------------------------------------------------------------------------------ 
 # load synapses weights from pretrained model
 #------------------------------------------------------------------------------
-pretrained = sio.loadmat('../tf_snn/output/weights/cifar10_weights.mat')
-conv1_wn = 1 / 6.1117
+pretrained = sio.loadmat('../tf_snn_trial/output/weights/cifar10_weights.mat')
+
+# convert input range from [-0.5, 0.5] to [0.0, 1.0]
+for i in range(np.size(pretrained['conv1_b'], 1)):
+    sum_w = np.sum(pretrained['conv1_w'][:, :, :, i])
+    pretrained['conv1_b'][0, i] = -0.5 * sum_w
+
+conv1_wn = 1 / 4.6085
 weight_norm = conv1_wn
 conv1_w    = pretrained['conv1_w']       * conv1_wn
 conv1_b    = pretrained['conv1_b'][0, :] * weight_norm
-conv2_wn = 1 / 25.1312 / weight_norm
+conv2_wn = 1 / 20.6484 / weight_norm
 weight_norm *= conv2_wn
 conv2_w    = pretrained['conv2_w']       * conv2_wn
 conv2_b    = pretrained['conv2_b'][0, :] * weight_norm
-ip1_wn = 1 / 10.5770 / weight_norm
+ip1_wn = 1 / 8.7884 / weight_norm
 weight_norm *= ip1_wn
 ip1_w      = pretrained['ip1_w']         * ip1_wn
 ip1_b      = pretrained['ip1_b'][0, :]   * weight_norm
-ip2_wn = 1 / 1.7380 / weight_norm
+ip2_wn = 1 / 1.5550 / weight_norm
 weight_norm *= ip2_wn
 ip2_w      = pretrained['ip2_w']         * ip2_wn
 ip2_b      = pretrained['ip2_b'][0, :]   * weight_norm
-ip3_wn = 1 / 29.9552 / weight_norm
+ip3_wn = 1 / 29.8450 / weight_norm
 weight_norm *= ip3_wn
 ip3_w      = pretrained['ip3_w']         * ip3_wn
 ip3_b      = pretrained['ip3_b'][0, :]   * weight_norm
@@ -252,7 +258,7 @@ ip3_b      = pretrained['ip3_b'][0, :]   * weight_norm
 # input group
 # input_group = PoissonGroup(input_n, 0 * Hz)
 input_group  = NeuronGroup(input_n, eqs_input, threshold = input_thresh, reset = input_reset, method = 'euler')
-
+input_pad_group = NeuronGroup(1, eqs_input, threshold = input_thresh, reset = input_reset, method = 'euler')
 # conv1 group
 conv1_group  = NeuronGroup(conv1_output_n, eqs_conv1, threshold = conv1_thresh, reset = conv1_reset, method = 'euler')
 conv1b_group = NeuronGroup(conv1_kernel_num, eqs_input, threshold = input_thresh, reset = input_reset, method = 'euler')
@@ -263,6 +269,14 @@ weights  = []
 create_conv_connections(input_ind, conv1_ind, conv1_output_size, conv1_kernel_num, conv1_kernel_size, conv1_pad_left, conv1_w, pre_ind, post_ind, weights)
 synapses_input_conv1.connect(i = pre_ind, j = post_ind)
 synapses_input_conv1.w = weights;
+
+synapses_input_pad_conv1 = Synapses(input_pad_group, conv1_group, model='w:1', on_pre = 'v_post += w', method = 'linear')
+pre_ind  = []
+post_ind = []
+weights  = []
+create_conv_padding_connections(input_ind, conv1_ind, conv1_output_size, conv1_kernel_num, conv1_kernel_size, conv1_pad_left, conv1_w, pre_ind, post_ind, weights)
+synapses_input_pad_conv1.connect(i = pre_ind, j = post_ind)
+synapses_input_pad_conv1.w = weights;
 
 synapses_conv1b_conv1 = Synapses(conv1b_group, conv1_group, model='w:1', on_pre = 'v_post += w', method = 'linear')
 pre_ind  = []
@@ -425,29 +439,29 @@ def app_run(test_start = 0, test_end = -1):
     # create monitors
     #------------------------------------------------------------------------------
     
-    conv1_mon = SpikeMonitor(conv1_group)
-    last_conv1_counts = np.array(conv1_mon.count)
-    conv1_record = np.zeros((test_num, np.size(last_conv1_counts)))
-     
-    pool1_mon = SpikeMonitor(pool1_group)
-    last_pool1_counts = np.array(pool1_mon.count)
-    pool1_record = np.zeros((test_num, np.size(last_pool1_counts)))
-       
-    conv2_mon = SpikeMonitor(conv2_group)
-    last_conv2_counts = np.array(conv2_mon.count)
-    conv2_record = np.zeros((test_num, np.size(last_conv2_counts)))
-       
-    pool2_mon = SpikeMonitor(pool2_group)
-    last_pool2_counts = np.array(pool2_mon.count)
-    pool2_record = np.zeros((test_num, np.size(last_pool2_counts)))
-     
-    ip1_mon = SpikeMonitor(ip1_group)
-    last_ip1_counts = np.array(ip1_mon.count)
-    ip1_record = np.zeros((test_num, np.size(last_ip1_counts)))
-     
-    ip2_mon = SpikeMonitor(ip2_group)
-    last_ip2_counts = np.array(ip2_mon.count)
-    ip2_record = np.zeros((test_num, np.size(last_ip2_counts)))
+#     conv1_mon = SpikeMonitor(conv1_group)
+#     last_conv1_counts = np.array(conv1_mon.count)
+#     conv1_record = np.zeros((test_num, np.size(last_conv1_counts)))
+#      
+#     pool1_mon = SpikeMonitor(pool1_group)
+#     last_pool1_counts = np.array(pool1_mon.count)
+#     pool1_record = np.zeros((test_num, np.size(last_pool1_counts)))
+#        
+#     conv2_mon = SpikeMonitor(conv2_group)
+#     last_conv2_counts = np.array(conv2_mon.count)
+#     conv2_record = np.zeros((test_num, np.size(last_conv2_counts)))
+#        
+#     pool2_mon = SpikeMonitor(pool2_group)
+#     last_pool2_counts = np.array(pool2_mon.count)
+#     pool2_record = np.zeros((test_num, np.size(last_pool2_counts)))
+#      
+#     ip1_mon = SpikeMonitor(ip1_group)
+#     last_ip1_counts = np.array(ip1_mon.count)
+#     ip1_record = np.zeros((test_num, np.size(last_ip1_counts)))
+#      
+#     ip2_mon = SpikeMonitor(ip2_group)
+#     last_ip2_counts = np.array(ip2_mon.count)
+#     ip2_record = np.zeros((test_num, np.size(last_ip2_counts)))
      
     ip3_mon = SpikeMonitor(ip3_group)
     last_ip3_counts = np.array(ip3_mon.count)
@@ -461,6 +475,7 @@ def app_run(test_start = 0, test_end = -1):
     
     defaultclock.dt = 0.1 * ms;
     
+    input_pad_group.rates = 127.5 * Hz
     conv1b_group.rates = 255. * Hz
     conv2b_group.rates = 255. * Hz
     ip1b_group.rates   = 255. * Hz
@@ -491,29 +506,29 @@ def app_run(test_start = 0, test_end = -1):
         run(500 * ms)
         
         
-        curr_conv1_counts = np.array(conv1_mon.count) - last_conv1_counts
-        last_conv1_counts = np.array(conv1_mon.count)
-        conv1_record[i-test_start, :] = curr_conv1_counts
-       
-        curr_pool1_counts = np.array(pool1_mon.count) - last_pool1_counts
-        last_pool1_counts = np.array(pool1_mon.count)
-        pool1_record[i-test_start, :] = curr_pool1_counts
-           
-        curr_conv2_counts = np.array(conv2_mon.count) - last_conv2_counts
-        last_conv2_counts = np.array(conv2_mon.count)
-        conv2_record[i-test_start, :] = curr_conv2_counts
-           
-        curr_pool2_counts = np.array(pool2_mon.count) - last_pool2_counts
-        last_pool2_counts = np.array(pool2_mon.count)
-        pool2_record[i-test_start, :] = curr_pool2_counts
-           
-        curr_ip1_counts = np.array(ip1_mon.count) - last_ip1_counts
-        last_ip1_counts = np.array(ip1_mon.count)
-        ip1_record[i-test_start, :] = curr_ip1_counts
-           
-        curr_ip2_counts = np.array(ip2_mon.count) - last_ip2_counts
-        last_ip2_counts = np.array(ip2_mon.count)
-        ip2_record[i-test_start, :] = curr_ip2_counts
+#         curr_conv1_counts = np.array(conv1_mon.count) - last_conv1_counts
+#         last_conv1_counts = np.array(conv1_mon.count)
+#         conv1_record[i-test_start, :] = curr_conv1_counts
+#        
+#         curr_pool1_counts = np.array(pool1_mon.count) - last_pool1_counts
+#         last_pool1_counts = np.array(pool1_mon.count)
+#         pool1_record[i-test_start, :] = curr_pool1_counts
+#            
+#         curr_conv2_counts = np.array(conv2_mon.count) - last_conv2_counts
+#         last_conv2_counts = np.array(conv2_mon.count)
+#         conv2_record[i-test_start, :] = curr_conv2_counts
+#            
+#         curr_pool2_counts = np.array(pool2_mon.count) - last_pool2_counts
+#         last_pool2_counts = np.array(pool2_mon.count)
+#         pool2_record[i-test_start, :] = curr_pool2_counts
+#            
+#         curr_ip1_counts = np.array(ip1_mon.count) - last_ip1_counts
+#         last_ip1_counts = np.array(ip1_mon.count)
+#         ip1_record[i-test_start, :] = curr_ip1_counts
+#            
+#         curr_ip2_counts = np.array(ip2_mon.count) - last_ip2_counts
+#         last_ip2_counts = np.array(ip2_mon.count)
+#         ip2_record[i-test_start, :] = curr_ip2_counts
          
         curr_ip3_counts = np.array(ip3_mon.count) - last_ip3_counts
         last_ip3_counts = np.array(ip3_mon.count)
@@ -527,6 +542,13 @@ def app_run(test_start = 0, test_end = -1):
         sample_counts += 1
     
         print('%d / [%d, %d]:%f %d %d' % (i, test_start, test_end-1, sample_right / sample_counts, sample_right, sample_counts))
+        sio.savemat('output/result_%d.mat' % (test_start), 
+                                        {
+                                            'test_start':test_start,
+                                            'test_end':test_end-1,
+                                            'sample_right':sample_right,
+                                            'sample_counts':sample_counts
+                                        })
     
     end = time.time()
     print 'time needed to run simulation:', end - start
@@ -538,13 +560,14 @@ def app_run(test_start = 0, test_end = -1):
     #------------------------------------------------------------------------------   
     
     # save classified results
-    sio.savemat('output/snn_counts_%d_%d.mat' % (test_start, test_end), {'conv1':conv1_record,
-                                          'pool1':pool1_record,
-                                          'conv2':conv2_record,
-                                          'pool2':pool2_record,
-                                          'ip1'  :ip1_record,
-                                          'ip2'  :ip2_record,
-                                          'ip3'  :ip3_record})
+#     sio.savemat('output/snn_counts_%d_%d.mat' % (test_start, test_end), {'conv1':conv1_record,
+#                                           'pool1':pool1_record,
+#                                           'conv2':conv2_record,
+#                                           'pool2':pool2_record,
+#                                           'ip1'  :ip1_record,
+#                                           'ip2'  :ip2_record,
+#                                           'ip3'  :ip3_record})
+    sio.savemat('output/snn_ip3_spikes_%d_%d.mat' % (test_start, test_end), {'snn_t': np.array(ip3_mon.t), 'snn_ip3': np.array(ip3_mon.i)})
     
 
 if __name__ == "__main__":

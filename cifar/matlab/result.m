@@ -1,7 +1,7 @@
 %close all
 %clear
 
-sample = 16;
+sample = 1;
 sample_num = 1;
 
 load('../brian2/output/snn_counts_0_100.mat');
@@ -15,7 +15,7 @@ snn_ip3   = double(ip3(sample, :));
 
 %sample = 2;
 
-load('../tf_snn/output/cifar10_cnn.mat');
+load('../tf_snn_trial/output/cifar10_cnn.mat');
 cnn_conv1 = double(reshape(conv1(sample, :), sample_num, []));
 cnn_pool1 = double(reshape(pool1(sample, :), sample_num, []));
 cnn_conv2 = double(reshape(conv2(sample, :), sample_num, []));
@@ -24,7 +24,7 @@ cnn_ip1   = double(reshape(ip1(sample, :), sample_num, []));
 cnn_ip2   = double(reshape(ip2(sample, :), sample_num, []));
 cnn_ip3   = double(reshape(ip3(sample, :), sample_num, []));
 
-load('../tf_snn/output/weights/cifar10_weights.mat');
+load('../tf_snn_trial/output/weights/cifar10_weights.mat');
 
 conv1_p = polyfit(cnn_conv1(:), snn_conv1(:), 1);
 pool1_p = polyfit(cnn_pool1(:), snn_pool1(:), 1);

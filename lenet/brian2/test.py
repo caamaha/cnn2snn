@@ -1,6 +1,7 @@
 from brian2 import *
 from brian2 import numpy as np
 from matplotlib.pyplot import *
+import scipy.io as sio
 
 start_scope()
 
@@ -36,20 +37,21 @@ synapses_inter_out = Synapses(inter_group, out_group, model='w:1', on_pre = 'v_p
 synapses_inter_out.connect()
 synapses_inter_out.w = 0.1;
 
-spike_mon = SpikeMonitor(out_group)
+spike_mon = SpikeMonitor(inter_group)
 M = StateMonitor(inter_group, 'v', record=True)
 
-input_group.rates = np.array([100, 500, 0, 0]) * Hz
+input_group.rates = np.array([400, 500, 300, 200]) * Hz
 
-logger = get_logger('brian2.codegen.generators.base')
-logger.warn('A warning message')
+
 
 run(1000 * ms)
 # input_group.rates = 0 * Hz
 # run(1000 * ms)
 
-print spike_mon.count
-
 plot(M.t/ms, M.v[0], '.')
+
+print(spike_mon.t)
+print(spike_mon.i)
+sio.savemat('output/snn_spikes.mat', {'snn_t': np.array(spike_mon.t), 'snn_ip3': np.array(spike_mon.i)})
 
 show()

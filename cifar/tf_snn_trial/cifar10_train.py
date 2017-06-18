@@ -60,7 +60,7 @@ tf.app.flags.DEFINE_integer('log_frequency', 10,
 tf.app.flags.DEFINE_string('pretrained_dir', 'output/cifar10_train',
                            """Directory where to restored from""")
 
-train_restored = False;
+train_restored = True;
 
 def train():
     """Train CIFAR-10 for a number of steps."""

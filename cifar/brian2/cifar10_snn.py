@@ -228,7 +228,7 @@ pretrained = sio.loadmat('../tf_snn_trial/output/weights/cifar10_weights.mat')
 # convert input range from [-0.5, 0.5] to [0.0, 1.0]
 for i in range(np.size(pretrained['conv1_b'], 1)):
     sum_w = np.sum(pretrained['conv1_w'][:, :, :, i])
-    pretrained['conv1_b'][0, i] = -0.5 * sum_w
+    pretrained['conv1_b'][0, i] += -0.5 * sum_w
 
 conv1_wn = 1 / 4.6127
 weight_norm = conv1_wn

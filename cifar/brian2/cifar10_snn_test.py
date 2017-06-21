@@ -6,7 +6,7 @@ import scipy.io as sio
 import time
 
 process_num = 4
-samples_num = 10000
+samples_num = 1000
 samples_per_count = samples_num / process_num
 
 def get_process(info):
@@ -58,3 +58,4 @@ if __name__ == "__main__":
     p.join()
     print 'All subprocesses done.'
     timer.cancel()
+    func_timer()

@@ -1,6 +1,6 @@
 % 绘制 准确率 vs 运行时间 图
-process_num = 4;
-samples_num = 1000;
+process_num = 20;
+samples_num = 10000;
 samples_per_count = samples_num / process_num;
 
 ip3_t = [];
@@ -12,7 +12,7 @@ load('test_labels.mat')
 spikes_time = zeros(500, samples_num);
 
 for i = 0:process_num-1
-    file_path = sprintf('../brian2/output/snn_ip3_spikes_%d_%d.mat', i*samples_per_count, (i+1)*samples_per_count);
+    file_path = sprintf('../experiments/2/result/snn_ip3_spikes_%d_%d.mat', i*samples_per_count, (i+1)*samples_per_count);
     load(file_path);
     
     for s = 1:samples_per_count

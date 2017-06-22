@@ -2434,3 +2434,62 @@ java.lang.RuntimeException: Unhandled: ExtSlice[dims=[Index[value=Name[id=kh, ct
 	at org.python.pydev.editor.hover.PyTextHover.getDocstringHover(PyTextHover.java:233)
 	at org.python.pydev.editor.hover.PyTextHover.getHoverInfo(PyTextHover.java:145)
 	at org.eclipse.jface.text.TextViewerHoverManager$4.run(TextViewerHoverManager.java:168)
+!SESSION 2017-06-21 03:52:35.226 -----------------------------------------------
+eclipse.buildId=4.5.2.M20160212-1500
+java.version=1.8.0_111
+java.vendor=Oracle Corporation
+BootLoader constants: OS=linux, ARCH=x86_64, WS=gtk, NL=en_US
+Framework arguments:  -product org.eclipse.epp.package.cpp.product
+Command-line arguments:  -os linux -ws gtk -arch x86_64 -product org.eclipse.epp.package.cpp.product
+
+!ENTRY org.eclipse.egit.ui 4 0 2017-06-21 08:22:55.497
+!MESSAGE Failed to refresh projects from index changes
+!STACK 1
+org.eclipse.core.internal.resources.ResourceException: Errors occurred while refreshing resources with the local file system.
+	at org.eclipse.core.internal.localstore.FileSystemResourceManager.refreshResource(FileSystemResourceManager.java:960)
+	at org.eclipse.core.internal.localstore.FileSystemResourceManager.refresh(FileSystemResourceManager.java:941)
+	at org.eclipse.core.internal.resources.Resource.refreshLocal(Resource.java:1593)
+	at org.eclipse.egit.ui.Activator$ResourceRefreshJob$1.run(Activator.java:446)
+	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2241)
+	at org.eclipse.egit.ui.Activator$ResourceRefreshJob.run(Activator.java:431)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:55)
+Contains: The project description file (.project) for 'tf_snn_trial2' is missing.  This file contains important information about the project.  The project will not function properly until this file is restored.
+!SUBENTRY 1 org.eclipse.core.resources 4 271 2017-06-21 08:22:55.499
+!MESSAGE Errors occurred while refreshing resources with the local file system.
+!SUBENTRY 2 org.eclipse.core.resources 4 567 2017-06-21 08:22:55.499
+!MESSAGE The project description file (.project) for 'tf_snn_trial2' is missing.  This file contains important information about the project.  The project will not function properly until this file is restored.
+
+!ENTRY org.python.pydev.shared_core 4 4 2017-06-21 08:22:55.518
+!MESSAGE /home/soe/workspace/ljl/cnn2snn/cifar/tf_snn_trial2/.pydevproject (No such file or directory)
+!STACK 0
+java.io.FileNotFoundException: /home/soe/workspace/ljl/cnn2snn/cifar/tf_snn_trial2/.pydevproject (No such file or directory)
+	at java.io.FileOutputStream.open0(Native Method)
+	at java.io.FileOutputStream.open(FileOutputStream.java:270)
+	at java.io.FileOutputStream.<init>(FileOutputStream.java:213)
+	at java.io.FileOutputStream.<init>(FileOutputStream.java:162)
+	at org.python.pydev.shared_core.io.FileUtils.writeBytesToFile(FileUtils.java:140)
+	at org.python.pydev.shared_core.io.FileUtils.writeStrToFile(FileUtils.java:133)
+	at org.python.pydev.plugin.nature.PythonNatureStore.doStore(PythonNatureStore.java:931)
+	at org.python.pydev.plugin.nature.PythonNatureStore.loadFromFile(PythonNatureStore.java:304)
+	at org.python.pydev.plugin.nature.PythonNatureStore.resourceChanged(PythonNatureStore.java:874)
+	at org.eclipse.core.internal.events.NotificationManager$1.run(NotificationManager.java:299)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:42)
+	at org.eclipse.core.internal.events.NotificationManager.notify(NotificationManager.java:289)
+	at org.eclipse.core.internal.events.NotificationManager.broadcastChanges(NotificationManager.java:152)
+	at org.eclipse.core.internal.resources.Workspace.broadcastPostChange(Workspace.java:373)
+	at org.eclipse.core.internal.resources.Workspace.endOperation(Workspace.java:1470)
+	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2250)
+	at org.eclipse.egit.ui.Activator$ResourceRefreshJob.run(Activator.java:431)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:55)
+
+!ENTRY org.eclipse.equinox.p2.metadata.repository 4 1000 2017-06-21 10:00:02.983
+!MESSAGE No repository found at file:/home/soe/Downloads/.
+
+!ENTRY org.eclipse.equinox.p2.metadata.repository 4 1000 2017-06-21 10:00:13.022
+!MESSAGE No repository found at http://download.eclipse.org/tools/pdt/updates/3.9.
+
+!ENTRY org.eclipse.equinox.p2.metadata.repository 4 1000 2017-06-21 10:00:17.060
+!MESSAGE No repository found at http://download.eclipse.org/tools/pdt/updates/3.8.
+
+!ENTRY org.eclipse.equinox.p2.metadata.repository 4 1000 2017-06-21 10:00:21.149
+!MESSAGE No repository found at jar:file:/home/soe/Downloads/PyDev%204.5.5.zip!/.
